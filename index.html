@@ -1035,9 +1035,9 @@ nav.scrolled {
 
 .sold-count {
   font-family: var(--font-display);
-  font-size: 68px;
-  font-weight: 300;
-  color: rgba(158,205,213,0.1);
+  font-size: 80px;
+  font-weight: 400;
+  color: rgba(158,205,213,0.2);
   line-height: 1;
 }
 
@@ -1330,8 +1330,8 @@ nav.scrolled {
 .testi-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
-  margin-top: 60px;
+  gap: 24px;
+  margin-top: 0;
 }
 
 .testi-card {
@@ -1614,7 +1614,7 @@ footer {
   position: fixed;
   bottom: 32px;
   right: 32px;
-  z-index: 1000;
+  z-index: 9000;
   width: 60px;
   height: 60px;
   background: var(--pink);
@@ -1661,7 +1661,7 @@ footer {
   background: white;
   border-radius: 12px;
   box-shadow: 0 24px 80px rgba(13,31,45,0.22);
-  z-index: 999;
+  z-index: 9001;
   display: flex;
   flex-direction: column;
   transform: translateY(20px) scale(0.95);
@@ -1882,28 +1882,35 @@ footer {
 }
 
 /* ── ENTRANCE ANIMATIONS ───────────────────────────────────────── */
+/* Content is ALWAYS visible. Animations are progressive enhancement. */
 .fade-up {
-  opacity: 0;
-  transform: translateY(24px);
   transition: opacity 0.65s ease, transform 0.65s ease;
 }
-
-.fade-up.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Staggered children */
-.stagger > * { 
-  opacity: 0;
-  transform: translateY(20px);
+.stagger > * {
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-.stagger.visible > *:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.05s; }
-.stagger.visible > *:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.15s; }
-.stagger.visible > *:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.25s; }
-.stagger.visible > *:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.35s; }
+/* Only hide when JS has loaded and opted in */
+body.js-loaded .fade-up:not(.visible) {
+  opacity: 0;
+  transform: translateY(24px);
+}
+body.js-loaded .stagger:not(.visible) > * {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.fade-up.visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+body.js-loaded .stagger.visible > *:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.05s; }
+body.js-loaded .stagger.visible > *:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.12s; }
+body.js-loaded .stagger.visible > *:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.19s; }
+body.js-loaded .stagger.visible > *:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.26s; }
+body.js-loaded .stagger.visible > *:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 0.33s; }
+body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: translateY(0); transition-delay: 0.40s; }
 
 /* ── RESPONSIVE ────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
@@ -1981,11 +1988,8 @@ footer {
   </div>
 </section>
 
-<!-- Elegant separator -->
-<div style="height:3px;background:linear-gradient(to right, var(--blue-deep) 0%, var(--pink) 50%, var(--blue-deep) 100%);"></div>
-
 <!-- ── STATS STRIP ─────────────────────────────────────────────────── -->
-<div class="stats-strip stagger" id="stats">
+<div class="stats-strip" id="stats">
   <div class="stat-item">
     <div class="stat-num">$400M+</div>
     <div class="stat-lbl">Property Sold</div>
@@ -2143,7 +2147,7 @@ footer {
 
 <!-- ── ABOUT ───────────────────────────────────────────────────────── -->
 <section class="about-section" id="about">
-  <div class="about-visual fade-up">
+  <div class="about-visual">
     <div class="about-photo-main">
       <img src="images/courtneyhead.jpg" alt="Courtney Wood" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
     </div>
@@ -2196,74 +2200,146 @@ footer {
 
 <!-- ── FEATURED PROPERTY ───────────────────────────────────────────── -->
 <section class="featured-section" id="properties">
-  <div class="featured-header">
+
+  <!-- Section label row -->
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;">
     <div>
-      <div class="section-label">Feature Listing</div>
-      <h2 class="section-title">A property worth<br><em>talking about.</em></h2>
+      <div class="section-label" style="color:var(--blue-lt);">Feature Listing</div>
+      <h2 class="section-title" style="color:white;">A home built with<br><em>no detail overlooked.</em></h2>
     </div>
-    <div class="featured-nav">
-      <button class="feat-btn" onclick="prevProp()">←</button>
-      <button class="feat-btn" onclick="nextProp()">→</button>
-    </div>
+    <a href="https://courtneyandco.co.nz/8-tauwaka-crescent-riverhead" target="_blank" style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-lt);text-decoration:none;border-bottom:1px solid rgba(158,205,213,0.3);padding-bottom:3px;">View Full Listing →</a>
   </div>
 
-  <div class="property-showcase">
-    <div class="prop-main-img">
-      <img src="images/tauwaka-09.webp" alt="8 Tauwaka Crescent, Riverhead" style="width:100%;height:100%;object-fit:cover;object-position:center;">
-      <div class="prop-badge">For Sale</div>
-      <div class="prop-main-info">
-        <div class="prop-address">8 Tauwaka Crescent,<br>Riverhead</div>
-        <div class="prop-price">By Negotiation</div>
-        <div class="prop-features">
-          <span class="prop-feat">🛏 4 Beds</span>
-          <span class="prop-feat">🚿 2 Baths</span>
-          <span class="prop-feat">🚗 2 Garage</span>
-          <span class="prop-feat">📐 800m² Land</span>
+  <!-- Hero image + thumbnail stack -->
+  <div style="display:grid;grid-template-columns:1.35fr 1fr;gap:3px;border-radius:4px;overflow:hidden;margin-bottom:3px;">
+    <div style="height:600px;position:relative;overflow:hidden;cursor:pointer;" onclick="openLightbox(0)">
+      <img src="images/tauwaka-09.webp" alt="8 Tauwaka Crescent — Dusk facade" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(12,22,40,0.75) 0%,transparent 50%);"></div>
+      <div style="position:absolute;top:20px;left:20px;background:var(--pink);color:white;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;padding:6px 14px;font-family:var(--font-mono);border-radius:2px;">For Sale</div>
+      <div style="position:absolute;bottom:28px;left:28px;right:28px;">
+        <div style="font-family:var(--font-display);font-size:clamp(26px,3vw,38px);font-weight:300;color:white;line-height:1.15;margin-bottom:10px;">8 Tauwaka Crescent,<br>Riverhead</div>
+        <div style="font-size:15px;color:var(--blue-lt);font-weight:500;letter-spacing:0.04em;margin-bottom:14px;">By Negotiation</div>
+        <div style="display:flex;gap:20px;flex-wrap:wrap;">
+          <span style="font-size:11px;color:rgba(255,255,255,0.65);font-family:var(--font-mono);">4 Bedrooms</span>
+          <span style="font-size:11px;color:rgba(255,255,255,0.65);font-family:var(--font-mono);">3 Bathrooms</span>
+          <span style="font-size:11px;color:rgba(255,255,255,0.65);font-family:var(--font-mono);">2-Car Garage</span>
+          <span style="font-size:11px;color:rgba(255,255,255,0.65);font-family:var(--font-mono);">600m² Section</span>
+          <span style="font-size:11px;color:rgba(255,255,255,0.65);font-family:var(--font-mono);">316m² Floor</span>
         </div>
       </div>
     </div>
-    <div class="prop-side">
-      <div class="prop-thumb">
-        <img src="images/tauwaka-42.webp" alt="Living & Kitchen" style="width:100%;height:100%;object-fit:cover;">
-        <div class="prop-thumb-overlay">
-          <span class="prop-count">Living &amp; Kitchen</span>
+    <div style="display:grid;grid-template-rows:1fr 1fr;gap:3px;height:600px;">
+      <div style="overflow:hidden;position:relative;cursor:pointer;" onclick="openLightbox(1)">
+        <img src="images/tauwaka-42.webp" alt="Open Plan Living & Kitchen" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        <div style="position:absolute;inset:0;background:rgba(12,22,40,0.28);display:flex;align-items:flex-end;padding:16px;">
+          <span style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.8);">Living &amp; Kitchen</span>
         </div>
       </div>
-      <div class="prop-thumb">
-        <img src="images/tauwaka-06.webp" alt="Outdoor Entertaining" style="width:100%;height:100%;object-fit:cover;">
-        <div class="prop-thumb-overlay">
-          <span class="prop-count">Outdoor Entertaining</span>
+      <div style="overflow:hidden;position:relative;cursor:pointer;" onclick="openLightbox(5)">
+        <img src="images/tauwaka-06.webp" alt="Outdoor Entertaining" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        <div style="position:absolute;inset:0;background:rgba(12,22,40,0.28);display:flex;align-items:flex-end;padding:16px;">
+          <span style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.8);">Outdoor Entertaining</span>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="prop-details fade-up">
-    <div class="prop-detail-item">
-      <div class="prop-detail-label">Property Type</div>
-      <div class="prop-detail-val">Freehold</div>
+  <!-- Second row of images -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;margin-bottom:56px;">
+    <div style="height:240px;overflow:hidden;cursor:pointer;position:relative;" onclick="openLightbox(2)">
+      <img src="images/tauwaka-34.webp" alt="Bespoke Kitchen" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      <div style="position:absolute;inset:0;background:rgba(12,22,40,0.2);display:flex;align-items:flex-end;padding:14px;"><span style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.75);">Kitchen</span></div>
     </div>
-    <div class="prop-detail-item">
-      <div class="prop-detail-label">Land Area</div>
-      <div class="prop-detail-val">600 <small>m²</small></div>
+    <div style="height:240px;overflow:hidden;cursor:pointer;position:relative;" onclick="openLightbox(3)">
+      <img src="images/tauwaka-48.webp" alt="Master Ensuite" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      <div style="position:absolute;inset:0;background:rgba(12,22,40,0.2);display:flex;align-items:flex-end;padding:14px;"><span style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.75);">Master Ensuite</span></div>
     </div>
-    <div class="prop-detail-item">
-      <div class="prop-detail-label">Floor Area</div>
-      <div class="prop-detail-val">316 <small>m²</small></div>
+    <div style="height:240px;overflow:hidden;cursor:pointer;position:relative;" onclick="openLightbox(4)">
+      <img src="images/tauwaka-14.webp" alt="Formal Lounge" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      <div style="position:absolute;inset:0;background:rgba(12,22,40,0.2);display:flex;align-items:flex-end;padding:14px;"><span style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.75);">Formal Lounge</span></div>
     </div>
-    <div class="prop-detail-item">
-      <div class="prop-detail-label">District</div>
-      <div class="prop-detail-val">Riverhead<small>, Rodney</small></div>
-    </div>
-    <a href="https://courtneyandco.co.nz/8-tauwaka-crescent-riverhead" target="_blank" class="btn-primary">
-      Full Details &amp; Photos →
-    </a>
   </div>
 
-  <!-- Floor Plan -->
-  <div class="fade-up" style="margin-top:40px;">
-    <div class="section-label" style="color:var(--blue-lt);margin-bottom:16px;">Floor Plan</div>
-    <img src="images/tauwaka-60.webp" alt="8 Tauwaka Crescent Floor Plan" style="width:100%;max-width:900px;display:block;border:1px solid var(--light-line);border-radius:3px;">
+  <!-- Property stats bar -->
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);border:1px solid rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;margin-bottom:60px;">
+    <div style="padding:24px 28px;border-right:1px solid rgba(255,255,255,0.08);">
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:8px;">Type</div>
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:400;color:white;">Freehold</div>
+    </div>
+    <div style="padding:24px 28px;border-right:1px solid rgba(255,255,255,0.08);">
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:8px;">Land Area</div>
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:400;color:white;">600 <span style="font-size:13px;color:rgba(255,255,255,0.45);">m²</span></div>
+    </div>
+    <div style="padding:24px 28px;border-right:1px solid rgba(255,255,255,0.08);">
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:8px;">Floor Area</div>
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:400;color:white;">316 <span style="font-size:13px;color:rgba(255,255,255,0.45);">m²</span></div>
+    </div>
+    <div style="padding:24px 28px;border-right:1px solid rgba(255,255,255,0.08);">
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:8px;">District</div>
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:400;color:white;">Riverhead</div>
+    </div>
+    <div style="padding:24px 28px;">
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:8px;">Builder</div>
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:400;color:white;">MDS Masonry</div>
+    </div>
+  </div>
+
+  <!-- Editorial property description + floor plan side by side -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;">
+
+    <!-- Left: Description -->
+    <div>
+      <div class="section-label" style="color:var(--blue-lt);margin-bottom:20px;">Property Description</div>
+      <p style="font-family:var(--font-display);font-size:22px;font-weight:300;font-style:italic;line-height:1.55;color:rgba(255,255,255,0.9);margin-bottom:28px;">Positioned in a quiet Riverhead enclave — craftsmanship, materiality and design integrity, with no detail overlooked.</p>
+      <p style="font-size:15px;line-height:1.85;color:rgba(255,255,255,0.58);margin-bottom:18px;font-weight:300;">A Monier Portuguese Classico antique clay tile roof paired with cedar fascia and a solid cedar front door creates a timeless, grounded presence. Outside, Antique Shahabad limestone paving adds a distinctly European character to Shafer-designed landscaped grounds.</p>
+      <p style="font-size:15px;line-height:1.85;color:rgba(255,255,255,0.58);margin-bottom:18px;font-weight:300;">Inside, 316m² of considered living unfolds across four bedrooms — including two masters — three bathrooms, and a double internal-access garage. Timber flooring runs throughout; custom Customtone cabinetry in kitchen, laundry and bathrooms. Burlington matt white tiles and Grohe tapware finish every wet room to an exacting standard.</p>
+      <p style="font-size:15px;line-height:1.85;color:rgba(255,255,255,0.58);margin-bottom:32px;font-weight:300;">A substantial family home that balances architectural integrity with everyday livability — in one of Riverhead's most peaceful residential pockets, minutes from motorway access, schools and village amenity.</p>
+
+      <!-- Key features -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;margin-bottom:40px;">
+        <div style="display:flex;gap:10px;align-items:center;">
+          <div style="width:5px;height:5px;background:var(--blue-lt);border-radius:50%;flex-shrink:0;"></div>
+          <span style="font-size:13px;color:rgba(255,255,255,0.6);font-family:var(--font-mono);">MDS Masonry construction</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <div style="width:5px;height:5px;background:var(--blue-lt);border-radius:50%;flex-shrink:0;"></div>
+          <span style="font-size:13px;color:rgba(255,255,255,0.6);font-family:var(--font-mono);">Grohe tapware throughout</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <div style="width:5px;height:5px;background:var(--blue-lt);border-radius:50%;flex-shrink:0;"></div>
+          <span style="font-size:13px;color:rgba(255,255,255,0.6);font-family:var(--font-mono);">Customtone bespoke cabinetry</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <div style="width:5px;height:5px;background:var(--blue-lt);border-radius:50%;flex-shrink:0;"></div>
+          <span style="font-size:13px;color:rgba(255,255,255,0.6);font-family:var(--font-mono);">Shafer landscaped grounds</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <div style="width:5px;height:5px;background:var(--blue-lt);border-radius:50%;flex-shrink:0;"></div>
+          <span style="font-size:13px;color:rgba(255,255,255,0.6);font-family:var(--font-mono);">Limestone outdoor paving</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <div style="width:5px;height:5px;background:var(--blue-lt);border-radius:50%;flex-shrink:0;"></div>
+          <span style="font-size:13px;color:rgba(255,255,255,0.6);font-family:var(--font-mono);">Dual master suites</span>
+        </div>
+      </div>
+
+      <a href="https://courtneyandco.co.nz/8-tauwaka-crescent-riverhead" target="_blank" class="btn-primary" style="background:var(--blue-deep);">View Full Listing &amp; Gallery →</a>
+    </div>
+
+    <!-- Right: Floor plan -->
+    <div>
+      <div class="section-label" style="color:var(--blue-lt);margin-bottom:20px;">Floor Plan</div>
+      <div style="border:1px solid rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;">
+        <img src="images/tauwaka-60.webp" alt="8 Tauwaka Crescent — Floor Plan" style="width:100%;display:block;">
+      </div>
+      <div style="margin-top:20px;padding:20px 24px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:3px;">
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:12px;">Agent</div>
+        <div style="font-family:var(--font-display);font-size:18px;color:white;font-weight:400;margin-bottom:4px;">Courtney Wood</div>
+        <div style="font-family:var(--font-mono);font-size:11px;color:var(--blue-lt);margin-bottom:14px;">027 688 0818</div>
+        <a href="tel:0276880818" class="btn-primary" style="font-size:10px;padding:12px 24px;background:var(--pink);">Call Courtney Direct →</a>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -2392,7 +2468,10 @@ footer {
       <div class="section-label" style="color:var(--blue-lt);">Track Record</div>
       <h2 class="section-title" style="color:white;">Sold. <em style="color:var(--pink-lt);">Delivered.</em></h2>
     </div>
-    <div class="sold-count">$400M</div>
+    <div style="text-align:right;">
+      <div style="font-family:var(--font-display);font-size:clamp(52px,6vw,88px);font-weight:400;color:white;line-height:1;letter-spacing:-0.02em;">$400<span style="color:var(--blue-lt);">M</span></div>
+      <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:6px;">Total Settled Sales</div>
+    </div>
   </div>
 
   <div class="sold-scroll-wrap">
@@ -2574,7 +2653,7 @@ footer {
         <div class="team-overlay">
           <div class="team-contact-links">
             <a href="tel:094129903">📞</a>
-            <a href="/cdn-cgi/l/email-protection#6405091d24070b1116100a011d050a00070b4a070b4a0a1e">✉</a>
+            <a href="mailto:info@courtneyandco.co.nz">✉</a>
           </div>
         </div>
       </div>
@@ -2589,7 +2668,7 @@ footer {
         <div class="team-overlay">
           <div class="team-contact-links">
             <a href="tel:094129903">📞</a>
-            <a href="/cdn-cgi/l/email-protection#601408051405010d20030f1512140e0519010e04030f4e030f4e0e1a">✉</a>
+            <a href="mailto:info@courtneyandco.co.nz">✉</a>
           </div>
         </div>
       </div>
@@ -2604,7 +2683,7 @@ footer {
         <div class="team-overlay">
           <div class="team-contact-links">
             <a href="tel:094129903">📞</a>
-            <a href="/cdn-cgi/l/email-protection#295d414c5d4c4844694a465c5b5d474c5048474d4a46074a46074753">✉</a>
+            <a href="mailto:info@courtneyandco.co.nz">✉</a>
           </div>
         </div>
       </div>
@@ -2619,7 +2698,7 @@ footer {
         <div class="team-overlay">
           <div class="team-contact-links">
             <a href="tel:094129903">📞</a>
-            <a href="/cdn-cgi/l/email-protection#75011d100110141835161a0007011b100c141b11161a5b161a5b1b0f">✉</a>
+            <a href="mailto:info@courtneyandco.co.nz">✉</a>
           </div>
         </div>
       </div>
@@ -2634,7 +2713,7 @@ footer {
         <div class="team-overlay">
           <div class="team-contact-links">
             <a href="tel:094129903">📞</a>
-            <a href="/cdn-cgi/l/email-protection#bed1d8d8d7dddbfeddd1cbcccad0dbc7dfd0daddd190ddd190d0c4">✉</a>
+            <a href="mailto:info@courtneyandco.co.nz">✉</a>
           </div>
         </div>
       </div>
@@ -2671,15 +2750,50 @@ footer {
 
 <!-- ── TESTIMONIALS ────────────────────────────────────────────────── -->
 <section class="testimonials-section" id="testimonials">
-  <div class="fade-up">
-    <div class="section-label">Client Stories</div>
-    <h2 class="section-title">Don't take it<br>from <em>us.</em></h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-bottom:64px;">
+    <div>
+      <div class="section-label">Client Stories</div>
+      <h2 class="section-title">Don't take it<br>from <em>us.</em></h2>
+    </div>
+    <div style="padding-top:16px;">
+      <p style="font-family:var(--font-display);font-size:clamp(18px,2vw,24px);font-weight:300;font-style:italic;line-height:1.6;color:var(--navy-mid);">"The difference with Courtney is simple: she tells you the truth. In a market full of promises, that's worth everything."</p>
+      <div style="margin-top:16px;display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--pink-pale);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);color:var(--pink);font-size:14px;">A</div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--navy);">Anna &amp; Craig</div>
+          <div style="font-size:11px;color:var(--mid);font-family:var(--font-mono);">Dairy Flat</div>
+        </div>
+        <div style="margin-left:auto;color:var(--gold);font-size:13px;letter-spacing:2px;">★★★★★</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Google reviews bar -->
+  <div style="background:var(--cream-dark);border-radius:3px;padding:20px 28px;display:flex;align-items:center;gap:24px;margin-bottom:48px;border:1px solid var(--light-line);">
+    <div style="flex-shrink:0;">
+      <svg width="68" height="24" viewBox="0 0 68 24" fill="none">
+        <path d="M8.5 3.5C5.5 3.5 3 5.5 3 8.5c0 2.7 2 4.5 4 5.5L12 17.5l5-3.5c2-1 4-2.8 4-5.5 0-3-2.5-5-5.5-5S8.5 3.5 8.5 3.5z" fill="#4285F4"/>
+        <text x="22" y="17" font-family="Arial,sans-serif" font-size="14" font-weight="700" fill="#4285F4">G</text>
+        <text x="32" y="17" font-family="Arial,sans-serif" font-size="13" fill="#333">oogle Reviews</text>
+      </svg>
+    </div>
+    <div style="width:1px;height:32px;background:var(--light-line);"></div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span style="font-family:var(--font-display);font-size:28px;font-weight:400;color:var(--navy);line-height:1;">5.0</span>
+      <div>
+        <div style="color:#FBBC04;font-size:14px;letter-spacing:2px;">★★★★★</div>
+        <div style="font-size:11px;color:var(--mid);font-family:var(--font-mono);margin-top:2px;">Based on 47 reviews</div>
+      </div>
+    </div>
+    <div style="margin-left:auto;">
+      <a href="https://courtneyandco.co.nz" target="_blank" style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue-deep);text-decoration:none;border-bottom:1px solid rgba(79,160,174,0.3);padding-bottom:2px;">Read All Reviews →</a>
+    </div>
   </div>
 
   <div class="testi-grid stagger">
     <div class="testi-card">
       <div class="testi-quote">"</div>
-      <p class="testi-text">Courtney sold our home for significantly more than the other agents quoted. Her honesty at the start saved us weeks and got us a better result.</p>
+      <p class="testi-text">Courtney sold our home for significantly more than every other agent quoted. Her honesty at the start saved us weeks and got us a far better result.</p>
       <div class="testi-author">
         <div class="testi-avatar">M</div>
         <div>
@@ -2692,7 +2806,7 @@ footer {
 
     <div class="testi-card">
       <div class="testi-quote">"</div>
-      <p class="testi-text">The marketing was genuinely different — beautiful photography, design that stood out on every platform. We had offers in the first weekend.</p>
+      <p class="testi-text">The marketing was genuinely different — beautiful photography, design that stood out on every platform. We had multiple offers in the first weekend.</p>
       <div class="testi-author">
         <div class="testi-avatar">S</div>
         <div>
@@ -2705,7 +2819,7 @@ footer {
 
     <div class="testi-card">
       <div class="testi-quote">"</div>
-      <p class="testi-text">What makes Courtney different? She actually listens. And then she delivers. We've recommended her to everyone we know out west.</p>
+      <p class="testi-text">What makes Courtney different? She actually listens. And then she delivers. We've recommended her to every single person we know out west.</p>
       <div class="testi-author">
         <div class="testi-avatar">R</div>
         <div>
@@ -2715,9 +2829,48 @@ footer {
         </div>
       </div>
     </div>
+
+    <div class="testi-card">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">We interviewed four agents. Courtney was the only one who gave us a realistic number and explained exactly how she'd achieve it. She did, and then some.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">J</div>
+        <div>
+          <div class="testi-name">James &amp; Pip</div>
+          <div class="testi-loc">Waimauku</div>
+          <div class="testi-stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Sold in 10 days, above CV, with three competing offers. Courtney's knowledge of the NW market is unmatched — she knew exactly who would buy our place.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">D</div>
+        <div>
+          <div class="testi-name">Dave &amp; Karen</div>
+          <div class="testi-loc">Dairy Flat</div>
+          <div class="testi-stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Buying through Courtney was a completely different experience. Transparent, fast, no games. She made a stressful process feel straightforward. Rare.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">N</div>
+        <div>
+          <div class="testi-name">Ngaio &amp; Ben</div>
+          <div class="testi-loc">Coatesville</div>
+          <div class="testi-stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div style="text-align:center;margin-top:48px;">
+  <div style="text-align:center;margin-top:56px;">
     <a href="https://courtneyandco.co.nz" target="_blank" class="btn-primary">Read All Testimonials</a>
   </div>
 </section>
@@ -2759,7 +2912,7 @@ footer {
         <div class="c-info-icon">✉</div>
         <div>
           <div class="c-info-label">Email</div>
-          <div class="c-info-value"><a href="/cdn-cgi/l/email-protection#37435f524352565a77545842454359524e565953545819545819594d"><span class="__cf_email__" data-cfemail="5a2e323f2e3f3b371a39352f282e343f233b343e3935743935743420">[email&#160;protected]</span></a></div>
+          <div class="c-info-value"><a href="mailto:info@courtneyandco.co.nz">info@courtneyandco.co.nz</a></div>
         </div>
       </div>
     </div>
@@ -2870,7 +3023,8 @@ footer {
 </div>
 
 <!-- ── SCRIPTS ─────────────────────────────────────────────────────── -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
+document.body.classList.add('js-loaded');
 // ── NAV SCROLL ──────────────────────────────────────────────────
 const nav = document.getElementById('main-nav');
 window.addEventListener('scroll', () => {
@@ -2878,21 +3032,26 @@ window.addEventListener('scroll', () => {
 });
 
 // ── INTERSECTION OBSERVER ───────────────────────────────────────
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      observer.unobserve(e.target);
-    }
-  });
-}, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
-
-document.querySelectorAll('.fade-up, .stagger').forEach(el => observer.observe(el));
-
-// Safety fallback: force all visible after 1.2s in case observer doesn't fire
-setTimeout(() => {
+// Robust animation system: works on GitHub Pages, no external script deps
+const revealAll = () => {
   document.querySelectorAll('.fade-up, .stagger').forEach(el => el.classList.add('visible'));
-}, 1200);
+};
+
+try {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0, rootMargin: '0px 0px -20px 0px' });
+  document.querySelectorAll('.fade-up, .stagger').forEach(el => observer.observe(el));
+} catch(e) {
+  revealAll();
+}
+// Hard failsafe — everything visible within 400ms no matter what
+setTimeout(revealAll, 400);
 
 // ── CHAT TOGGLE ─────────────────────────────────────────────────
 let chatOpen = false;
