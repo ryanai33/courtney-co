@@ -3122,261 +3122,158 @@ try {
 // Hard failsafe - everything visible within 400ms no matter what
 setTimeout(revealAll, 400);
 
-// -- COURTNEY & CO - PREMIUM AI CONCIERGE ------------------------
-// Adapted from concierge-ai.js pattern (client-side, no backend required)
-
-// -- SESSION ------------------------------------------------------
-function getConciergeSession() {
-  let sid = sessionStorage.getItem('cc_sid');
-  if (!sid) { sid = 's_' + Math.random().toString(36).slice(2) + Date.now(); sessionStorage.setItem('cc_sid', sid); }
-  return sid;
-}
-
-// -- STATE --------------------------------------------------------
+// -- COURTNEY & CO AI CONCIERGE ----------------------------------
 let chatOpen = false;
 let cpTyping = false;
 let cpHistory = [];
 
-// -- TIME OF DAY --------------------------------------------------
 function timeOfDay() {
   const h = new Date().getHours();
   return h < 12 ? 'morning' : h < 17 ? 'afternoon' : 'evening';
 }
 
+// Set greeting on load
+(function() {
+  var tod = document.getElementById('cp-tod');
+  if (tod) tod.textContent = timeOfDay();
+})();
+
 // -- TOGGLE -------------------------------------------------------
 function toggleChat() {
   chatOpen = !chatOpen;
-  const panel = document.getElementById('chat-panel');
-  panel.classList.toggle('open', chatOpen);
+  var panel = document.getElementById('chat-panel');
   if (chatOpen) {
-    setTimeout(() => { const input = document.getElementById('cp-input'); if (input) input.focus(); }, 300);
+    panel.classList.add('open');
+    setTimeout(function() {
+      var input = document.getElementById('cp-input');
+      if (input) input.focus();
+    }, 300);
+  } else {
+    panel.classList.remove('open');
   }
 }
 
-// -- KNOWLEDGE BASE (rich C&Co specific) -------------------------
-const ccKnowledge = {
-  appraisal: [
-    "Absolutely - a free, no-obligation appraisal is always our first step. Courtney will give you the straight number, not the one designed to win your listing. Can I take your property address and a good contact number so she can call you personally within one business day?",
-    "Great timing - the North West market is moving well right now and accurate pricing is everything. I'll need your address and best contact number. Courtney does every appraisal herself, no juniors. Shall we start there?"
-  ],
-  sell: [
-    "Selling with Courtney & Co starts with honesty - you'll get a realistic price, not flattery. The second step is our bespoke marketing: world-class photography, in-house design, and multi-platform reach. Where is your property located, and what's your rough timeline?",
-    "Let's get you moving. Courtney has settled over $400M in North West Auckland - she knows exactly how to position your home to attract the right buyers at the right price. What's the address, and are you thinking of listing in the next month or further out?"
-  ],
-  buy: [
-    "North West Auckland is genuinely one of the most exciting markets in the country right now - Riverhead, Kumeu, Dairy Flat, Helensville all offer that rare combination of space, community and proximity to the city. What's your budget range and how many bedrooms are you after?",
-    "Smart move looking out west - buyers who act now are ahead of the curve. Are you after a lifestyle block, a village home, or something in between? And have you got pre-approval sorted? That'll help me point you to exactly the right listings."
-  ],
-  riverhead: [
-    "Riverhead is our heartland - village atmosphere, motorway access within minutes, and some of the most architecturally considered homes in NW Auckland. We currently have 8 Tauwaka Crescent available, a stunning 316m2 home By Negotiation. Want me to arrange a private viewing with Courtney?",
-    "Riverhead has come into its own in the last few years. Strong school zones, beautiful reserves, and a tight-knit community. We know every street here. Are you looking to buy or sell in Riverhead - or both?"
-  ],
-  helensville: [
-    "Helensville is having a real moment - lifestyle properties, affordable entry points, and a genuine sense of community. We've sold extensively here and know which streets are emerging. Are you looking at lifestyle blocks or residential in Helensville?",
-    "Great choice - Helensville offers some of the best value in the region right now, and the lifestyle is second to none. We have local knowledge that's hard to find elsewhere. What's your situation - buying, selling, or exploring?"
-  ],
-  kumeu: [
-    "Kumeu is wine country meets suburban convenience - we love it. Strong school zoning, cafe culture, and excellent highway access. We've got current listings there. Are you looking for a lifestyle block, or more of a family home in the village itself?",
-    "Kumeu has been one of the strongest performers in NW Auckland over the past few years. Low supply, strong demand. We know the area inside out. What kind of property are you looking for?"
-  ],
-  dairyflat: [
-    "Dairy Flat is pure lifestyle - you get serious land, peace and quiet, and you're still 30 minutes from the CBD. It attracts discerning buyers who want space without compromising on quality of life. Are you looking at rural residential or bare land?"
-  ],
-  price: [
-    "Pricing in North West Auckland is highly street and property-specific right now - we don't do ballpark figures. What Courtney will give you is a precise, data-backed number with a clear strategy to achieve it. What's the property address?",
-    "Market conditions shift suburb by suburb. The only honest answer is a proper comparative market analysis - which is exactly what our free appraisal gives you. No obligation, just straight talk. Want to book one?"
-  ],
-  team: [
-    "Courtney leads the team personally - every appraisal, every negotiation. Supporting her is Amy (branch manager), Rebecca (staging & interiors), Chris (photography), Amy Creative (design & marketing), Lisa (legal eagle) and Jenny (operations). It's a full-service team under one roof - no outsourcing.",
-    "We're not a franchise, so you deal with the actual people who know your home. Courtney handles every negotiation herself. Our full in-house team covers photography, staging, legal admin and marketing design. Want to know more about any of them?"
-  ],
-  contact: [
-    "You can reach Courtney directly on 027 688 0818, or the office on 09 412 9903. Email: info@courtneyandco.co.nz. Main office at 1047 Coatesville-Riverhead Hwy, Riverhead - or our satellite office at 9 Factory Road, Shop 15C, Waimauku.",
-    "Best way is to call Courtney directly: 027 688 0818. She picks up. Or email info@courtneyandco.co.nz and we'll get back to you same day."
-  ],
-  general: [
-    "Happy to help - Courtney & Co specialises exclusively in North West Auckland: Riverhead, Helensville, Kumeu, Dairy Flat, Waimauku and surrounds. Straight talking, local knowledge, bespoke marketing. What would you like to know?",
-    "Of course - what can I help with? Whether it's a property appraisal, market advice, or information about our current listings, I'm here for it.",
-    "Great question - let me point you in the right direction. We're boutique, local, and genuinely invested in every outcome. What's on your mind?"
-  ]
-};
-
-function getCCResponse(msg) {
-  const t = msg.toLowerCase();
-  if (t.includes('apprais') || t.includes('worth') || t.includes('value') || t.includes('how much'))
-    return pick(ccKnowledge.appraisal);
-  if (t.includes('sell') || t.includes('list') || t.includes('selling') || t.includes('vendor'))
-    return pick(ccKnowledge.sell);
-  if (t.includes('buy') || t.includes('purchase') || t.includes('looking') || t.includes('find'))
-    return pick(ccKnowledge.buy);
-  if (t.includes('riverhead') || t.includes('tauwaka'))
-    return pick(ccKnowledge.riverhead);
-  if (t.includes('helensville') || t.includes('helens'))
-    return pick(ccKnowledge.helensville);
-  if (t.includes('kumeu') || t.includes('huapai'))
-    return pick(ccKnowledge.kumeu);
-  if (t.includes('dairy flat') || t.includes('dairy') || t.includes('rural'))
-    return pick(ccKnowledge.dairyflat);
-  if (t.includes('price') || t.includes('cost') || t.includes('market') || t.includes('median'))
-    return pick(ccKnowledge.price);
-  if (t.includes('team') || t.includes('courtney') || t.includes('staff') || t.includes('agent'))
-    return pick(ccKnowledge.team);
-  if (t.includes('contact') || t.includes('phone') || t.includes('call') || t.includes('email') || t.includes('office'))
-    return pick(ccKnowledge.contact);
-  return pick(ccKnowledge.general);
-}
-
-function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-
-// -- MESSAGE RENDERING (matches concierge-ai.js pattern) ---------
-function cpAppendMessage(role, text) {
-  const msgs = document.getElementById('cp-messages');
-  if (!msgs) return;
-  // Remove chips on first user message
-  if (role === 'user') {
-    const chips = document.getElementById('cp-chips');
-    if (chips) chips.style.display = 'none';
-  }
-  const wrapper = document.createElement('div');
-  wrapper.className = role === 'user' ? 'cp-msg cp-msg--user' : 'cp-msg cp-msg--agent';
-  const bubble = document.createElement('div');
-  bubble.className = 'cp-msg-bubble';
-  bubble.textContent = text;
-  const time = document.createElement('div');
-  time.className = 'cp-msg-time';
-  const now = new Date();
-  const hhmm = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
-  time.textContent = role === 'user' ? ('You - ' + hhmm) : ('Courtney & Co Concierge - ' + hhmm);
-  wrapper.appendChild(bubble);
-  wrapper.appendChild(time);
-  msgs.appendChild(wrapper);
-  msgs.scrollTo({ top: msgs.scrollHeight, behavior: 'smooth' });
-}
-
-function cpShowTyping() {
-  cpTyping = true;
-  const msgs = document.getElementById('cp-messages');
-  if (!msgs) return;
-  const el = document.createElement('div');
-  el.id = 'cp-typing';
-  el.className = 'cp-msg cp-msg--agent';
-  el.innerHTML = '<div class="cp-msg-bubble cp-typing-bubble"><span></span><span></span><span></span></div>';
-  msgs.appendChild(el);
-  msgs.scrollTo({ top: msgs.scrollHeight, behavior: 'smooth' });
-}
-
-function cpHideTyping() {
-  cpTyping = false;
-  const el = document.getElementById('cp-typing');
-  if (el) el.remove();
+// -- CHIP CLICK ---------------------------------------------------
+function sendChip(btn) {
+  sendMessageText(btn.textContent.trim());
 }
 
 // -- SEND ---------------------------------------------------------
 function sendConcierge() {
-  const input = document.getElementById('cp-input');
+  var input = document.getElementById('cp-input');
   if (!input) return;
-  const text = input.value.trim();
+  var text = input.value.trim();
   if (!text || cpTyping) return;
   input.value = '';
   sendMessageText(text);
 }
 
-function sendChip(btn) {
-  const text = btn.textContent.trim();
-  sendMessageText(text);
-}
-
 function sendMessageText(text) {
   if (cpTyping) return;
-  cpAppendMessage('user', text);
+
+  // Hide chips
+  var chips = document.getElementById('cp-chips');
+  if (chips) chips.style.display = 'none';
+
+  appendMsg('user', text);
   cpHistory.push({ role: 'user', content: text });
-  cpShowTyping();
-  const delay = 900 + Math.random() * 700;
-  setTimeout(() => {
-    cpHideTyping();
-    const reply = getCCResponse(text);
-    cpAppendMessage('assistant', reply);
+  showTyping();
+
+  // Build messages for API
+  var messages = cpHistory.slice(-10);
+
+  fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 1000,
+      system: "You are the concierge for Courtney & Co, a boutique real estate agency specialising exclusively in North West Auckland: Riverhead, Helensville, Kumeu, Dairy Flat, Waimauku and surrounds. You speak in the agency voice: warm, knowledgeable, straight-talking, never pushy. Key facts: Courtney Wood is the lead agent, over $400M settled, licensed since 2008. Office: 1047 Coatesville-Riverhead Hwy, Riverhead. Phone: 027 688 0818. Email: info@courtneyandco.co.nz. Current listing: 8 Tauwaka Crescent, Riverhead - 316sqm architectural home, By Negotiation. Always offer to arrange a free appraisal or connect the person with Courtney directly. Keep responses concise (2-4 sentences max) and conversational.",
+      messages: messages
+    })
+  })
+  .then(function(res) {
+    if (!res.ok) throw new Error('API ' + res.status);
+    return res.json();
+  })
+  .then(function(data) {
+    hideTyping();
+    var reply = data.content && data.content[0] && data.content[0].text
+      ? data.content[0].text
+      : fallbackResponse(text);
+    appendMsg('agent', reply);
     cpHistory.push({ role: 'assistant', content: reply });
-  }, delay);
+  })
+  .catch(function() {
+    hideTyping();
+    var reply = fallbackResponse(text);
+    appendMsg('agent', reply);
+    cpHistory.push({ role: 'assistant', content: reply });
+  });
 }
 
-// -- INIT: set time-of-day greeting -------------------------------
-(function() {
-  const tod = document.getElementById('cp-tod');
-  if (tod) tod.textContent = timeOfDay();
-})();
-
-// -- FORM SUBMIT -------------------------------------------------
-function handleFormSubmit(e) {
-  e.preventDefault();
-  const btn = e.target;
-  btn.textContent = 'Sent Message Sent - We\'ll be in touch!';
-  btn.style.background = 'var(--blue-deep)';
-  btn.disabled = true;
+// -- FALLBACK (used on GitHub Pages where API proxy is unavailable) --
+function fallbackResponse(msg) {
+  var t = msg.toLowerCase();
+  if (t.indexOf('apprais') > -1 || t.indexOf('worth') > -1 || t.indexOf('value') > -1)
+    return "A free appraisal is always our first step - Courtney gives you the straight number, not what you want to hear. Call her directly on 027 688 0818 or drop your address and we will be in touch today.";
+  if (t.indexOf('sell') > -1 || t.indexOf('list') > -1)
+    return "Selling with Courtney & Co means bespoke marketing, world-class photography and honest pricing. Where is your property and what is your timeline? Courtney would love to chat.";
+  if (t.indexOf('buy') > -1 || t.indexOf('looking') > -1)
+    return "North West Auckland is a brilliant market right now. What is your budget and how many bedrooms are you after? We know every pocket of Riverhead, Kumeu, Helensville and Dairy Flat.";
+  if (t.indexOf('riverhead') > -1)
+    return "Riverhead is our heartland - we have 8 Tauwaka Crescent available right now, a stunning 316sqm architectural home. Want to arrange a private viewing with Courtney?";
+  if (t.indexOf('kumeu') > -1)
+    return "Kumeu is one of the strongest performers in NW Auckland. Wine country, great schools, easy highway access. We have active listings there - what are you looking for?";
+  if (t.indexOf('helensville') > -1)
+    return "Helensville is having a real moment - lifestyle properties and genuine community. We have sold extensively here and know which streets are emerging.";
+  if (t.indexOf('phone') > -1 || t.indexOf('contact') > -1 || t.indexOf('call') > -1)
+    return "Call Courtney directly: 027 688 0818. Office: 09 412 9903. Email: info@courtneyandco.co.nz. She picks up.";
+  return "Happy to help - we specialise in North West Auckland real estate. Whether you are buying, selling or want a free appraisal, call Courtney on 027 688 0818 or ask me anything.";
 }
 
-// -- LIGHTBOX -----------------------------------------------------
-const lbImages = [
-  { src: 'images/tauwaka-09.webp', caption: '8 Tauwaka Crescent - Riverhead - Sunset' },
-  { src: 'images/tauwaka-42.webp', caption: 'Open Plan Living & Kitchen' },
-  { src: 'images/tauwaka-34.webp', caption: 'Miele Kitchen - Customtone Cabinetry' },
-  { src: 'images/tauwaka-06.webp', caption: 'Outdoor Entertaining - Limestone Paving' },
-  { src: 'images/tauwaka-14.webp', caption: 'Formal Lounge - Fireplace' },
-  { src: 'images/tauwaka-48.webp', caption: 'Powder Room - Burlington Tiles' },
-  { src: 'images/tauwaka-27.webp', caption: 'Shafer Landscaped Gardens' },
-  { src: 'images/tauwaka-23.webp', caption: 'Exterior - Monier Clay Tile Roof' },
-  { src: 'images/tauwaka-25.webp', caption: 'Autumn - Front Garden' },
-  { src: 'images/tauwaka-24.webp', caption: 'Rear Garden - Outdoor Living' },
-];
-let lbIdx = 0;
-function openLightbox(i) {
-  lbIdx = i;
-  const lb = document.getElementById('lightbox');
-  lb.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-  updateLB();
-}
-function closeLightbox() {
-  document.getElementById('lightbox').style.display = 'none';
-  document.body.style.overflow = '';
-}
-function changeLB(dir) {
-  lbIdx = (lbIdx + dir + lbImages.length) % lbImages.length;
-  updateLB();
-}
-function updateLB() {
-  document.getElementById('lb-img').src = lbImages[lbIdx].src;
-  document.getElementById('lb-caption').textContent = (lbIdx + 1) + ' / ' + lbImages.length + '  ' + lbImages[lbIdx].caption;
-}
-document.addEventListener('keydown', e => {
-  const lb = document.getElementById('lightbox');
-  if (lb.style.display !== 'flex') return;
-  if (e.key === 'Escape') closeLightbox();
-  if (e.key === 'ArrowLeft') changeLB(-1);
-  if (e.key === 'ArrowRight') changeLB(1);
-});
-document.getElementById('lightbox').addEventListener('click', function(e) {
-  if (e.target === this) closeLightbox();
-});
+// -- UI HELPERS ---------------------------------------------------
+function appendMsg(role, text) {
+  var msgs = document.getElementById('cp-messages');
+  if (!msgs) return;
 
-// -- PROPERTY CAROUSEL -------------------------------------------
-let propIdx = 0;
-const props = [
-  { addr: '8 Tauwaka Crescent,
-Riverhead', price: 'By Negotiation' },
-  { addr: 'Oraha Road,
-Kumeu', price: 'Enquire' },
-  { addr: 'Coatesville-Riverhead Hwy', price: 'Sold Above CV' },
-  { addr: 'Dairy Flat Highway', price: 'Sold' },
-];
-function nextProp() {
-  propIdx = (propIdx + 1) % props.length;
-  const el = document.getElementById('prop-addr');
-  if (!el) return;
-  el.style.opacity = '0';
-  setTimeout(() => { el.textContent = props[propIdx].addr; el.style.opacity = '1'; }, 300);
+  var wrapper = document.createElement('div');
+  wrapper.className = role === 'user' ? 'cp-msg cp-msg--user' : 'cp-msg cp-msg--agent';
+
+  var bubble = document.createElement('div');
+  bubble.className = 'cp-msg-bubble';
+  bubble.textContent = text;
+
+  var time = document.createElement('div');
+  time.className = 'cp-msg-time';
+  var now = new Date();
+  var hhmm = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+  time.textContent = role === 'user' ? ('You - ' + hhmm) : ('Courtney & Co - ' + hhmm);
+
+  wrapper.appendChild(bubble);
+  wrapper.appendChild(time);
+  msgs.appendChild(wrapper);
+  msgs.scrollTop = msgs.scrollHeight;
 }
-setInterval(nextProp, 4000);
+
+function showTyping() {
+  cpTyping = true;
+  var msgs = document.getElementById('cp-messages');
+  if (!msgs) return;
+  var el = document.createElement('div');
+  el.id = 'cp-typing';
+  el.className = 'cp-msg cp-msg--agent';
+  el.innerHTML = '<div class="cp-msg-bubble cp-typing-bubble"><span></span><span></span><span></span></div>';
+  msgs.appendChild(el);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function hideTyping() {
+  cpTyping = false;
+  var el = document.getElementById('cp-typing');
+  if (el) el.remove();
+}
+
 
 </script>
 </body>
