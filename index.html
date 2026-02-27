@@ -3337,6 +3337,22 @@ document.getElementById('lightbox').addEventListener('click', function(e) {
 // ── PROPERTY CAROUSEL ───────────────────────────────────────────
 let propIdx = 0;
 const props = [
-  { addr: '8 Tauwaka Crescent,\nRiverhead', price: 'By Negotiation', bg: 'linear-gradient(155deg,#1e3d2a,#0d2035)' },
-  { addr: 'Oraha Road,\nKumeu', price: 'Enquire', bg: 'linear-gradient(155deg,#2a1e3d,#0d2035)' },
-  { addr: 'Coatesville-River
+  { addr: '8 Tauwaka Crescent,
+Riverhead', price: 'By Negotiation' },
+  { addr: 'Oraha Road,
+Kumeu', price: 'Enquire' },
+  { addr: 'Coatesville-Riverhead Hwy', price: 'Sold Above CV' },
+  { addr: 'Dairy Flat Highway', price: 'Sold' },
+];
+function nextProp() {
+  propIdx = (propIdx + 1) % props.length;
+  const el = document.getElementById('prop-addr');
+  if (!el) return;
+  el.style.opacity = '0';
+  setTimeout(() => { el.textContent = props[propIdx].addr; el.style.opacity = '1'; }, 300);
+}
+setInterval(nextProp, 4000);
+
+</script>
+</body>
+</html>
