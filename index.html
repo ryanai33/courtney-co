@@ -451,8 +451,8 @@ nav.scrolled {
 
 .about-badge {
   position: absolute;
-  top: 28px;
-  right: 28px;
+  top: 20px;
+  left: 20px;
   background: linear-gradient(135deg, var(--navy) 0%, var(--pink-deep) 100%);
   color: white;
   padding: 16px 20px;
@@ -1677,6 +1677,60 @@ footer {
   pointer-events: all;
 }
 
+/* Concierge message styles */
+.cp-msg { display: flex; flex-direction: column; margin-bottom: 12px; }
+.cp-msg--agent { align-items: flex-start; }
+.cp-msg--user { align-items: flex-end; }
+.cp-msg-bubble {
+  max-width: 85%;
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.6;
+  font-family: var(--font-body);
+}
+.cp-msg--agent .cp-msg-bubble {
+  background: var(--cream-dark);
+  color: var(--navy);
+  border-bottom-left-radius: 4px;
+  border: 1px solid var(--light-line);
+}
+.cp-msg--user .cp-msg-bubble {
+  background: var(--pink);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+.cp-msg-time {
+  font-size: 11px;
+  color: var(--mid);
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+}
+.cp-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.cp-chip {
+  background: white;
+  border: 1px solid var(--light-line);
+  color: var(--navy);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font-body);
+  letter-spacing: 0.02em;
+}
+.cp-chip:hover { background: var(--navy); color: white; border-color: var(--navy); }
+.cp-typing-bubble { display: flex; align-items: center; gap: 5px; padding: 14px 18px; }
+.cp-typing-bubble span {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--mid); display: inline-block;
+  animation: cpBounce 1.2s ease-in-out infinite;
+}
+.cp-typing-bubble span:nth-child(2) { animation-delay: 0.2s; }
+.cp-typing-bubble span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes cpBounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
+
 .chat-header {
   background: var(--navy);
   padding: 20px 22px;
@@ -2357,9 +2411,6 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
     <div style="height:220px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(6)">
       <img src="images/tauwaka-27.webp" alt="Garden & Grounds" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
     </div>
-    <div style="height:220px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(7)">
-      <img src="images/tauwaka-23.webp" alt="Exterior Detail" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-    </div>
   </div>
 </section>
 
@@ -2463,64 +2514,52 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
   <div class="sold-scroll-wrap">
     <div class="sold-track">
       <div class="sold-card">
-        <div class="sold-img">
-          <img src="images/tauwaka-23.webp" alt="Sold Property" style="width:100%;height:100%;object-fit:cover;">
-          <span class="sold-stamp">Sold</span>
-        </div>
-        <div class="sold-info">
-          <div class="sold-addr">Coatesville-Riverhead Hwy</div>
-          <div class="sold-loc">Riverhead · Above CV</div>
-        </div>
+        <div class="sold-img"><img src="images/tauwaka-23.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-info"><div class="sold-addr">Coatesville-Riverhead Hwy</div><div class="sold-loc">Riverhead · Above CV</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img">
-          <img src="images/tauwaka-27.webp" alt="Sold Property" style="width:100%;height:100%;object-fit:cover;">
-          <span class="sold-stamp">Sold</span>
-        </div>
-        <div class="sold-info">
-          <div class="sold-addr">Oraha Road</div>
-          <div class="sold-loc">Kumeu · Lifestyle Block</div>
-        </div>
+        <div class="sold-img"><img src="images/kumeu.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-info"><div class="sold-addr">Oraha Road</div><div class="sold-loc">Kumeu · Lifestyle Block</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img">
-          <img src="images/tauwaka-14.webp" alt="Sold Property" style="width:100%;height:100%;object-fit:cover;">
-          <span class="sold-stamp">Sold</span>
-        </div>
-        <div class="sold-info">
-          <div class="sold-addr">Factory Road</div>
-          <div class="sold-loc">Waimauku · Premium Price</div>
-        </div>
+        <div class="sold-img"><img src="images/tauwaka-14.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-info"><div class="sold-addr">Factory Road</div><div class="sold-loc">Waimauku · Premium Price</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img">
-          <img src="images/tauwaka-48.webp" alt="Sold Property" style="width:100%;height:100%;object-fit:cover;">
-          <span class="sold-stamp">Sold</span>
-        </div>
-        <div class="sold-info">
-          <div class="sold-addr">Dairy Flat Highway</div>
-          <div class="sold-loc">Dairy Flat · Rural Retreat</div>
-        </div>
+        <div class="sold-img"><img src="images/tauwaka-48.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-info"><div class="sold-addr">Dairy Flat Highway</div><div class="sold-loc">Dairy Flat · Rural Retreat</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img">
-          <img src="images/tauwaka-06.webp" alt="Sold Property" style="width:100%;height:100%;object-fit:cover;">
-          <span class="sold-stamp">Sold</span>
-        </div>
-        <div class="sold-info">
-          <div class="sold-addr">Helensville Village</div>
-          <div class="sold-loc">Helensville · Fast Sale</div>
-        </div>
+        <div class="sold-img"><img src="images/tauwaka-06.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-info"><div class="sold-addr">Helensville Village</div><div class="sold-loc">Helensville · Fast Sale</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img">
-          <img src="images/tauwaka-04.webp" alt="Sold Property" style="width:100%;height:100%;object-fit:cover;">
-          <span class="sold-stamp">Sold</span>
-        </div>
-        <div class="sold-info">
-          <div class="sold-addr">Mangawhai Heads</div>
-          <div class="sold-loc">Mangawhai · Coastal</div>
-        </div>
+        <div class="sold-img"><img src="images/kumeu_2.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-info"><div class="sold-addr">Matua Valley Road</div><div class="sold-loc">Riverhead · Multiple Offers</div></div>
+      </div>
+      <div class="sold-card">
+        <div class="sold-img"><img src="images/tauwaka-25.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-info"><div class="sold-addr">The Concourse</div><div class="sold-loc">Hobsonville · Above RV</div></div>
+      </div>
+      <div class="sold-card">
+        <div class="sold-img"><img src="images/tauwaka-27.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-info"><div class="sold-addr">Coatesville Road</div><div class="sold-loc">Coatesville · Equestrian</div></div>
+      </div>
+      <div class="sold-card">
+        <div class="sold-img"><img src="images/tauwaka-04.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-info"><div class="sold-addr">Mangawhai Heads</div><div class="sold-loc">Mangawhai · Coastal</div></div>
+      </div>
+      <div class="sold-card">
+        <div class="sold-img"><img src="images/tauwaka-34.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-info"><div class="sold-addr">Waimauku Village</div><div class="sold-loc">Waimauku · Record Street Price</div></div>
+      </div>
+      <div class="sold-card">
+        <div class="sold-img"><img src="images/tauwaka-42.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-info"><div class="sold-addr">Henderson Valley Road</div><div class="sold-loc">Henderson · 8 Days on Market</div></div>
+      </div>
+      <div class="sold-card">
+        <div class="sold-img"><img src="images/tauwaka-09.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-info"><div class="sold-addr">8 Tauwaka Crescent</div><div class="sold-loc">Riverhead · Premium Result</div></div>
       </div>
     </div>
   </div>
@@ -2727,15 +2766,6 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
       <div class="team-name">Darren</div>
       <p class="team-bio">Grounded, hardworking, and deeply invested in every client outcome. Darren brings a calm professionalism that buyers and sellers alike trust immediately.</p>
     </div>
-    <div class="team-card rubble">
-      <div class="team-photo-wrap">
-        <img src="images/Rubble.webp" alt="Rubble" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
-        <div class="team-overlay"></div>
-      </div>
-      <div class="team-role">Occupational Wellbeing</div>
-      <div class="team-name">Rubble</div>
-      <p class="team-bio">Dedicated, loyal, and still mastering the bathroom routine. Chief morale officer. Would someone say 'Walkies'?</p>
-    </div>
   </div>
 </section>
 
@@ -2907,6 +2937,18 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
         </div>
       </div>
     </div>
+
+    <!-- Rubble -->
+    <div style="margin-top:32px;display:flex;align-items:center;gap:18px;padding:20px;background:rgba(255,255,255,0.06);border-radius:6px;border:1px solid rgba(255,255,255,0.08);">
+      <div style="width:72px;height:72px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid rgba(255,255,255,0.15);">
+        <img src="images/Rubble.webp" alt="Rubble" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+      <div>
+        <div style="font-family:var(--font-display);font-size:16px;color:white;font-weight:400;">Rubble</div>
+        <div style="font-family:var(--font-mono);font-size:11px;color:var(--blue-lt);letter-spacing:0.15em;text-transform:uppercase;margin-top:2px;">Chief Morale Officer</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-top:6px;line-height:1.5;">Dedicated, loyal, still mastering the bathroom routine. Would someone say 'Walkies'?</div>
+      </div>
+    </div>
   </div>
 
   <div class="contact-form">
@@ -2960,11 +3002,25 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
     <div class="footer-logo-main">Courtney &amp; Co</div>
     <div class="footer-logo-tag">Straight Talking Real Estate · Licensed REA 2008</div>
   </div>
+  <div style="display:flex;gap:14px;margin-bottom:20px;">
+    <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
+    <a href="https://www.facebook.com/courtneyandco" target="_blank" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </a>
+    <a href="https://www.trademe.co.nz/property" target="_blank" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+    </a>
+    <a href="https://www.realestate.co.nz" target="_blank" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    </a>
+  </div>
   <ul class="footer-links">
     <li><a href="https://courtneyandco.co.nz">Properties</a></li>
     <li><a href="https://courtneyandco.co.nz/general-enquires">Contact</a></li>
-    <li><a href="https://www.facebook.com" target="_blank">Facebook</a></li>
-    <li><a href="https://www.instagram.com" target="_blank">Instagram</a></li>
+    <li><a href="https://www.facebook.com/courtneyandco" target="_blank">Facebook</a></li>
+    <li><a href="https://www.instagram.com/courtney_and_co_/" target="_blank">Instagram</a></li>
   </ul>
   <div class="footer-legal">
     © 2026 Courtney &amp; Co Ltd. All rights reserved.<br>
@@ -2980,34 +3036,31 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
 <div class="chat-panel" id="chat-panel">
   <div class="chat-header">
-    <div class="chat-avatar">C</div>
+    <div style="width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid rgba(255,255,255,0.2);">
+      <img src="images/courtneyhead.jpg" style="width:100%;height:100%;object-fit:cover;object-position:top;">
+    </div>
     <div class="chat-agent-info">
       <div class="chat-agent-name">Courtney &amp; Co Concierge</div>
-      <div class="chat-agent-status">
-        <div class="status-dot"></div>
-        Online now
-      </div>
+      <div class="chat-agent-status"><div class="status-dot"></div>NW Auckland Specialist · Online</div>
     </div>
-    <button class="chat-close-btn" id="chat-close-btn" onclick="toggleChat()">✕</button>
+    <button class="chat-close-btn" onclick="toggleChat()">✕</button>
   </div>
 
-  <div class="chat-messages" id="chat-messages">
-    <div class="msg msg-bot">
-      <div class="msg-label">Courtney &amp; Co</div>
-      Kia ora! I'm the Courtney &amp; Co concierge. Whether you're looking to buy, sell, or just want to know what your home is worth — I can help. What brings you here today?
+  <div class="chat-messages" id="cp-messages">
+    <div class="cp-msg cp-msg--agent">
+      <div class="cp-msg-bubble">Good <span id="cp-tod"></span>! I'm the Courtney &amp; Co concierge — your specialist for Riverhead, Helensville, Kumeu, Dairy Flat and surrounds. How can I help you today?</div>
     </div>
-  </div>
-
-  <div class="chat-quick-btns" id="quick-btns">
-    <button class="quick-btn" onclick="quickChat('I want a free property appraisal')">Free Appraisal</button>
-    <button class="quick-btn" onclick="quickChat('I\'m looking to buy in the area')">Buying</button>
-    <button class="quick-btn" onclick="quickChat('I\'d like to sell my home')">Selling</button>
-    <button class="quick-btn" onclick="quickChat('Tell me about Riverhead properties')">Riverhead</button>
+    <div class="cp-chips" id="cp-chips">
+      <button class="cp-chip" onclick="sendChip(this)">Free Appraisal</button>
+      <button class="cp-chip" onclick="sendChip(this)">I want to sell</button>
+      <button class="cp-chip" onclick="sendChip(this)">Buying in the area</button>
+      <button class="cp-chip" onclick="sendChip(this)">Market update</button>
+    </div>
   </div>
 
   <div class="chat-input-area">
-    <input class="chat-input" id="chat-input" type="text" placeholder="Ask anything about the area..." onkeydown="handleChatKey(event)">
-    <button class="chat-send" onclick="sendChat()">
+    <input class="chat-input" id="cp-input" type="text" placeholder="Ask anything about NW Auckland property…" onkeydown="if(event.key==='Enter'){sendConcierge()}">
+    <button class="chat-send" onclick="sendConcierge()">
       <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
     </button>
   </div>
@@ -3044,121 +3097,189 @@ try {
 // Hard failsafe — everything visible within 400ms no matter what
 setTimeout(revealAll, 400);
 
-// ── CHAT TOGGLE ─────────────────────────────────────────────────
-let chatOpen = false;
+// ── COURTNEY & CO — PREMIUM AI CONCIERGE ────────────────────────
+// Adapted from concierge-ai.js pattern (client-side, no backend required)
 
+// ── SESSION ──────────────────────────────────────────────────────
+function getConciergeSession() {
+  let sid = sessionStorage.getItem('cc_sid');
+  if (!sid) { sid = 's_' + Math.random().toString(36).slice(2) + Date.now(); sessionStorage.setItem('cc_sid', sid); }
+  return sid;
+}
+
+// ── STATE ────────────────────────────────────────────────────────
+let chatOpen = false;
+let cpTyping = false;
+let cpHistory = [];
+
+// ── TIME OF DAY ──────────────────────────────────────────────────
+function timeOfDay() {
+  const h = new Date().getHours();
+  return h < 12 ? 'morning' : h < 17 ? 'afternoon' : 'evening';
+}
+
+// ── TOGGLE ───────────────────────────────────────────────────────
 function toggleChat() {
   chatOpen = !chatOpen;
   const panel = document.getElementById('chat-panel');
+  panel.classList.toggle('open', chatOpen);
   if (chatOpen) {
-    panel.classList.add('open');
-    panel.style.display = 'flex';
-  } else {
-    panel.classList.remove('open');
+    setTimeout(() => { const input = document.getElementById('cp-input'); if (input) input.focus(); }, 300);
   }
 }
 
-// ── CONCIERGE RESPONSES ─────────────────────────────────────────
-const responses = {
+// ── KNOWLEDGE BASE (rich C&Co specific) ─────────────────────────
+const ccKnowledge = {
   appraisal: [
-    "Great — I'd love to arrange a free, no-obligation appraisal for you. Can you share the property address and your contact details? Courtney will call you personally within one business day.",
-    "Perfect timing! The North West market has been moving well. To book your appraisal, I just need your name, address, and best contact number. Shall we start there?"
-  ],
-  buy: [
-    "Brilliant! North West Auckland has some genuinely special pockets right now — Riverhead, Kumeu, Dairy Flat are all seeing strong activity. What's your rough budget, and how many bedrooms are you after?",
-    "Exciting time to be looking out west! Are you after a lifestyle property, or more of a village home? And have you been pre-approved yet? That'll help me point you in the right direction."
+    "Absolutely — a free, no-obligation appraisal is always our first step. Courtney will give you the straight number, not the one designed to win your listing. Can I take your property address and a good contact number so she can call you personally within one business day?",
+    "Great timing — the North West market is moving well right now and accurate pricing is everything. I'll need your address and best contact number. Courtney does every appraisal herself, no juniors. Shall we start there?"
   ],
   sell: [
-    "Wonderful — let's get you on the right track. The first step is an honest appraisal, no obligation. Can I grab your address and a good number for Courtney to call you back?",
-    "Timing is everything in this market, and right now things are moving well in NW Auckland. Where is your property located, and are you thinking of selling in the next three months or further out?"
+    "Selling with Courtney & Co starts with honesty — you'll get a realistic price, not flattery. The second step is our bespoke marketing: world-class photography, in-house design, and multi-platform reach. Where is your property located, and what's your rough timeline?",
+    "Let's get you moving. Courtney has settled over $400M in North West Auckland — she knows exactly how to position your home to attract the right buyers at the right price. What's the address, and are you thinking of listing in the next month or further out?"
   ],
-  general: [
-    "Happy to help! I know this corner of Auckland pretty well — Riverhead, Helensville, Kumeu, Waimauku, Dairy Flat and beyond. What would you like to know?",
-    "Of course — what would you like to know about our listings, the team, or the North West Auckland market?"
+  buy: [
+    "North West Auckland is genuinely one of the most exciting markets in the country right now — Riverhead, Kumeu, Dairy Flat, Helensville all offer that rare combination of space, community and proximity to the city. What's your budget range and how many bedrooms are you after?",
+    "Smart move looking out west — buyers who act now are ahead of the curve. Are you after a lifestyle block, a village home, or something in between? And have you got pre-approval sorted? That'll help me point you to exactly the right listings."
   ],
   riverhead: [
-    "Riverhead is one of our favourites — it's got that village feel with easy motorway access. Currently we have a stunning property on Tauwaka Crescent. Want me to tell you more about it, or arrange a viewing?",
-    "Great choice — Riverhead has really come into its own. Proximity to Auckland, rural character, strong community. We have active listings there now. Are you buying or selling in Riverhead?"
+    "Riverhead is our heartland — village atmosphere, motorway access within minutes, and some of the most architecturally considered homes in NW Auckland. We currently have 8 Tauwaka Crescent available, a stunning 316m² home By Negotiation. Want me to arrange a private viewing with Courtney?",
+    "Riverhead has come into its own in the last few years. Strong school zones, beautiful reserves, and a tight-knit community. We know every street here. Are you looking to buy or sell in Riverhead — or both?"
+  ],
+  helensville: [
+    "Helensville is having a real moment — lifestyle properties, affordable entry points, and a genuine sense of community. We've sold extensively here and know which streets are emerging. Are you looking at lifestyle blocks or residential in Helensville?",
+    "Great choice — Helensville offers some of the best value in the region right now, and the lifestyle is second to none. We have local knowledge that's hard to find elsewhere. What's your situation — buying, selling, or exploring?"
+  ],
+  kumeu: [
+    "Kumeu is wine country meets suburban convenience — we love it. Strong school zoning, café culture, and excellent highway access. We've got current listings there. Are you looking for a lifestyle block, or more of a family home in the village itself?",
+    "Kumeu has been one of the strongest performers in NW Auckland over the past few years. Low supply, strong demand. We know the area inside out. What kind of property are you looking for?"
+  ],
+  dairyflat: [
+    "Dairy Flat is pure lifestyle — you get serious land, peace and quiet, and you're still 30 minutes from the CBD. It attracts discerning buyers who want space without compromising on quality of life. Are you looking at rural residential or bare land?"
+  ],
+  price: [
+    "Pricing in North West Auckland is highly street and property-specific right now — we don't do ballpark figures. What Courtney will give you is a precise, data-backed number with a clear strategy to achieve it. What's the property address?",
+    "Market conditions shift suburb by suburb. The only honest answer is a proper comparative market analysis — which is exactly what our free appraisal gives you. No obligation, just straight talk. Want to book one?"
+  ],
+  team: [
+    "Courtney leads the team personally — every appraisal, every negotiation. Supporting her is Amy (branch manager), Rebecca (staging & interiors), Chris (photography), Amy Creative (design & marketing), Lisa (legal eagle) and Jenny (operations). It's a full-service team under one roof — no outsourcing.",
+    "We're not a franchise, so you deal with the actual people who know your home. Courtney handles every negotiation herself. Our full in-house team covers photography, staging, legal admin and marketing design. Want to know more about any of them?"
+  ],
+  contact: [
+    "You can reach Courtney directly on 027 688 0818, or the office on 09 412 9903. Email: info@courtneyandco.co.nz. Main office at 1047 Coatesville-Riverhead Hwy, Riverhead — or our satellite office at 9 Factory Road, Shop 15C, Waimauku.",
+    "Best way is to call Courtney directly: 027 688 0818. She picks up. Or email info@courtneyandco.co.nz and we'll get back to you same day."
+  ],
+  general: [
+    "Happy to help — Courtney & Co specialises exclusively in North West Auckland: Riverhead, Helensville, Kumeu, Dairy Flat, Waimauku and surrounds. Straight talking, local knowledge, bespoke marketing. What would you like to know?",
+    "Of course — what can I help with? Whether it's a property appraisal, market advice, or information about our current listings, I'm here for it.",
+    "Great question — let me point you in the right direction. We're boutique, local, and genuinely invested in every outcome. What's on your mind?"
   ]
 };
 
-function getResponse(msg) {
-  const lower = msg.toLowerCase();
-  if (lower.includes('appraisal') || lower.includes('worth') || lower.includes('value')) {
-    return responses.appraisal[Math.floor(Math.random() * responses.appraisal.length)];
-  }
-  if (lower.includes('buy') || lower.includes('looking') || lower.includes('find')) {
-    return responses.buy[Math.floor(Math.random() * responses.buy.length)];
-  }
-  if (lower.includes('sell') || lower.includes('selling') || lower.includes('list')) {
-    return responses.sell[Math.floor(Math.random() * responses.sell.length)];
-  }
-  if (lower.includes('riverhead') || lower.includes('tauwaka')) {
-    return responses.riverhead[Math.floor(Math.random() * responses.riverhead.length)];
-  }
-  return responses.general[Math.floor(Math.random() * responses.general.length)];
+function getCCResponse(msg) {
+  const t = msg.toLowerCase();
+  if (t.includes('apprais') || t.includes('worth') || t.includes('value') || t.includes('how much'))
+    return pick(ccKnowledge.appraisal);
+  if (t.includes('sell') || t.includes('list') || t.includes('selling') || t.includes('vendor'))
+    return pick(ccKnowledge.sell);
+  if (t.includes('buy') || t.includes('purchase') || t.includes('looking') || t.includes('find'))
+    return pick(ccKnowledge.buy);
+  if (t.includes('riverhead') || t.includes('tauwaka'))
+    return pick(ccKnowledge.riverhead);
+  if (t.includes('helensville') || t.includes('helens'))
+    return pick(ccKnowledge.helensville);
+  if (t.includes('kumeu') || t.includes('huapai'))
+    return pick(ccKnowledge.kumeu);
+  if (t.includes('dairy flat') || t.includes('dairy') || t.includes('rural'))
+    return pick(ccKnowledge.dairyflat);
+  if (t.includes('price') || t.includes('cost') || t.includes('market') || t.includes('median'))
+    return pick(ccKnowledge.price);
+  if (t.includes('team') || t.includes('courtney') || t.includes('staff') || t.includes('agent'))
+    return pick(ccKnowledge.team);
+  if (t.includes('contact') || t.includes('phone') || t.includes('call') || t.includes('email') || t.includes('office'))
+    return pick(ccKnowledge.contact);
+  return pick(ccKnowledge.general);
 }
 
-function addMessage(text, isUser = false) {
-  const msgs = document.getElementById('chat-messages');
-  const msg = document.createElement('div');
-  msg.className = `msg ${isUser ? 'msg-user' : 'msg-bot'}`;
-  if (!isUser) {
-    const label = document.createElement('div');
-    label.className = 'msg-label';
-    label.textContent = 'Courtney & Co';
-    msg.appendChild(label);
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+// ── MESSAGE RENDERING (matches concierge-ai.js pattern) ─────────
+function cpAppendMessage(role, text) {
+  const msgs = document.getElementById('cp-messages');
+  if (!msgs) return;
+  // Remove chips on first user message
+  if (role === 'user') {
+    const chips = document.getElementById('cp-chips');
+    if (chips) chips.style.display = 'none';
   }
-  const content = document.createElement('span');
-  content.textContent = text;
-  msg.appendChild(content);
-  msgs.appendChild(msg);
-  msgs.scrollTop = msgs.scrollHeight;
+  const wrapper = document.createElement('div');
+  wrapper.className = role === 'user' ? 'cp-msg cp-msg--user' : 'cp-msg cp-msg--agent';
+  const bubble = document.createElement('div');
+  bubble.className = 'cp-msg-bubble';
+  bubble.textContent = text;
+  const time = document.createElement('div');
+  time.className = 'cp-msg-time';
+  const now = new Date();
+  const hhmm = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+  time.textContent = role === 'user' ? ('You · ' + hhmm) : ('Courtney & Co Concierge · ' + hhmm);
+  wrapper.appendChild(bubble);
+  wrapper.appendChild(time);
+  msgs.appendChild(wrapper);
+  msgs.scrollTo({ top: msgs.scrollHeight, behavior: 'smooth' });
 }
 
-function showTyping() {
-  const msgs = document.getElementById('chat-messages');
-  const typing = document.createElement('div');
-  typing.className = 'msg msg-bot';
-  typing.id = 'typing-indicator';
-  typing.innerHTML = '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
-  msgs.appendChild(typing);
-  msgs.scrollTop = msgs.scrollHeight;
+function cpShowTyping() {
+  cpTyping = true;
+  const msgs = document.getElementById('cp-messages');
+  if (!msgs) return;
+  const el = document.createElement('div');
+  el.id = 'cp-typing';
+  el.className = 'cp-msg cp-msg--agent';
+  el.innerHTML = '<div class="cp-msg-bubble cp-typing-bubble"><span></span><span></span><span></span></div>';
+  msgs.appendChild(el);
+  msgs.scrollTo({ top: msgs.scrollHeight, behavior: 'smooth' });
 }
 
-function removeTyping() {
-  const el = document.getElementById('typing-indicator');
+function cpHideTyping() {
+  cpTyping = false;
+  const el = document.getElementById('cp-typing');
   if (el) el.remove();
 }
 
-function sendChat() {
-  const input = document.getElementById('chat-input');
-  const msg = input.value.trim();
-  if (!msg) return;
+// ── SEND ─────────────────────────────────────────────────────────
+function sendConcierge() {
+  const input = document.getElementById('cp-input');
+  if (!input) return;
+  const text = input.value.trim();
+  if (!text || cpTyping) return;
   input.value = '';
-  addMessage(msg, true);
-  document.getElementById('quick-btns').style.display = 'none';
-  showTyping();
-  setTimeout(() => {
-    removeTyping();
-    addMessage(getResponse(msg));
-  }, 1200 + Math.random() * 600);
+  sendMessageText(text);
 }
 
-function quickChat(msg) {
-  if (!chatOpen) toggleChat();
-  addMessage(msg, true);
-  document.getElementById('quick-btns').style.display = 'none';
-  showTyping();
-  setTimeout(() => {
-    removeTyping();
-    addMessage(getResponse(msg));
-  }, 1000 + Math.random() * 500);
+function sendChip(btn) {
+  const text = btn.textContent.trim();
+  sendMessageText(text);
 }
 
-function handleChatKey(e) {
-  if (e.key === 'Enter') sendChat();
+function sendMessageText(text) {
+  if (cpTyping) return;
+  cpAppendMessage('user', text);
+  cpHistory.push({ role: 'user', content: text });
+  cpShowTyping();
+  const delay = 900 + Math.random() * 700;
+  setTimeout(() => {
+    cpHideTyping();
+    const reply = getCCResponse(text);
+    cpAppendMessage('assistant', reply);
+    cpHistory.push({ role: 'assistant', content: reply });
+  }, delay);
 }
+
+// ── INIT: set time-of-day greeting ───────────────────────────────
+(function() {
+  const tod = document.getElementById('cp-tod');
+  if (tod) tod.textContent = timeOfDay();
+})();
 
 // ── FORM SUBMIT ─────────────────────────────────────────────────
 function handleFormSubmit(e) {
