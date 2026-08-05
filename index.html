@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Courtney & Co - Straight Talking Real Estate</title>
 <meta name="description" content="Boutique real estate across Riverhead, Kumeu, Waimauku, Helensville and North West Auckland. 15+ years, 366 homes sold, straight answers.">
-<link rel="canonical" href="https://courtneyandco.co.nz/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -68,6 +67,16 @@ html {
   --font-display: 'Cormorant Garamond', serif;
   --font-body:    'DM Sans', sans-serif;
   --font-mono:    'DM Mono', monospace;
+  /* ── A1: TEXT COLOUR TOKENS ──────────────────────────────────────
+     One system, no ad hoc rgba text colours, no opacity on text.
+     Nothing sits below --ink-3 on light or --paper-3 on navy. */
+  --ink:     #0c1628;              /* body on light */
+  --ink-2:   #3d4757;              /* secondary on light, AA at 14px+ */
+  --ink-3:   #5b6472;              /* meta and eyebrows, minimum allowed */
+  --paper:   #ffffff;
+  --paper-2: rgba(255,255,255,0.92); /* body on navy */
+  --paper-3: rgba(255,255,255,0.78); /* secondary on navy */
+  --accent:  #a85f7e;
 }
 
 /* C3: wide-gamut branch. The mauve and navy render at full saturation on
@@ -154,7 +163,7 @@ nav.scrolled {
 
 .logo-sub {
   font-family: var(--font-mono);
-  font-size: 9.6px;
+  font-size: 12px;
   letter-spacing: 0.35em;
   text-transform: uppercase;
   color: var(--copper-lt);
@@ -172,7 +181,7 @@ nav.scrolled {
   font-size: 13.2px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.75);
+  color: var(--paper-3);
   text-decoration: none;
   transition: color 0.2s;
 }
@@ -307,7 +316,7 @@ nav.scrolled {
 .hero-tagline {
   font-size: 17px;
   line-height: 1.75;
-  color: rgba(255,255,255,0.78);
+  color: var(--paper-3);
   max-width: 520px;
   margin-bottom: 48px;
   font-weight: 300;
@@ -339,7 +348,7 @@ nav.scrolled {
 
 .btn-ghost {
   background: transparent;
-  color: rgba(255,255,255,0.85);
+  color: var(--paper-2);
   padding: 14px 32px;
   font-size: 13.2px;
   letter-spacing: 0.2em;
@@ -363,8 +372,8 @@ nav.scrolled {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: rgba(255,255,255,0.4);
-  font-size: 10.8px;
+  color: var(--paper-3);
+  font-size: 12px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
   font-family: var(--font-mono);
@@ -445,22 +454,22 @@ nav.scrolled {
 }
 
 .stat-lbl {
-  font-size: 12.0px;
+  font-size: 12px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.5);
+  color: var(--paper-3);
   margin-top: 6px;
   font-family: var(--font-mono);
 }
 
 /* ── SECTION SHARED ────────────────────────────────────────────── */
 .section {
-  padding: 100px 60px;
+  padding: clamp(80px, 9vw, 140px) 0;
 }
 
 .section-label {
   font-family: var(--font-mono);
-  font-size: 12.0px;
+  font-size: 12px;
   letter-spacing: 0.4em;
   text-transform: uppercase;
   color: var(--blue-deep);
@@ -493,7 +502,7 @@ nav.scrolled {
 /* ── ABOUT ─────────────────────────────────────────────────────── */
 .about-section {
   background: var(--warm-white);
-  padding: 100px 60px;
+  padding: clamp(80px, 9vw, 140px) 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 80px;
@@ -572,7 +581,7 @@ nav.scrolled {
 }
 
 .about-badge-text {
-  font-size: 10.8px;
+  font-size: 12px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   margin-top: 4px;
@@ -594,7 +603,7 @@ nav.scrolled {
   font-weight: 300;
   font-style: italic;
   line-height: 1.55;
-  color: var(--navy-mid);
+  color: var(--ink);
   margin: 20px 0 30px;
   padding-left: 22px;
   border-left: 3px solid var(--pink);
@@ -603,7 +612,7 @@ nav.scrolled {
 .about-body {
   font-size: 16px;
   line-height: 1.82;
-  color: var(--mid);
+  color: var(--ink-2);
   margin-bottom: 20px;
   font-weight: 300;
 }
@@ -640,7 +649,7 @@ nav.scrolled {
 /* ── FEATURED PROPERTY ─────────────────────────────────────────── */
 .featured-section {
   background: var(--navy);
-  padding: 100px 60px;
+  padding: clamp(80px, 9vw, 140px) 0;
 }
 
 .featured-section .section-title { color: white; }
@@ -716,7 +725,7 @@ nav.scrolled {
   z-index: 2;
   background: var(--pink);
   color: white;
-  font-size: 10.8px;
+  font-size: 12px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   padding: 6px 14px;
@@ -756,7 +765,7 @@ nav.scrolled {
 
 .prop-feat {
   font-size: 13.2px;
-  color: rgba(255,255,255,0.6);
+  color: var(--paper-3);
   display: flex;
   align-items: center;
   gap: 5px;
@@ -830,10 +839,10 @@ nav.scrolled {
 .prop-detail-item { color: white; }
 
 .prop-detail-label {
-  font-size: 10.8px;
+  font-size: 12px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.35);
+  color: var(--paper-3);
   font-family: var(--font-mono);
   margin-bottom: 6px;
 }
@@ -847,70 +856,93 @@ nav.scrolled {
 
 .prop-detail-val small {
   font-size: 14.4px;
-  color: rgba(255,255,255,0.5);
+  color: var(--paper-3);
 }
 
-/* ── LISTED AND FEATURED ON ────────────────────────────────────── */
-/* One typeface, one colour, evenly spaced. No third-party marks are
-   drawn or imitated anywhere on this page. */
+/* ── LISTED AND FEATURED ON: MARQUEE ───────────────────────────── */
 .press-section {
-  background: white;
-  padding: 44px 60px 48px;
-  border-top: 1px solid var(--light-line);
-  border-bottom: 1px solid var(--light-line);
+  background: #f4f2f4;               /* warm light grey, not pure white */
+  padding: 40px 0 44px;
+  border-top: 1px solid #e4e0e4;
+  border-bottom: 1px solid #e4e0e4;
   text-align: center;
+  overflow: hidden;
 }
 
 .press-eyebrow {
   font-family: var(--font-mono);
-  font-size: 10.8px;
-  letter-spacing: 0.3em;
+  font-size: 12px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--pink);
-  margin-bottom: 22px;
+  color: var(--ink-3);
+  margin-bottom: 26px;
 }
 
-.press-row {
+.marquee {
+  position: relative;
+  overflow: hidden;
+  /* fade the band edges so logos enter and leave rather than clipping */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+          mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.mq-track {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
+  width: max-content;
+  animation: mq 40s linear infinite;
+}
+.marquee:hover .mq-track,
+.marquee:focus-within .mq-track { animation-play-state: paused; }
+
+@keyframes mq {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.mq-item {
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0;
-  margin: 0 auto;
-  max-width: 1100px;
+  padding: 0 46px;
+  flex: 0 0 auto;
 }
 
-.press-name {
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--navy);
-  opacity: 0.55;
-  white-space: nowrap;
-  padding: 6px 0;
+.mq-logo {
+  display: block;
+  width: auto;
+  filter: grayscale(1);
+  opacity: 0.72;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+}
+.mq-item:hover .mq-logo,
+.mq-item:focus-visible .mq-logo { filter: grayscale(0); opacity: 1; }
+
+/* Matched optical cap height, tuned per lockup. */
+.mq-trademe    { height: 41px; }
+.mq-realestate { height: 32px; }
+.mq-oneroof    { height: 42px; }
+.mq-homes      { height: 31px; }
+.mq-hougarden  { height: 50px; }
+
+@media (max-width: 640px) {
+  .mq-item { padding: 0 26px; }
+  .mq-trademe { height: 32px; } .mq-realestate { height: 25px; }
+  .mq-oneroof { height: 33px; } .mq-homes { height: 24px; }
+  .mq-hougarden { height: 39px; }
 }
 
-/* Interpunct trails each name except the last. Using ::after rather than
-   ::before means a wrapped line starts with a name, not an orphaned dot. */
-.press-name:not(:last-child)::after {
-  content: "·";
-  opacity: 0.5;
-  margin: 0 18px;
-  letter-spacing: 0;
-}
-
-@media (max-width: 900px) {
-  .press-section { padding: 36px 24px 40px; }
-  .press-name { font-size: 11.5px; letter-spacing: 0.16em; }
-  .press-name:not(:last-child)::after { margin: 0 11px; }
+/* Reduced motion: static centred row, no loop. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee { -webkit-mask-image: none; mask-image: none; }
+  .mq-track { animation: none; width: 100%; justify-content: center; flex-wrap: wrap; gap: 12px 0; }
+  .mq-item[aria-hidden="true"] { display: none; }
 }
 
 /* ── LISTINGS GRID ─────────────────────────────────────────────── */
 .listings-section {
   background: var(--cream);
-  padding: 100px 60px;
+  padding: clamp(80px, 9vw, 140px) 0;
 }
 
 .listings-header {
@@ -968,7 +1000,7 @@ nav.scrolled {
   left: 16px;
   background: var(--pink);
   color: white;
-  font-size: 10.8px;
+  font-size: 12px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   padding: 5px 12px;
@@ -1014,7 +1046,7 @@ nav.scrolled {
 
 .spec {
   font-size: 13.2px;
-  color: var(--mid);
+  color: var(--ink-2);
   display: flex;
   align-items: baseline;
   gap: 4px;
@@ -1133,7 +1165,7 @@ nav.scrolled {
   right: 12px;
   background: var(--blue-deep);
   color: white;
-  font-size: 9.6px;
+  font-size: 12px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   padding: 4px 10px;
@@ -1157,8 +1189,8 @@ nav.scrolled {
 }
 
 .sold-loc {
-  font-size: 12.0px;
-  color: rgba(255,255,255,0.4);
+  font-size: 13px;
+  color: var(--paper-3);
   letter-spacing: 0.12em;
   font-family: var(--font-mono);
 }
@@ -1166,7 +1198,7 @@ nav.scrolled {
 /* ── TEAM ──────────────────────────────────────────────────────── */
 .team-section {
   background: var(--warm-white);
-  padding: 100px 60px;
+  padding: clamp(80px, 9vw, 140px) 0;
 }
 
 .team-intro {
@@ -1183,13 +1215,13 @@ nav.scrolled {
   font-weight: 300;
   font-style: italic;
   line-height: 1.5;
-  color: var(--navy-mid);
+  color: var(--ink);
 }
 
 .team-body {
   font-size: 16px;
   line-height: 1.8;
-  color: var(--mid);
+  color: var(--ink-2);
   font-weight: 300;
 }
 
@@ -1300,7 +1332,7 @@ nav.scrolled {
 }
 
 .team-role {
-  font-size: 12.0px;
+  font-size: 12px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--blue-deep);
@@ -1311,7 +1343,7 @@ nav.scrolled {
 .team-bio {
   font-size: 14px;
   line-height: 1.7;
-  color: var(--mid);
+  color: var(--ink-2);
   font-weight: 300;
 }
 
@@ -1321,7 +1353,7 @@ nav.scrolled {
 /* ── PROCESS / VALUES ──────────────────────────────────────────── */
 .process-section {
   background: var(--cream);
-  padding: 100px 60px;
+  padding: clamp(80px, 9vw, 140px) 0;
 }
 
 .process-grid {
@@ -1339,16 +1371,18 @@ nav.scrolled {
 }
 
 .process-item:hover { background: var(--blue-deep); }
-.process-item:hover .process-num { color: rgba(208,154,184,0.5); }
+.process-item:hover .process-num { color: var(--navy); }
 .process-item:hover .process-title { color: white; }
-.process-item:hover .process-desc { color: rgba(255,255,255,0.55); }
+.process-item:hover .process-desc { color: var(--paper-3); }
 .process-item:hover .process-icon { color: var(--copper-lt); border-color: var(--copper-lt); }
 
+/* A3: the step numerals were pale enough to read as decoration. Full-strength
+   accent, 400 weight, larger, so each one anchors its card. */
 .process-num {
   font-family: var(--font-display);
-  font-size: 72px;
-  font-weight: 300;
-  color: rgba(208,154,184,0.75);
+  font-size: 84px;
+  font-weight: 400;
+  color: var(--accent);
   line-height: 1;
   margin-bottom: 20px;
   transition: color 0.3s;
@@ -1371,8 +1405,8 @@ nav.scrolled {
 .process-title {
   font-family: var(--font-display);
   font-size: 22px;
-  font-weight: 400;
-  color: var(--navy);
+  font-weight: 500;
+  color: var(--ink);
   margin-bottom: 14px;
   transition: color 0.3s;
 }
@@ -1380,7 +1414,7 @@ nav.scrolled {
 .process-desc {
   font-size: 15px;
   line-height: 1.75;
-  color: var(--mid);
+  color: var(--ink-2);
   font-weight: 300;
   transition: color 0.3s;
 }
@@ -1390,7 +1424,7 @@ nav.scrolled {
 /* ── TESTIMONIALS ──────────────────────────────────────────────── */
 .testimonials-section {
   background: var(--warm-white);
-  padding: 100px 60px;
+  padding: clamp(80px, 9vw, 140px) 0;
 }
 
 .testi-grid {
@@ -1400,14 +1434,16 @@ nav.scrolled {
   margin-top: 0;
 }
 
+/* A4: warmer off-white so the cards separate from the section behind them. */
 .testi-card {
-  background: var(--cream);
+  background: #faf7f5;
   padding: 40px 36px;
   border-radius: 3px;
   position: relative;
-  border: 1px solid transparent;
-  transition: border-color 0.3s, transform 0.3s;
+  border: 1px solid #ece5e6;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
 }
+.testi-card:hover { box-shadow: 0 10px 30px rgba(12,22,40,0.07); }
 
 .testi-card:hover {
   border-color: var(--pink);
@@ -1417,8 +1453,7 @@ nav.scrolled {
 .testi-quote {
   font-family: var(--font-display);
   font-size: 72px;
-  color: var(--pink);
-  opacity: 0.25;
+  color: #e7cfdd;
   line-height: 0.5;
   margin-bottom: 28px;
   font-style: italic;
@@ -1430,7 +1465,7 @@ nav.scrolled {
   font-weight: 300;
   font-style: italic;
   line-height: 1.65;
-  color: var(--navy-mid);
+  color: var(--ink);
   margin-bottom: 28px;
 }
 
@@ -1456,11 +1491,11 @@ nav.scrolled {
 
 .testi-name {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--navy);
+  color: var(--ink-2);
 }
 
 /* Video testimonial facades */
@@ -1477,7 +1512,7 @@ nav.scrolled {
 
 .testi-loc {
   font-size: 13.2px;
-  color: var(--mid);
+  color: var(--ink-2);
   font-family: var(--font-mono);
   letter-spacing: 0.08em;
 }
@@ -1492,7 +1527,7 @@ nav.scrolled {
 /* ── CONTACT ───────────────────────────────────────────────────── */
 .contact-section {
   background: linear-gradient(135deg, #0e1e38 0%, #0c2240 100%);
-  padding: 100px 60px;
+  padding: clamp(80px, 9vw, 140px) 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 80px;
@@ -1507,7 +1542,7 @@ nav.scrolled {
 .contact-intro {
   font-size: 17px;
   line-height: 1.82;
-  color: rgba(255,255,255,0.65);
+  color: var(--paper-3);
   font-weight: 300;
   margin-bottom: 44px;
 }
@@ -1538,10 +1573,10 @@ nav.scrolled {
 }
 
 .c-info-label {
-  font-size: 10.8px;
+  font-size: 12px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.35);
+  color: var(--paper-3);
   font-family: var(--font-mono);
   margin-bottom: 5px;
 }
@@ -1583,10 +1618,10 @@ nav.scrolled {
 
 .form-label {
   display: block;
-  font-size: 10.8px;
+  font-size: 12px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.45);
+  color: var(--paper-3);
   font-family: var(--font-mono);
   margin-bottom: 8px;
 }
@@ -1620,7 +1655,7 @@ nav.scrolled {
   box-shadow: 0 0 0 3px rgba(208,154,184,0.22);
 }
 
-.form-input::placeholder, .form-textarea::placeholder { color: rgba(255,255,255,0.55); }
+.form-input::placeholder, .form-textarea::placeholder { color: var(--paper-3); }
 
 .form-select option { background: #0e2040; }
 
@@ -1671,7 +1706,7 @@ footer {
 
 .footer-logo-tag {
   font-family: var(--font-mono);
-  font-size: 10.8px;
+  font-size: 12px;
   letter-spacing: 0.35em;
   text-transform: uppercase;
   color: var(--blue-lt);
@@ -1687,7 +1722,7 @@ footer {
   font-size: 13.2px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.35);
+  color: var(--paper-3);
   text-decoration: none;
   transition: color 0.2s;
 }
@@ -1722,7 +1757,7 @@ footer {
     max-width: 100%;
     padding-left: 20px;
     padding-right: 20px;
-    font-size: 11px;
+    font-size: 13px;
     white-space: nowrap;
   }
 
@@ -1824,7 +1859,7 @@ footer {
     padding: 13px 10px;
     border-radius: 2px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     text-decoration: none;
@@ -1843,6 +1878,336 @@ body.js-loaded .hero-tagline { animation: heroRise 0.7s cubic-bezier(.16,1,.3,1)
 body.js-loaded .hero-actions { animation: heroRise 0.7s cubic-bezier(.16,1,.3,1) 0.16s both; }
 body.js-loaded .hero-photo { animation: heroDrift 12s cubic-bezier(.16,1,.3,1) both; }
 
+
+/* ── C2: the feature hero ran nearly edge to edge and read stretched.
+   Capped and centred, 16/10 so it is not a letterbox. The margin is the point. */
+.feature-hero {
+  max-width: 1200px;
+  margin: 0 auto 3px;
+  aspect-ratio: 16 / 10;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.feature-thumbs { max-width: 1200px; margin: 0 auto; }
+
+/* ── C3: the video row was stretching a small poster across ~1900px,
+   which read as low resolution. Capped, centred, 16/9. */
+.vt-grid {
+  max-width: 1100px;
+  margin-inline: auto;
+  gap: 32px;
+}
+.vt-card { aspect-ratio: 16 / 9; }
+
+/* ── D: property description, 7/5 split, columns ending together. */
+.pd-grid {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: 64px;
+  align-items: stretch;
+}
+.pd-highlights {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 24px;
+  margin-bottom: 36px;
+}
+.pd-highlight {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--paper-2);
+}
+.pd-highlight::before {
+  content: '';
+  width: 5px; height: 5px;
+  background: var(--blue-lt);
+  border-radius: 50%;
+  flex-shrink: 0;
+  transform: translateY(-3px);
+}
+.pd-media {
+  display: flex; flex-direction: column; gap: 16px;
+  max-width: 620px;
+  /* fill the column so the two columns finish together instead of leaving
+     a tall void on the right. The pair keeps its landscape-over-detail
+     proportion; object-fit:cover absorbs the extra height. */
+  height: 100%;
+}
+.pd-media figure { margin: 0; overflow: hidden; border-radius: 3px; min-height: 0; }
+.pd-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pd-media .pd-a { flex: 1.22 1 0; aspect-ratio: 4 / 3; }
+.pd-media .pd-b { flex: 1 1 0;    aspect-ratio: 3 / 2; }
+@media (max-width: 900px) {
+  .pd-grid { grid-template-columns: 1fr; gap: 40px; }
+  .pd-media { height: auto; }
+  .pd-media .pd-a, .pd-media .pd-b { flex: 0 0 auto; }
+  .pd-highlights { grid-template-columns: 1fr; }
+}
+
+/* ── E: FOOTER ───────────────────────────────────────────────────── */
+.footer-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 32px;
+  width: min(1440px, 100% - 9rem);
+  margin-inline: auto;
+}
+.footer-social { display: flex; gap: 14px; justify-content: center; }
+.footer-social a {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, border-color 0.2s;
+}
+.footer-social a:hover { background: rgba(255,255,255,0.18); border-color: var(--pink); }
+.footer-links {
+  display: flex; gap: 26px; justify-content: flex-end;
+  list-style: none; margin: 0; padding: 0; flex-wrap: wrap;
+}
+.footer-links a {
+  font-family: var(--font-mono); font-size: 13px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--paper-3); text-decoration: none; transition: color 0.2s;
+}
+.footer-links a:hover { color: #fff; }
+
+.footer-fine {
+  width: min(1440px, 100% - 9rem);
+  margin: 34px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  text-align: center;
+}
+.footer-legal, .footer-source {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--paper-3);
+  text-align: center;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.footer-source { margin-top: 6px; }
+
+@media (max-width: 900px) {
+  .footer-row { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 22px; }
+  .footer-links { justify-content: center; }
+  .footer-row, .footer-fine { width: min(1440px, 100% - 2.5rem); }
+}
+
+/* ── I: PRIVATE PREVIEW COVER ────────────────────────────────────── */
+.cover {
+  position: fixed; inset: 0; z-index: 10001;
+  background: var(--navy);
+  display: flex; align-items: center; justify-content: center;
+  padding: 40px 24px;
+  overflow-y: auto;
+}
+.cover[hidden] { display: none; }
+body.cover-open { overflow: hidden; }
+
+.cover-inner { width: 100%; max-width: 560px; text-align: center; }
+
+.cover-eyebrow {
+  font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--pink); margin-bottom: 26px;
+}
+.cover-prepared { font-size: 15px; color: var(--paper-3); margin: 0 0 10px; }
+.cover-brand {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 7vw, 64px);
+  font-weight: 300; color: #fff; line-height: 1.05;
+}
+.cover-date {
+  font-family: var(--font-mono); font-size: 13px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--paper-3); margin-top: 12px;
+}
+
+.cover-form { margin: 36px auto 0; max-width: 380px; }
+.cover-label {
+  display: block; text-align: left;
+  font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--paper-3); margin-bottom: 8px;
+}
+.cover-row { display: flex; gap: 10px; }
+.cover-input {
+  flex: 1 1 auto; min-width: 0;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff; padding: 13px 15px; font-size: 16px;
+  font-family: var(--font-body); border-radius: 2px; outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.cover-input:focus { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(184,122,160,0.25); }
+.cover-btn {
+  flex: 0 0 auto; background: var(--pink); color: #fff; border: 0;
+  padding: 13px 26px; cursor: pointer; border-radius: 2px;
+  font-family: var(--font-mono); font-size: 13px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  transition: background 0.2s;
+}
+.cover-btn:hover { background: var(--blue-mid); }
+.cover-err { font-size: 13px; color: var(--pink-lt); margin: 10px 0 0; text-align: left; }
+
+.cover-loom { margin-top: 40px; }
+.cover-loom-frame {
+  aspect-ratio: 16 / 9; width: 100%;
+  background: rgba(255,255,255,0.045);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 3px; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.cover-loom-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+.cover-loom-hint {
+  font-family: var(--font-mono); font-size: 13px;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--paper-3);
+}
+.cover-loom-cap {
+  margin-top: 12px; font-size: 13px; color: var(--paper-3);
+}
+.cover-foot { margin-top: 34px; font-size: 13px; color: var(--paper-3); }
+
+/* ── H: LIGHTBOX ─────────────────────────────────────────────────── */
+.lb {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(8,14,26,0.94);
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.lb[hidden] { display: none; }
+.lb.is-open { opacity: 1; }
+
+.lb-stage { margin: 0; position: relative; z-index: 2; pointer-events: none; }
+.lb-stage img {
+  max-width: 92vw; max-height: 88vh;
+  object-fit: contain; display: block; border-radius: 2px;
+}
+.lb-caption {
+  position: fixed; left: 28px; bottom: 22px; z-index: 4;
+  display: flex; flex-direction: column; gap: 2px; pointer-events: none;
+}
+.lb-addr { font-size: 14px; color: var(--paper); }
+.lb-room { font-size: 14px; color: var(--paper-3); }
+
+.lb-counter {
+  position: fixed; top: 24px; left: 28px; z-index: 4;
+  font-family: var(--font-mono); font-size: 13px; color: var(--paper-3);
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+.lb-close {
+  position: fixed; top: 16px; right: 20px; z-index: 5;
+  width: 48px; height: 48px;            /* >= 44px hit area */
+  background: none; border: 0; cursor: pointer;
+  color: var(--paper-2); font-size: 24px; line-height: 1;
+  border-radius: 50%; transition: background 0.2s;
+}
+.lb-close:hover { background: rgba(255,255,255,0.12); }
+
+/* large invisible paging zones, chevrons only on hover */
+.lb-zone {
+  position: fixed; top: 0; bottom: 0; width: 33vw; z-index: 3;
+  background: none; border: 0; cursor: pointer;
+  display: flex; align-items: center;
+}
+.lb-prev { left: 0; justify-content: flex-start; padding-left: 24px; }
+.lb-next { right: 0; justify-content: flex-end; padding-right: 24px; }
+.lb-chev {
+  font-size: 40px; line-height: 1; color: var(--paper-2);
+  opacity: 0; transition: opacity 0.2s;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(255,255,255,0.10);
+  display: flex; align-items: center; justify-content: center;
+}
+.lb-zone:hover .lb-chev, .lb-zone:focus-visible .lb-chev { opacity: 1; }
+
+/* filmstrip above 1024px */
+.lb-film { display: none; }
+@media (min-width: 1025px) {
+  .lb-film {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 4;
+    display: flex; gap: 8px; justify-content: center;
+    padding: 12px 20px 16px; overflow-x: auto;
+  }
+  .lb-thumb {
+    width: 84px; height: 56px; flex: 0 0 auto;
+    padding: 0; border: 0; cursor: pointer; background: none;
+    border-bottom: 2px solid transparent;
+    opacity: 0.55; transition: opacity 0.2s, border-color 0.2s;
+  }
+  .lb-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .lb-thumb:hover { opacity: 0.85; }
+  .lb-thumb[aria-current="true"] { opacity: 1; border-bottom-color: var(--accent); }
+  .lb-caption { bottom: 92px; }
+}
+
+@media (prefers-reduced-motion: reduce) { .lb { transition: none; } }
+
+/* ── C1: ONE CONTAINER, ONE GUTTER ───────────────────────────────
+   Full bleed is an explicit opt-in (.full-bleed), used only by the hero,
+   the navy track-record band and the marquee. Nothing else escapes. */
+.container {
+  width: min(1440px, 100% - 9rem);
+  margin-inline: auto;
+}
+@media (max-width: 1024px) { .container { width: min(1440px, 100% - 4rem); } }
+@media (max-width: 640px)  { .container { width: min(1440px, 100% - 2.5rem); } }
+
+/* C4: one vertical scale everywhere, so no section runs long for no reason. */
+.about-section, .listings-section, .featured-section, .sold-section,
+.team-section, .process-section, .testimonials-section, .contact-section,
+.gallery-section, .insta-section {
+  padding-top: clamp(80px, 9vw, 140px);
+  padding-bottom: clamp(80px, 9vw, 140px);
+  padding-left: 0;
+  padding-right: 0;
+}
+/* inner content of each section obeys the container */
+.about-section, .listings-section, .featured-section, .sold-section,
+.team-section, .process-section, .testimonials-section, .contact-section {
+  padding-left: max(0px, calc((100% - min(1440px, 100% - 9rem)) / 2));
+  padding-right: max(0px, calc((100% - min(1440px, 100% - 9rem)) / 2));
+}
+@media (max-width: 1024px) {
+  .about-section, .listings-section, .featured-section, .sold-section,
+  .team-section, .process-section, .testimonials-section, .contact-section {
+    padding-left: 2rem; padding-right: 2rem;
+  }
+}
+@media (max-width: 640px) {
+  .about-section, .listings-section, .featured-section, .sold-section,
+  .team-section, .process-section, .testimonials-section, .contact-section {
+    padding-left: 1.25rem; padding-right: 1.25rem;
+  }
+}
+
+/* ── A2: TYPE SCALE ──────────────────────────────────────────────
+   Minimums enforced. Nothing renders below 13px; eyebrows sit at 12px
+   only because wide tracking and caps make them legible at that size. */
+body, p, li, .about-body, .contact-intro, .member-bio, .step-desc {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink);
+}
+.section-label, .eyebrow, .press-eyebrow, .stat-lbl {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+}
+.spec, .listing-suburb, .sold-loc, .testi-name, .footer-legal { font-size: 13px; }
+
 /* A7: the newsletter sits on a light band, so it needs a light-theme field.
    .form-input is styled for the navy contact card and was invisible here. */
 .nl-input {
@@ -1857,7 +2222,7 @@ body.js-loaded .hero-photo { animation: heroDrift 12s cubic-bezier(.16,1,.3,1) b
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
-.nl-input::placeholder { color: rgba(12,22,40,0.55); }
+.nl-input::placeholder { color: var(--ink-3); }
 .nl-input:focus {
   border-color: var(--pink);
   box-shadow: 0 0 0 3px rgba(184,122,160,0.25);
@@ -1880,25 +2245,13 @@ body.js-loaded .hero-photo { animation: heroDrift 12s cubic-bezier(.16,1,.3,1) b
   background: var(--pink);
   color: #fff;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.3em;
   /* padding-right absorbs the trailing letter-space so the D is not clipped */
   padding: 5px 8px 5px 11px;
   border-radius: 2px;
   line-height: 1;
-}
-
-.footer-legal {
-  font-size: 13.2px;
-  color: rgba(255,255,255,0.55);
-  font-family: var(--font-mono);
-  text-align: right;
-  line-height: 1.6;
-  /* A5: was overflowing the viewport instead of wrapping. */
-  max-width: 100%;
-  min-width: 0;
-  overflow-wrap: anywhere;
 }
 
 /* ── AI CONCIERGE CHAT WIDGET ──────────────────────────────────── */
@@ -1993,8 +2346,8 @@ body.js-loaded .hero-photo { animation: heroDrift 12s cubic-bezier(.16,1,.3,1) b
   border-bottom-right-radius: 4px;
 }
 .cp-msg-time {
-  font-size: 11px;
-  color: var(--mid);
+  font-size: 12px;
+  color: var(--ink-2);
   margin-top: 4px;
   font-family: var(--font-mono);
   letter-spacing: 0.04em;
@@ -2006,7 +2359,7 @@ body.js-loaded .hero-photo { animation: heroDrift 12s cubic-bezier(.16,1,.3,1) b
   color: var(--navy);
   padding: 6px 14px;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 13px;
   cursor: pointer;
   transition: all 0.2s;
   font-family: var(--font-body);
@@ -2058,7 +2411,7 @@ body.js-loaded .hero-photo { animation: heroDrift 12s cubic-bezier(.16,1,.3,1) b
 
 .chat-agent-status {
   font-size: 13.2px;
-  color: rgba(255,255,255,0.5);
+  color: var(--paper-3);
   display: flex;
   align-items: center;
   gap: 5px;
@@ -2076,7 +2429,7 @@ body.js-loaded .hero-photo { animation: heroDrift 12s cubic-bezier(.16,1,.3,1) b
   margin-left: auto;
   background: none;
   border: none;
-  color: rgba(255,255,255,0.5);
+  color: var(--paper-3);
   cursor: pointer;
   font-size: 18px;
   width: 30px;
@@ -2129,10 +2482,10 @@ body.js-loaded .hero-photo { animation: heroDrift 12s cubic-bezier(.16,1,.3,1) b
 }
 
 .msg-label {
-  font-size: 12.0px;
+  font-size: 13px;
   font-family: var(--font-mono);
   letter-spacing: 0.1em;
-  color: var(--mid);
+  color: var(--ink-2);
   margin-bottom: 4px;
 }
 
@@ -2184,7 +2537,7 @@ body.js-loaded .hero-photo { animation: heroDrift 12s cubic-bezier(.16,1,.3,1) b
 }
 
 .chat-input:focus { border-color: var(--pink); }
-.chat-input::placeholder { color: var(--mid); }
+.chat-input::placeholder { color: var(--ink-2); }
 
 .chat-send {
   width: 38px;
@@ -2354,13 +2707,14 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
 </style>
 
 <!-- Private preview: keep this page out of search results -->
-<meta name="robots" content="noindex">
+<meta name="robots" content="noindex, nofollow">
 
 <!-- Social preview -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Courtney &amp; Co | Real Estate Riverhead, Kumeu &amp; North West Auckland">
-<meta property="og:description" content="Boutique real estate across North West Auckland. 15+ years and hundreds of millions sold.">
-<meta property="og:image" content="https://ryanai33.github.io/courtney-co/images/og-cover.jpg">
+<meta property="og:title" content="Courtney &amp; Co - Private Preview">
+<meta property="og:description" content="A private site preview prepared for Courtney Wood by Renovatio.">
+<meta property="og:url" content="https://courtneyandco.vercel.app/">
+<meta property="og:image" content="https://courtneyandco.vercel.app/images/og-cover.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -2373,7 +2727,6 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
   "@context": "https://schema.org",
   "@type": "RealEstateAgent",
   "name": "Courtney & Co",
-  "url": "https://courtneyandco.co.nz/",
   "telephone": "+64-9-412-9903",
   "email": "theteam@courtneyandco.co.nz",
   "address": {
@@ -2406,6 +2759,62 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
 </script>
 </head>
 <body>
+
+<!-- ── I: PRIVATE PREVIEW COVER ────────────────────────────────────
+     Presentation, not security. The page source is public; this is a cover
+     sheet so a forwarded link opens on something deliberate rather than
+     straight into the client's unsigned site. No claim of protection.
+     ?k=riverhead skips it so the SMS link opens directly. -->
+<script>
+/* I2: run before paint so the site never flashes behind the cover.
+   In-memory only, no localStorage. This is a cover sheet, not access
+   control: the page source is public and it is not protected. */
+(function () {
+  var ACCESS = 'riverhead';
+  var skip = false;
+  try {
+    var q = new URLSearchParams(window.location.search).get('k');
+    skip = !!q && q.toLowerCase() === ACCESS;
+  } catch (e) { skip = false; }
+  window.__coverPassed = skip;
+  if (!skip) document.documentElement.classList.add('cover-pending');
+})();
+</script>
+<style>
+  /* keep the page from scrolling behind an un-dismissed cover */
+  html.cover-pending, html.cover-pending body { overflow: hidden; }
+</style>
+<div id="cover" class="cover">
+  <div class="cover-inner">
+    <div class="cover-eyebrow">Private Preview</div>
+    <p class="cover-prepared">Prepared for Courtney Wood</p>
+    <div class="cover-brand">Courtney &amp; Co</div>
+    <div class="cover-date">August 2026</div>
+
+    <form class="cover-form" id="cover-form" novalidate>
+      <label class="cover-label" for="cover-code">Access code</label>
+      <div class="cover-row">
+        <input id="cover-code" class="cover-input" type="text" autocomplete="off"
+               spellcheck="false" aria-describedby="cover-err">
+        <button class="cover-btn" type="submit">Enter</button>
+      </div>
+      <p class="cover-err" id="cover-err" role="alert" hidden>That code does not match. Try again.</p>
+    </form>
+
+    <!-- I3: drop the Loom share URL into the src below. The frame is already
+         sized 16:9, so the layout does not move when it is added. -->
+    <div class="cover-loom">
+      <div class="cover-loom-frame" id="cover-loom-frame">
+        <span class="cover-loom-hint">Walkthrough coming shortly</span>
+        <!-- <iframe src="https://www.loom.com/embed/REPLACE_ME" frameborder="0"
+                 allowfullscreen title="A 90 second walkthrough from Will"></iframe> -->
+      </div>
+      <div class="cover-loom-cap">A 90 second walkthrough from Will</div>
+    </div>
+
+    <p class="cover-foot">Prepared by Renovatio. This preview is private and not indexed.</p>
+  </div>
+</div>
 
 <a class="skip-link" href="#main">Skip to main content</a>
 <div id="scroll-progress" aria-hidden="true"></div>
@@ -2466,9 +2875,7 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
     <div class="stat-lbl">Sold in the last 24 months</div>
   </div>
 </div>
-<div style="background:var(--navy);text-align:center;padding:0 20px 18px;font-family:var(--font-mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.45);">
-  Confirmed sales, homes.co.nz, August 2026.
-</div>
+
 
 <!-- ── ABOUT ───────────────────────────────────────────────────────── -->
 
@@ -2523,19 +2930,59 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
   </div>
 </section>
 
+<!-- ── B: LOGO MARQUEE ──────────────────────────────────────────────
+     Real logo files taken from her own Squarespace site, trimmed to their
+     content box and scaled to a matched optical cap height (not a matched
+     box height, which makes tagline lockups like OneRoof read small).
+     Only the five portals her listings verifiably appear on. Stuff,
+     Neighbourly, RateMyAgent and M2Woman stay out until she confirms. -->
 <div class="press-section">
   <div class="press-eyebrow">Listed and Featured On</div>
-  <div class="press-row">
-    <span class="press-name">Trade Me</span>
-    <span class="press-name">realestate.co.nz</span>
-    <span class="press-name">OneRoof</span>
-    <span class="press-name">homes.co.nz</span>
-    <span class="press-name">RateMyAgent</span>
-    <span class="press-name">HouGarden</span>
-    <span class="press-name">Stuff</span>
-    <span class="press-name">Neighbourly</span>
-    <span class="press-name">M2woman</span>
+  <div class="marquee" id="marquee">
+    <div class="mq-track">
+      <a class="mq-item" href="https://www.trademe.co.nz/a/property" target="_blank" rel="noopener">
+        <img src="images/logos/trademe.png" srcset="images/logos/trademe.png 1x, images/logos/trademe@2x.png 2x"
+             alt="Trade Me Property" class="mq-logo mq-trademe" loading="lazy" decoding="async">
+      </a>
+      <a class="mq-item" href="https://www.realestate.co.nz" target="_blank" rel="noopener">
+        <img src="images/logos/realestate.png" srcset="images/logos/realestate.png 1x, images/logos/realestate@2x.png 2x"
+             alt="realestate.co.nz" class="mq-logo mq-realestate" loading="lazy" decoding="async">
+      </a>
+      <a class="mq-item" href="https://www.oneroof.co.nz" target="_blank" rel="noopener">
+        <img src="images/logos/oneroof.png" srcset="images/logos/oneroof.png 1x, images/logos/oneroof@2x.png 2x"
+             alt="OneRoof" class="mq-logo mq-oneroof" loading="lazy" decoding="async">
+      </a>
+      <a class="mq-item" href="https://www.homes.co.nz" target="_blank" rel="noopener">
+        <img src="images/logos/homes.png" srcset="images/logos/homes.png 1x, images/logos/homes@2x.png 2x"
+             alt="homes.co.nz" class="mq-logo mq-homes" loading="lazy" decoding="async">
+      </a>
+      <a class="mq-item" href="https://www.hougarden.com" target="_blank" rel="noopener">
+        <img src="images/logos/hougarden.png" srcset="images/logos/hougarden.png 1x, images/logos/hougarden@2x.png 2x"
+             alt="HouGarden" class="mq-logo mq-hougarden" loading="lazy" decoding="async">
+      </a>
+      <a class="mq-item" href="https://www.trademe.co.nz/a/property" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
+        <img src="images/logos/trademe.png" srcset="images/logos/trademe.png 1x, images/logos/trademe@2x.png 2x"
+             alt="Trade Me Property" class="mq-logo mq-trademe" loading="lazy" decoding="async">
+      </a>
+      <a class="mq-item" href="https://www.realestate.co.nz" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
+        <img src="images/logos/realestate.png" srcset="images/logos/realestate.png 1x, images/logos/realestate@2x.png 2x"
+             alt="realestate.co.nz" class="mq-logo mq-realestate" loading="lazy" decoding="async">
+      </a>
+      <a class="mq-item" href="https://www.oneroof.co.nz" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
+        <img src="images/logos/oneroof.png" srcset="images/logos/oneroof.png 1x, images/logos/oneroof@2x.png 2x"
+             alt="OneRoof" class="mq-logo mq-oneroof" loading="lazy" decoding="async">
+      </a>
+      <a class="mq-item" href="https://www.homes.co.nz" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
+        <img src="images/logos/homes.png" srcset="images/logos/homes.png 1x, images/logos/homes@2x.png 2x"
+             alt="homes.co.nz" class="mq-logo mq-homes" loading="lazy" decoding="async">
+      </a>
+      <a class="mq-item" href="https://www.hougarden.com" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
+        <img src="images/logos/hougarden.png" srcset="images/logos/hougarden.png 1x, images/logos/hougarden@2x.png 2x"
+             alt="HouGarden" class="mq-logo mq-hougarden" loading="lazy" decoding="async">
+      </a>
+    </div>
   </div>
+</div>
 </div>
 
 <section class="featured-section" id="properties">
@@ -2546,184 +2993,184 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
       <div class="section-label" style="color:var(--blue-lt);">Feature Listing</div>
       <h2 class="section-title" style="color:white;">Character, without<br><em>compromise.</em></h2>
     </div>
-    <a href="https://courtneyandco.co.nz/26-alexandra-street-riverhead" target="_blank" style="font-size: 13.2px;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-lt);text-decoration:none;border-bottom:1px solid rgba(208,154,184,0.3);padding-bottom:3px;">View Full Listing →</a>
+    <a href="#contact" style="font-size: 13px;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-lt);text-decoration:none;border-bottom:1px solid rgba(208,154,184,0.3);padding-bottom:3px;">Enquire About This Home →</a>
   </div>
 
   <!-- B4: the hero is the widest element in the section, not the narrowest,
        and object-position frames the villa rather than the fence and lawn.
        The house sits in the upper half of the source frame, so the focal
        point moves up, not down. -->
-  <div style="position:relative;aspect-ratio:21/9;overflow:hidden;border-radius:4px;margin-bottom:3px;cursor:pointer;" onclick="openLightbox(0)">
-    <picture><source type="image/avif" srcset="images/r/alexandra-01-400.avif 400w, images/r/alexandra-01-800.avif 800w, images/r/alexandra-01-1600.avif 1600w, images/r/alexandra-01-2400.avif 2400w" sizes="100vw"><source type="image/webp" srcset="images/r/alexandra-01-400.webp 400w, images/r/alexandra-01-800.webp 800w, images/r/alexandra-01-1600.webp 1600w, images/r/alexandra-01-2400.webp 2400w" sizes="100vw"><img loading="lazy" decoding="async" src="images/alexandra-01.jpg" alt="26 Alexandra Street, Riverhead - villa frontage" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;object-position:center 38%;display:block;transition:transform 0.7s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'"></picture>
+  <div class="feature-hero" onclick="openLightbox(0)">
+    <picture><source type="image/avif" srcset="images/r/alexandra-01-400.avif 400w, images/r/alexandra-01-800.avif 800w, images/r/alexandra-01-1600.avif 1600w, images/r/alexandra-01-2400.avif 2400w" sizes="100vw"><source type="image/webp" srcset="images/r/alexandra-01-400.webp 400w, images/r/alexandra-01-800.webp 800w, images/r/alexandra-01-1600.webp 1600w, images/r/alexandra-01-2400.webp 2400w" sizes="100vw"><img loading="lazy" decoding="async" src="images/alexandra-01.jpg" alt="26 Alexandra Street, Riverhead - Villa frontage from the street" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;object-position:center 38%;display:block;transition:transform 0.7s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'"></picture>
     <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(12,22,40,0.78) 0%,rgba(12,22,40,0.15) 42%,rgba(12,22,40,0) 65%);"></div>
-    <div style="position:absolute;top:20px;left:20px;background:var(--pink);color:white;font-size: 10.8px;letter-spacing:0.2em;text-transform:uppercase;padding:6px 14px;font-family:var(--font-mono);border-radius:2px;">For Sale</div>
+    <div style="position:absolute;top:20px;left:20px;background:var(--pink);color:white;font-size: 12px;letter-spacing:0.2em;text-transform:uppercase;padding:6px 14px;font-family:var(--font-mono);border-radius:2px;">For Sale</div>
     <div style="position:absolute;bottom:28px;left:28px;right:28px;">
       <div style="font-family:var(--font-display);font-size:clamp(26px,3vw,38px);font-weight:300;color:white;line-height:1.15;margin-bottom:10px;">26 Alexandra Street, Riverhead</div>
       <div style="font-size:15px;color:var(--blue-lt);font-weight:500;letter-spacing:0.04em;margin-bottom:14px;">Price by negotiation</div>
       <div style="display:flex;gap:20px;flex-wrap:wrap;">
-        <span style="font-size: 13.2px;color:rgba(255,255,255,0.75);font-family:var(--font-mono);">4 Bedrooms</span>
-        <span style="font-size: 13.2px;color:rgba(255,255,255,0.75);font-family:var(--font-mono);">1 Bathroom</span>
-        <span style="font-size: 13.2px;color:rgba(255,255,255,0.75);font-family:var(--font-mono);">807m² Freehold</span>
-        <span style="font-size: 13.2px;color:rgba(255,255,255,0.75);font-family:var(--font-mono);">Off-street parking</span>
+        <span style="font-size: 13.2px;color: var(--paper-3);font-family:var(--font-mono);">4 Bedrooms</span>
+        <span style="font-size: 13.2px;color: var(--paper-3);font-family:var(--font-mono);">1 Bathroom</span>
+        <span style="font-size: 13.2px;color: var(--paper-3);font-family:var(--font-mono);">807m² Freehold</span>
+        <span style="font-size: 13.2px;color: var(--paper-3);font-family:var(--font-mono);">Off-street parking</span>
       </div>
     </div>
   </div>
 
   <!-- B3: an even four-up row, so no column runs short and leaves dead navy. -->
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:56px;">
+  <div class="feature-thumbs" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:56px;">
     <div style="aspect-ratio:4/3;overflow:hidden;cursor:pointer;" onclick="openLightbox(1)">
-      <picture><source type="image/avif" srcset="images/r/alexandra-15-400.avif 400w, images/r/alexandra-15-800.avif 800w, images/r/alexandra-15-1600.avif 1600w, images/r/alexandra-15-2400.avif 2400w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/alexandra-15-400.webp 400w, images/r/alexandra-15-800.webp 800w, images/r/alexandra-15-1600.webp 1600w, images/r/alexandra-15-2400.webp 2400w" sizes="(max-width:900px) 100vw, 50vw"><img loading="lazy" decoding="async" src="images/alexandra-15.jpg" alt="Family living room" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></picture>
+      <picture><source type="image/avif" srcset="images/r/alexandra-15-400.avif 400w, images/r/alexandra-15-800.avif 800w, images/r/alexandra-15-1600.avif 1600w, images/r/alexandra-15-2400.avif 2400w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/alexandra-15-400.webp 400w, images/r/alexandra-15-800.webp 800w, images/r/alexandra-15-1600.webp 1600w, images/r/alexandra-15-2400.webp 2400w" sizes="(max-width:900px) 100vw, 50vw"><img loading="lazy" decoding="async" src="images/alexandra-15.jpg" alt="26 Alexandra Street, Riverhead - Street frontage and bay window" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></picture>
     </div>
     <div style="aspect-ratio:4/3;overflow:hidden;cursor:pointer;" onclick="openLightbox(2)">
-      <picture><source type="image/avif" srcset="images/r/alexandra-31-400.avif 400w, images/r/alexandra-31-800.avif 800w, images/r/alexandra-31-1600.avif 1600w, images/r/alexandra-31-2400.avif 2400w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/alexandra-31-400.webp 400w, images/r/alexandra-31-800.webp 800w, images/r/alexandra-31-1600.webp 1600w, images/r/alexandra-31-2400.webp 2400w" sizes="(max-width:900px) 100vw, 50vw"><img loading="lazy" decoding="async" src="images/alexandra-31.jpg" alt="Upgraded kitchen" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></picture>
+      <picture><source type="image/avif" srcset="images/r/alexandra-31-400.avif 400w, images/r/alexandra-31-800.avif 800w, images/r/alexandra-31-1600.avif 1600w, images/r/alexandra-31-2400.avif 2400w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/alexandra-31-400.webp 400w, images/r/alexandra-31-800.webp 800w, images/r/alexandra-31-1600.webp 1600w, images/r/alexandra-31-2400.webp 2400w" sizes="(max-width:900px) 100vw, 50vw"><img loading="lazy" decoding="async" src="images/alexandra-31.jpg" alt="26 Alexandra Street, Riverhead - Covered entertaining deck at dusk" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></picture>
     </div>
     <div style="aspect-ratio:4/3;overflow:hidden;cursor:pointer;" onclick="openLightbox(3)">
-      <picture><source type="image/avif" srcset="images/r/alexandra-39-400.avif 400w, images/r/alexandra-39-800.avif 800w, images/r/alexandra-39-1600.avif 1600w, images/r/alexandra-39-2400.avif 2400w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/alexandra-39-400.webp 400w, images/r/alexandra-39-800.webp 800w, images/r/alexandra-39-1600.webp 1600w, images/r/alexandra-39-2400.webp 2400w" sizes="(max-width:900px) 100vw, 50vw"><img loading="lazy" decoding="async" src="images/alexandra-39.jpg" alt="Oversized master suite" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></picture>
+      <picture><source type="image/avif" srcset="images/r/alexandra-39-400.avif 400w, images/r/alexandra-39-800.avif 800w, images/r/alexandra-39-1600.avif 1600w, images/r/alexandra-39-2400.avif 2400w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/alexandra-39-400.webp 400w, images/r/alexandra-39-800.webp 800w, images/r/alexandra-39-1600.webp 1600w, images/r/alexandra-39-2400.webp 2400w" sizes="(max-width:900px) 100vw, 50vw"><img loading="lazy" decoding="async" src="images/alexandra-39.jpg" alt="26 Alexandra Street, Riverhead - Off-street parking and entry" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></picture>
     </div>
     <div style="aspect-ratio:4/3;overflow:hidden;cursor:pointer;" onclick="openLightbox(5)">
-      <picture><source type="image/avif" srcset="images/r/alexandra-61-400.avif 400w, images/r/alexandra-61-800.avif 800w, images/r/alexandra-61-1600.avif 1600w, images/r/alexandra-61-2400.avif 2400w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/alexandra-61-400.webp 400w, images/r/alexandra-61-800.webp 800w, images/r/alexandra-61-1600.webp 1600w, images/r/alexandra-61-2400.webp 2400w" sizes="(max-width:900px) 100vw, 50vw"><img loading="lazy" decoding="async" src="images/alexandra-61.jpg" alt="Covered outdoor entertaining" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></picture>
+      <picture><source type="image/avif" srcset="images/r/alexandra-31-400.avif 400w, images/r/alexandra-31-800.avif 800w, images/r/alexandra-31-1600.avif 1600w, images/r/alexandra-31-2400.avif 2400w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/alexandra-31-400.webp 400w, images/r/alexandra-31-800.webp 800w, images/r/alexandra-31-1600.webp 1600w, images/r/alexandra-31-2400.webp 2400w" sizes="(max-width:900px) 100vw, 50vw"><img loading="lazy" decoding="async" src="images/alexandra-61.jpg" alt="26 Alexandra Street, Riverhead - Bedroom with leadlight windows" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></picture>
     </div>
   </div>
 
   <!-- Property stats bar. Verified against courtneyandco.co.nz and
        realestate.co.nz; unpublished values show a hyphen. -->
-  <div style="display:grid;grid-template-columns:repeat(5,1fr);border:1px solid rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;margin-bottom:60px;">
+  <div style="max-width:1200px;margin:0 auto 60px;display:grid;grid-template-columns:repeat(5,1fr);border:1px solid rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;">
     <div style="padding:24px 28px;border-right:1px solid rgba(255,255,255,0.08);">
-      <div style="font-family:var(--font-mono);font-size: 10.8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:8px;">Type</div>
+      <div style="font-family:var(--font-mono);font-size: 12px;letter-spacing:0.3em;text-transform:uppercase;color: var(--paper-3);margin-bottom:8px;">Type</div>
       <div style="font-family:var(--font-display);font-size:20px;font-weight:400;color:white;">Freehold</div>
     </div>
     <div style="padding:24px 28px;border-right:1px solid rgba(255,255,255,0.08);">
-      <div style="font-family:var(--font-mono);font-size: 10.8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:8px;">Land Area</div>
-      <div style="font-family:var(--font-display);font-size:20px;font-weight:400;color:white;">807 <span style="font-size: 15.6px;color:rgba(255,255,255,0.45);">m²</span></div>
+      <div style="font-family:var(--font-mono);font-size: 12px;letter-spacing:0.3em;text-transform:uppercase;color: var(--paper-3);margin-bottom:8px;">Land Area</div>
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:400;color:white;">807 <span style="font-size: 15px;color: var(--paper-3);">m²</span></div>
     </div>
     <div style="padding:24px 28px;border-right:1px solid rgba(255,255,255,0.08);">
-      <div style="font-family:var(--font-mono);font-size: 10.8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:8px;">Bedrooms</div>
+      <div style="font-family:var(--font-mono);font-size: 12px;letter-spacing:0.3em;text-transform:uppercase;color: var(--paper-3);margin-bottom:8px;">Bedrooms</div>
       <div style="font-family:var(--font-display);font-size:20px;font-weight:400;color:white;">4</div>
     </div>
     <div style="padding:24px 28px;border-right:1px solid rgba(255,255,255,0.08);">
-      <div style="font-family:var(--font-mono);font-size: 10.8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:8px;">Bathrooms</div>
+      <div style="font-family:var(--font-mono);font-size: 12px;letter-spacing:0.3em;text-transform:uppercase;color: var(--paper-3);margin-bottom:8px;">Bathrooms</div>
       <div style="font-family:var(--font-display);font-size:20px;font-weight:400;color:white;">1</div>
     </div>
     <div style="padding:24px 28px;">
-      <div style="font-family:var(--font-mono);font-size: 10.8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:8px;">District</div>
+      <div style="font-family:var(--font-mono);font-size: 12px;letter-spacing:0.3em;text-transform:uppercase;color: var(--paper-3);margin-bottom:8px;">District</div>
       <div style="font-family:var(--font-display);font-size:20px;font-weight:400;color:white;">Riverhead</div>
     </div>
   </div>
 
-  <!-- Description drawn from her own listing copy for 26 Alexandra Street. -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;">
+  <!-- ── D: PROPERTY DESCRIPTION ────────────────────────────────────
+       7/5 split. The left column carries lead, body, highlights, CTA and the
+       agent card so it fills to the same depth as the media stack on the
+       right. The right column is a stacked pair rather than one oversized
+       frame, and the near-empty lounge shot is no longer the anchor. -->
+  <div class="pd-grid">
 
-    <!-- Left: Description -->
-    <div>
+    <div class="pd-copy">
       <div class="section-label" style="color:var(--blue-lt);margin-bottom:20px;">Property Description</div>
-      <p style="font-family:var(--font-display);font-size:22px;font-weight:300;font-style:italic;line-height:1.55;color:rgba(255,255,255,0.9);margin-bottom:28px;">Character homes of this calibre are a rare find in Riverhead. Jasmine Villa sits on a generous 807m² freehold site on a quiet no-exit street.</p>
-      <p style="font-size:15px;line-height:1.85;color:rgba(255,255,255,0.58);margin-bottom:18px;font-weight:300;">A covered verandah with a classic bullnose roofline, ornate fretwork and extra-wide entry stairs sets the tone. Mature hedging, established trees and granite pavers frame the home, and the quiet setting adds to the sense of retreat.</p>
-      <p style="font-size:15px;line-height:1.85;color:rgba(255,255,255,0.58);margin-bottom:18px;font-weight:300;">Inside, soaring high-stud ceilings, leadlight windows and a calm contemporary palette create a light-filled home. The hard work is done: fresh interior paint, new drainage, designer lighting, a moisture barrier, underfloor and ceiling insulation, and ducted heating and cooling to every room.</p>
-      <p style="font-size:15px;line-height:1.85;color:rgba(255,255,255,0.58);margin-bottom:32px;font-weight:300;">Four generous bedrooms include an oversized master with a bay window and walk-in wardrobe. Outside, a covered entertaining area and oversized rear deck overlook established gardens and lawn, with a workshop, garden shed and lit attic storage.</p>
+      <p style="font-family:var(--font-display);font-size:22px;font-weight:300;font-style:italic;line-height:1.55;color:var(--paper-2);margin-bottom:28px;">Character homes of this calibre are a rare find in Riverhead. Jasmine Villa sits on a generous 807m² freehold site on a quiet no-exit street.</p>
+      <p style="font-size:17px;line-height:1.65;color:var(--paper-3);margin-bottom:18px;">A covered verandah with a classic bullnose roofline, ornate fretwork and extra-wide entry stairs sets the tone. Mature hedging, established trees and granite pavers frame the home, and the quiet setting adds to the sense of retreat.</p>
+      <p style="font-size:17px;line-height:1.65;color:var(--paper-3);margin-bottom:18px;">Inside, soaring high-stud ceilings, leadlight windows and a calm contemporary palette create a light-filled home. The hard work is done: fresh interior paint, new drainage, designer lighting, a moisture barrier, underfloor and ceiling insulation, and ducted heating and cooling to every room.</p>
+      <p style="font-size:17px;line-height:1.65;color:var(--paper-3);margin-bottom:32px;">Four generous bedrooms include an oversized master with a bay window and walk-in wardrobe. Outside, a covered entertaining area and oversized rear deck overlook established gardens and lawn, with a workshop, garden shed and lit attic storage.</p>
 
-      <!-- Key features. Sans, not mono: mono is reserved for numerals and metadata. -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;margin-bottom:40px;">
-        <div style="display:flex;gap:10px;align-items:center;">
-          <div style="width:5px;height:5px;background:var(--blue-lt);border-radius:50%;flex-shrink:0;"></div>
-          <span style="font-size: 15.6px;color:rgba(255,255,255,0.72);font-weight:300;">Renovated character villa</span>
-        </div>
-        <div style="display:flex;gap:10px;align-items:center;">
-          <div style="width:5px;height:5px;background:var(--blue-lt);border-radius:50%;flex-shrink:0;"></div>
-          <span style="font-size: 15.6px;color:rgba(255,255,255,0.72);font-weight:300;">807m² freehold site</span>
-        </div>
-        <div style="display:flex;gap:10px;align-items:center;">
-          <div style="width:5px;height:5px;background:var(--blue-lt);border-radius:50%;flex-shrink:0;"></div>
-          <span style="font-size: 15.6px;color:rgba(255,255,255,0.72);font-weight:300;">Ducted heating and cooling</span>
-        </div>
-        <div style="display:flex;gap:10px;align-items:center;">
-          <div style="width:5px;height:5px;background:var(--blue-lt);border-radius:50%;flex-shrink:0;"></div>
-          <span style="font-size: 15.6px;color:rgba(255,255,255,0.72);font-weight:300;">High-stud ceilings, leadlight windows</span>
-        </div>
-        <div style="display:flex;gap:10px;align-items:center;">
-          <div style="width:5px;height:5px;background:var(--blue-lt);border-radius:50%;flex-shrink:0;"></div>
-          <span style="font-size: 15.6px;color:rgba(255,255,255,0.72);font-weight:300;">Covered entertaining and rear deck</span>
-        </div>
-        <div style="display:flex;gap:10px;align-items:center;">
-          <div style="width:5px;height:5px;background:var(--blue-lt);border-radius:50%;flex-shrink:0;"></div>
-          <span style="font-size: 15.6px;color:rgba(255,255,255,0.72);font-weight:300;">Attic storage and workshop</span>
-        </div>
+      <!-- Highlights in the sans, not the mono: mono is numerals and metadata only. -->
+      <div class="pd-highlights">
+        <div class="pd-highlight">Renovated character villa</div>
+        <div class="pd-highlight">807m² freehold site</div>
+        <div class="pd-highlight">Ducted heating and cooling</div>
+        <div class="pd-highlight">High-stud ceilings, leadlight windows</div>
+        <div class="pd-highlight">Covered entertaining and rear deck</div>
+        <div class="pd-highlight">Attic storage and workshop</div>
       </div>
 
-      <a href="https://courtneyandco.co.nz/26-alexandra-street-riverhead" target="_blank" class="btn-primary" style="background:var(--blue-deep);">View Full Listing &amp; Gallery →</a>
+      <a href="#contact" class="btn-primary" style="background:var(--blue-deep);">Book a Viewing →</a>
 
-      <!-- Agent card moved into the left column so it sits under the CTA
-           rather than leaving a tall void beside the image (B3). -->
-      <div style="margin-top:28px;padding:20px 24px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:3px;max-width:340px;">
-        <div style="font-family:var(--font-mono);font-size: 10.8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:12px;">Agent</div>
+      <div style="margin-top:28px;padding:20px 24px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:3px;max-width:360px;">
+        <div style="font-family:var(--font-mono);font-size: 12px;letter-spacing:0.3em;text-transform:uppercase;color:var(--paper-3);margin-bottom:12px;">Agent</div>
         <div style="font-family:var(--font-display);font-size:18px;color:white;font-weight:400;margin-bottom:4px;">Courtney Wood</div>
-        <div style="font-family:var(--font-mono);font-size: 13.2px;color:var(--blue-lt);margin-bottom:14px;">027 688 0818</div>
-        <a href="tel:0276880818" class="btn-primary" style="font-size: 12.0px;padding:12px 24px;background:var(--pink);">Call Courtney Direct →</a>
+        <div style="font-family:var(--font-mono);font-size: 13px;color:var(--blue-lt);margin-bottom:14px;">027 688 0818</div>
+        <a href="tel:0276880818" class="btn-primary" style="font-size: 13px;padding:12px 24px;background:var(--pink);">Call Courtney Direct →</a>
       </div>
     </div>
 
-    <!-- Right: a tall image, not a mislabelled "floor plan". No floor plan
-         has been supplied for this listing. -->
-    <div>
-      <div class="section-label" style="color:var(--blue-lt);margin-bottom:20px;">The Home</div>
-      <div style="border:1px solid rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;aspect-ratio:3/4;">
-        <picture><source type="image/avif" srcset="images/r/alexandra-55-400.avif 400w, images/r/alexandra-55-800.avif 800w, images/r/alexandra-55-1600.avif 1600w, images/r/alexandra-55-2400.avif 2400w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/alexandra-55-400.webp 400w, images/r/alexandra-55-800.webp 800w, images/r/alexandra-55-1600.webp 1600w, images/r/alexandra-55-2400.webp 2400w" sizes="(max-width:900px) 100vw, 50vw"><img width="2500" height="1667" loading="lazy" decoding="async" src="images/alexandra-55.jpg" alt="26 Alexandra Street - covered verandah and frontage" style="width:100%;height:100%;object-fit:cover;display:block;"></picture>
-      </div>
+    <div class="pd-media">
+      <figure class="pd-a">
+        <picture><source type="image/avif" srcset="images/r/alexandra-23-400.avif 400w, images/r/alexandra-23-800.avif 800w, images/r/alexandra-23-1600.avif 1600w, images/r/alexandra-23-2400.avif 2400w" sizes="(max-width:900px) 100vw, 40vw"><source type="image/webp" srcset="images/r/alexandra-23-400.webp 400w, images/r/alexandra-23-800.webp 800w, images/r/alexandra-23-1600.webp 1600w, images/r/alexandra-23-2400.webp 2400w" sizes="(max-width:900px) 100vw, 40vw"><img src="images/alexandra-23.jpg" alt="26 Alexandra Street, Riverhead - The villa at dusk" width="2500" height="1667" loading="lazy" decoding="async"></picture>
+      </figure>
+      <figure class="pd-b">
+        <picture><source type="image/avif" srcset="images/r/alexandra-31-400.avif 400w, images/r/alexandra-31-800.avif 800w, images/r/alexandra-31-1600.avif 1600w, images/r/alexandra-31-2400.avif 2400w" sizes="(max-width:900px) 100vw, 40vw"><source type="image/webp" srcset="images/r/alexandra-31-400.webp 400w, images/r/alexandra-31-800.webp 800w, images/r/alexandra-31-1600.webp 1600w, images/r/alexandra-31-2400.webp 2400w" sizes="(max-width:900px) 100vw, 40vw"><img src="images/alexandra-31.jpg" alt="26 Alexandra Street, Riverhead - Covered entertaining deck at dusk" width="2500" height="1667" loading="lazy" decoding="async"></picture>
+      </figure>
     </div>
 
   </div>
 </section>
 
 <!-- ── PHOTO GALLERY ───────────────────────────────────────────────── -->
-<section style="background:linear-gradient(135deg,#0c1c38 0%,#0e2040 100%);padding:60px 60px 80px;">
+<section style="background:linear-gradient(135deg,#0c1c38 0%,#0e2040 100%);padding:clamp(80px,9vw,140px) 0;">
+<div class="container">
   <div class="fade-up" style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;">
     <div>
       <div class="section-label" style="color:var(--blue-lt);">Property Gallery</div>
       <h2 class="section-title" style="color:white;">Every detail, <em style="color:var(--pink-lt);">considered.</em></h2>
     </div>
-    <a href="https://courtneyandco.co.nz/26-alexandra-street-riverhead" target="_blank" style="font-size: 13.2px;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue-lt);text-decoration:none;">View All Photos →</a>
+    <button type="button" onclick="openLightbox(0)" style="font-size: 13px;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue-lt);background:none;border:0;cursor:pointer;font-family:inherit;">View All Photos →</button>
   </div>
   <!-- B8: 12-column editorial mosaic. One anchor tile spanning 8 columns and
        two rows, 4- and 3-column tiles around it. Every cell has a fixed
        aspect via grid-auto-rows and object-fit:cover, so nothing letterboxes. -->
   <div class="gallery-mosaic">
-    <button type="button" class="gal-tile" style="grid-column:span 8;grid-row:span 2;" onclick="openLightbox(0)" aria-label="Open photo: 26 Alexandra Street, Riverhead">
-      <picture><source type="image/avif" srcset="images/r/alexandra-01-400.avif 400w, images/r/alexandra-01-800.avif 800w, images/r/alexandra-01-1600.avif 1600w, images/r/alexandra-01-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-01-400.webp 400w, images/r/alexandra-01-800.webp 800w, images/r/alexandra-01-1600.webp 1600w, images/r/alexandra-01-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-01.jpg" alt="26 Alexandra Street, Riverhead" width="2500" height="1667"></picture>
+    <button type="button" class="gal-tile" style="grid-column:span 8;grid-row:span 2;" onclick="openLightbox(0)" aria-label="Open photo: Villa frontage from the street">
+      <picture><source type="image/avif" srcset="images/r/alexandra-01-400.avif 400w, images/r/alexandra-01-800.avif 800w, images/r/alexandra-01-1600.avif 1600w, images/r/alexandra-01-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-01-400.webp 400w, images/r/alexandra-01-800.webp 800w, images/r/alexandra-01-1600.webp 1600w, images/r/alexandra-01-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-01.jpg" alt="26 Alexandra Street, Riverhead - Villa frontage from the street" width="2500" height="1667"></picture>
     </button>
-    <button type="button" class="gal-tile" style="grid-column:span 4;" onclick="openLightbox(1)" aria-label="Open photo: Family living room">
-      <picture><source type="image/avif" srcset="images/r/alexandra-15-400.avif 400w, images/r/alexandra-15-800.avif 800w, images/r/alexandra-15-1600.avif 1600w, images/r/alexandra-15-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-15-400.webp 400w, images/r/alexandra-15-800.webp 800w, images/r/alexandra-15-1600.webp 1600w, images/r/alexandra-15-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-15.jpg" alt="Family living room" width="2500" height="1667"></picture>
+    <button type="button" class="gal-tile" style="grid-column:span 4;" onclick="openLightbox(1)" aria-label="Open photo: Street frontage and bay window">
+      <picture><source type="image/avif" srcset="images/r/alexandra-15-400.avif 400w, images/r/alexandra-15-800.avif 800w, images/r/alexandra-15-1600.avif 1600w, images/r/alexandra-15-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-15-400.webp 400w, images/r/alexandra-15-800.webp 800w, images/r/alexandra-15-1600.webp 1600w, images/r/alexandra-15-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-15.jpg" alt="26 Alexandra Street, Riverhead - Street frontage and bay window" width="2500" height="1667"></picture>
     </button>
-    <button type="button" class="gal-tile" style="grid-column:span 4;" onclick="openLightbox(2)" aria-label="Open photo: Upgraded kitchen">
-      <picture><source type="image/avif" srcset="images/r/alexandra-31-400.avif 400w, images/r/alexandra-31-800.avif 800w, images/r/alexandra-31-1600.avif 1600w, images/r/alexandra-31-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-31-400.webp 400w, images/r/alexandra-31-800.webp 800w, images/r/alexandra-31-1600.webp 1600w, images/r/alexandra-31-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-31.jpg" alt="Upgraded kitchen" width="2500" height="1667"></picture>
+    <button type="button" class="gal-tile" style="grid-column:span 4;" onclick="openLightbox(2)" aria-label="Open photo: Covered entertaining deck at dusk">
+      <picture><source type="image/avif" srcset="images/r/alexandra-31-400.avif 400w, images/r/alexandra-31-800.avif 800w, images/r/alexandra-31-1600.avif 1600w, images/r/alexandra-31-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-31-400.webp 400w, images/r/alexandra-31-800.webp 800w, images/r/alexandra-31-1600.webp 1600w, images/r/alexandra-31-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-31.jpg" alt="26 Alexandra Street, Riverhead - Covered entertaining deck at dusk" width="2500" height="1667"></picture>
     </button>
-    <button type="button" class="gal-tile" style="grid-column:span 3;" onclick="openLightbox(5)" aria-label="Open photo: Covered outdoor entertaining">
-      <picture><source type="image/avif" srcset="images/r/alexandra-61-400.avif 400w, images/r/alexandra-61-800.avif 800w, images/r/alexandra-61-1600.avif 1600w, images/r/alexandra-61-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-61-400.webp 400w, images/r/alexandra-61-800.webp 800w, images/r/alexandra-61-1600.webp 1600w, images/r/alexandra-61-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-61.jpg" alt="Covered outdoor entertaining" width="2500" height="1667"></picture>
+    <button type="button" class="gal-tile" style="grid-column:span 3;" onclick="openLightbox(5)" aria-label="Open photo: Bedroom with leadlight windows">
+      <picture><source type="image/avif" srcset="images/r/alexandra-31-400.avif 400w, images/r/alexandra-31-800.avif 800w, images/r/alexandra-31-1600.avif 1600w, images/r/alexandra-31-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-31-400.webp 400w, images/r/alexandra-31-800.webp 800w, images/r/alexandra-31-1600.webp 1600w, images/r/alexandra-31-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-61.jpg" alt="26 Alexandra Street, Riverhead - Bedroom with leadlight windows" width="2500" height="1667"></picture>
     </button>
-    <button type="button" class="gal-tile" style="grid-column:span 3;" onclick="openLightbox(4)" aria-label="Open photo: Leadlight windows and high stud">
-      <picture><source type="image/avif" srcset="images/r/alexandra-23-400.avif 400w, images/r/alexandra-23-800.avif 800w, images/r/alexandra-23-1600.avif 1600w, images/r/alexandra-23-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-23-400.webp 400w, images/r/alexandra-23-800.webp 800w, images/r/alexandra-23-1600.webp 1600w, images/r/alexandra-23-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-23.jpg" alt="Leadlight windows and high stud" width="2500" height="1667"></picture>
+    <button type="button" class="gal-tile" style="grid-column:span 3;" onclick="openLightbox(4)" aria-label="Open photo: The villa at dusk">
+      <picture><source type="image/avif" srcset="images/r/alexandra-23-400.avif 400w, images/r/alexandra-23-800.avif 800w, images/r/alexandra-23-1600.avif 1600w, images/r/alexandra-23-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-23-400.webp 400w, images/r/alexandra-23-800.webp 800w, images/r/alexandra-23-1600.webp 1600w, images/r/alexandra-23-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-23.jpg" alt="26 Alexandra Street, Riverhead - The villa at dusk" width="2500" height="1667"></picture>
     </button>
-    <button type="button" class="gal-tile" style="grid-column:span 3;" onclick="openLightbox(3)" aria-label="Open photo: Oversized master suite">
-      <picture><source type="image/avif" srcset="images/r/alexandra-39-400.avif 400w, images/r/alexandra-39-800.avif 800w, images/r/alexandra-39-1600.avif 1600w, images/r/alexandra-39-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-39-400.webp 400w, images/r/alexandra-39-800.webp 800w, images/r/alexandra-39-1600.webp 1600w, images/r/alexandra-39-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-39.jpg" alt="Oversized master suite" width="2500" height="1667"></picture>
+    <button type="button" class="gal-tile" style="grid-column:span 3;" onclick="openLightbox(3)" aria-label="Open photo: Off-street parking and entry">
+      <picture><source type="image/avif" srcset="images/r/alexandra-39-400.avif 400w, images/r/alexandra-39-800.avif 800w, images/r/alexandra-39-1600.avif 1600w, images/r/alexandra-39-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-39-400.webp 400w, images/r/alexandra-39-800.webp 800w, images/r/alexandra-39-1600.webp 1600w, images/r/alexandra-39-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-39.jpg" alt="26 Alexandra Street, Riverhead - Off-street parking and entry" width="2500" height="1667"></picture>
     </button>
-    <button type="button" class="gal-tile" style="grid-column:span 3;" onclick="openLightbox(6)" aria-label="Open photo: Established gardens">
-      <picture><source type="image/avif" srcset="images/r/alexandra-78-400.avif 400w, images/r/alexandra-78-800.avif 800w, images/r/alexandra-78-1600.avif 1600w, images/r/alexandra-78-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-78-400.webp 400w, images/r/alexandra-78-800.webp 800w, images/r/alexandra-78-1600.webp 1600w, images/r/alexandra-78-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-78.jpg" alt="Established gardens" width="2500" height="1667"></picture>
+    <button type="button" class="gal-tile" style="grid-column:span 3;" onclick="openLightbox(6)" aria-label="Open photo: Wardrobe and storage">
+      <picture><source type="image/avif" srcset="images/r/alexandra-78-400.avif 400w, images/r/alexandra-78-800.avif 800w, images/r/alexandra-78-1600.avif 1600w, images/r/alexandra-78-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-78-400.webp 400w, images/r/alexandra-78-800.webp 800w, images/r/alexandra-78-1600.webp 1600w, images/r/alexandra-78-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-78.jpg" alt="26 Alexandra Street, Riverhead - Wardrobe and storage" width="2500" height="1667"></picture>
     </button>
   </div>
+</div>
 </section>
 
 <!-- Lightbox overlay -->
-<div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(12,22,40,0.97);z-index:9999;align-items:center;justify-content:center;flex-direction:column;">
-  <button onclick="closeLightbox()" style="position:absolute;top:24px;right:30px;background:none;border:none;color:white;font-size:32px;cursor:pointer;opacity:0.7;">✕</button>
-  <button onclick="changeLB(-1)" style="position:absolute;left:20px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.1);border:none;color:white;font-size:28px;cursor:pointer;padding:16px 20px;border-radius:3px;">‹</button>
-  <img loading="lazy" decoding="async" id="lb-img" style="max-height:85vh;max-width:90vw;object-fit:contain;border-radius:3px;">
-  <div id="lb-caption" style="color:rgba(255,255,255,0.5);font-family:var(--font-mono);font-size: 12.0px;letter-spacing:0.3em;text-transform:uppercase;margin-top:16px;"></div>
-  <button onclick="changeLB(1)" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.1);border:none;color:white;font-size:28px;cursor:pointer;padding:16px 20px;border-radius:3px;">›</button>
+<!-- ── H: LIGHTBOX ─────────────────────────────────────────────────── -->
+<div id="lightbox" class="lb" role="dialog" aria-modal="true" aria-label="Property photo viewer" hidden>
+  <div class="lb-counter" id="lb-counter"></div>
+  <button class="lb-close" id="lb-close" type="button" aria-label="Close viewer">&#10005;</button>
+
+  <button class="lb-zone lb-prev" type="button" aria-label="Previous photo" onclick="changeLB(-1)">
+    <span class="lb-chev" aria-hidden="true">&#8249;</span>
+  </button>
+  <button class="lb-zone lb-next" type="button" aria-label="Next photo" onclick="changeLB(1)">
+    <span class="lb-chev" aria-hidden="true">&#8250;</span>
+  </button>
+
+  <figure class="lb-stage">
+    <img id="lb-img" alt="" decoding="async">
+    <figcaption class="lb-caption">
+      <span class="lb-addr" id="lb-addr"></span>
+      <span class="lb-room" id="lb-room"></span>
+    </figcaption>
+  </figure>
+
+  <div class="lb-film" id="lb-film"></div>
 </div>
 
 <!-- ── LISTINGS GRID ───────────────────────────────────────────────── -->
 <!-- ── OPEN HOMES STRIP ────────────────────────────────────────────── -->
-<div style="background:var(--navy);padding:18px 60px;display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;text-align:center;border-top:1px solid rgba(255,255,255,0.07);border-bottom:1px solid rgba(255,255,255,0.07);">
-  <span style="font-size:14px;color:rgba(255,255,255,0.75);font-weight:300;letter-spacing:0.01em;">Open homes run Saturday and Sunday. Times are on each listing.</span>
-  <a href="#listings-grid" style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-lt);text-decoration:none;border-bottom:1px solid rgba(208,154,184,0.4);padding-bottom:2px;">See this week's open homes →</a>
+<div style="background:var(--navy);padding:18px 0;display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;text-align:center;border-top:1px solid rgba(255,255,255,0.07);border-bottom:1px solid rgba(255,255,255,0.07);">
+  <span style="font-size:14px;color: var(--paper-3);font-weight:300;letter-spacing:0.01em;">Open homes run Saturday and Sunday. Times are on each listing.</span>
+  <a href="#listings-grid" style="font-family:var(--font-mono);font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-lt);text-decoration:none;border-bottom:1px solid rgba(208,154,184,0.4);padding-bottom:2px;">See this week's open homes →</a>
 </div>
 
 <section class="listings-section">
@@ -2732,14 +3179,14 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
       <div class="section-label">Current Listings</div>
       <h2 class="section-title">Homes worth <em>knowing.</em></h2>
     </div>
-    <a href="https://courtneyandco.co.nz/properties-new" target="_blank" class="btn-primary">View All Properties</a>
+    <a href="#listings-grid" class="btn-primary">View All Properties</a>
   </div>
 
   <div class="listings-grid stagger" id="listings-grid">
     <!-- Cards injected dynamically + static demos -->
     <div class="listing-card">
       <div class="listing-img">
-        <picture><source type="image/avif" srcset="images/r/alexandra-44-400.avif 400w, images/r/alexandra-44-800.avif 800w, images/r/alexandra-44-1600.avif 1600w, images/r/alexandra-44-2400.avif 2400w" sizes="(max-width:900px) 100vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-44-400.webp 400w, images/r/alexandra-44-800.webp 800w, images/r/alexandra-44-1600.webp 1600w, images/r/alexandra-44-2400.webp 2400w" sizes="(max-width:900px) 100vw, 33vw"><img width="2500" height="1667" loading="lazy" decoding="async" src="images/alexandra-44.jpg" alt="26 Alexandra Street, Riverhead" style="width:100%;height:100%;object-fit:cover;display:block;"></picture>
+        <picture><source type="image/avif" srcset="images/r/alexandra-44-400.avif 400w, images/r/alexandra-44-800.avif 800w, images/r/alexandra-44-1600.avif 1600w, images/r/alexandra-44-2400.avif 2400w" sizes="(max-width:900px) 100vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-44-400.webp 400w, images/r/alexandra-44-800.webp 800w, images/r/alexandra-44-1600.webp 1600w, images/r/alexandra-44-2400.webp 2400w" sizes="(max-width:900px) 100vw, 33vw"><img width="2500" height="1667" loading="lazy" decoding="async" src="images/alexandra-44.jpg" alt="26 Alexandra Street, Riverhead - Entry hallway" style="width:100%;height:100%;object-fit:cover;display:block;"></picture>
         <span class="listing-tag">For Sale</span>
       </div>
       <div class="listing-body">
@@ -2753,7 +3200,7 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
         </div>
         <div class="listing-cta">
           <div class="listing-price">Price by negotiation</div>
-          <a href="https://courtneyandco.co.nz/26-alexandra-street-riverhead" target="_blank" class="listing-link">View →</a>
+          <a href="#contact" class="listing-link">Enquire →</a>
         </div>
       </div>
     </div>
@@ -2774,7 +3221,7 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
         </div>
         <div class="listing-cta">
           <div class="listing-price">Price by negotiation</div>
-          <a href="https://courtneyandco.co.nz/106-awaroa-road-helensville" target="_blank" class="listing-link">View →</a>
+          <a href="#contact" class="listing-link">Enquire →</a>
         </div>
       </div>
     </div>
@@ -2795,7 +3242,7 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
         </div>
         <div class="listing-cta">
           <div class="listing-price">Price by negotiation</div>
-          <a href="https://courtneyandco.co.nz/208-glenmore-road-coatesville" target="_blank" class="listing-link">View →</a>
+          <a href="#contact" class="listing-link">Enquire →</a>
         </div>
       </div>
     </div>
@@ -2811,7 +3258,7 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
     </div>
     <div style="text-align:right;">
       <div style="font-family:var(--font-display);font-size:clamp(52px,6vw,88px);font-weight:400;color:white;line-height:1;letter-spacing:-0.02em;">$499<span style="color:var(--blue-lt);">M+</span></div>
-      <div style="font-family:var(--font-mono);font-size: 12.0px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:6px;">Total Settled Sales</div>
+      <div style="font-family:var(--font-mono);font-size: 12px;letter-spacing:0.3em;text-transform:uppercase;color: var(--paper-3);margin-top:6px;">Total Settled Sales</div>
     </div>
   </div>
 
@@ -2870,7 +3317,8 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
 </section>
 
 <!-- ── INSTAGRAM FEED ──────────────────────────────────────────────── -->
-<section style="background:var(--warm-white);padding:80px 60px;">
+<section style="background:var(--warm-white);padding:clamp(80px,9vw,140px) 0;">
+<div class="container">
   <div class="fade-up" style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;">
     <div>
       <div class="section-label">Follow Along</div>
@@ -2886,23 +3334,24 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
      neither of which was the brand mauve. -->
 <div class="insta-grid" id="insta-grid">
   <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" rel="noopener" class="insta-tile" aria-label="Courtney &amp; Co on Instagram: Riverhead villa">
-    <picture><source type="image/avif" srcset="images/r/alexandra-01-400.avif 400w, images/r/alexandra-01-800.avif 800w, images/r/alexandra-01-1600.avif 1600w, images/r/alexandra-01-2400.avif 2400w" sizes="(max-width:768px) 33vw, 16vw"><source type="image/webp" srcset="images/r/alexandra-01-400.webp 400w, images/r/alexandra-01-800.webp 800w, images/r/alexandra-01-1600.webp 1600w, images/r/alexandra-01-2400.webp 2400w" sizes="(max-width:768px) 33vw, 16vw"><img loading="lazy" decoding="async" src="images/alexandra-01.jpg" alt="Riverhead villa" width="2500" height="1667"></picture>
+    <picture><source type="image/avif" srcset="images/r/alexandra-01-400.avif 400w, images/r/alexandra-01-800.avif 800w, images/r/alexandra-01-1600.avif 1600w, images/r/alexandra-01-2400.avif 2400w" sizes="(max-width:768px) 33vw, 16vw"><source type="image/webp" srcset="images/r/alexandra-01-400.webp 400w, images/r/alexandra-01-800.webp 800w, images/r/alexandra-01-1600.webp 1600w, images/r/alexandra-01-2400.webp 2400w" sizes="(max-width:768px) 33vw, 16vw"><img loading="lazy" decoding="async" src="images/alexandra-01.jpg" alt="26 Alexandra Street, Riverhead - Villa frontage from the street" width="2500" height="1667"></picture>
   </a>
   <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" rel="noopener" class="insta-tile" aria-label="Courtney &amp; Co on Instagram: Pohutukawa Parade, Riverhead">
     <picture><source type="image/avif" srcset="images/r/sold-pohutukawa-96-400.avif 400w, images/r/sold-pohutukawa-96-800.avif 800w, images/r/sold-pohutukawa-96-1000.avif 1000w" sizes="(max-width:768px) 33vw, 16vw"><source type="image/webp" srcset="images/r/sold-pohutukawa-96-400.webp 400w, images/r/sold-pohutukawa-96-800.webp 800w, images/r/sold-pohutukawa-96-1000.webp 1000w" sizes="(max-width:768px) 33vw, 16vw"><img loading="lazy" decoding="async" src="images/sold-pohutukawa-96.jpg" alt="Pohutukawa Parade, Riverhead" width="1000" height="667"></picture>
   </a>
   <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" rel="noopener" class="insta-tile" aria-label="Courtney &amp; Co on Instagram: Outdoor entertaining">
-    <picture><source type="image/avif" srcset="images/r/alexandra-61-400.avif 400w, images/r/alexandra-61-800.avif 800w, images/r/alexandra-61-1600.avif 1600w, images/r/alexandra-61-2400.avif 2400w" sizes="(max-width:768px) 33vw, 16vw"><source type="image/webp" srcset="images/r/alexandra-61-400.webp 400w, images/r/alexandra-61-800.webp 800w, images/r/alexandra-61-1600.webp 1600w, images/r/alexandra-61-2400.webp 2400w" sizes="(max-width:768px) 33vw, 16vw"><img loading="lazy" decoding="async" src="images/alexandra-61.jpg" alt="Outdoor entertaining" width="2500" height="1667"></picture>
+    <picture><source type="image/avif" srcset="images/r/alexandra-31-400.avif 400w, images/r/alexandra-31-800.avif 800w, images/r/alexandra-31-1600.avif 1600w, images/r/alexandra-31-2400.avif 2400w" sizes="(max-width:768px) 33vw, 16vw"><source type="image/webp" srcset="images/r/alexandra-31-400.webp 400w, images/r/alexandra-31-800.webp 800w, images/r/alexandra-31-1600.webp 1600w, images/r/alexandra-31-2400.webp 2400w" sizes="(max-width:768px) 33vw, 16vw"><img loading="lazy" decoding="async" src="images/alexandra-61.jpg" alt="26 Alexandra Street, Riverhead - Bedroom with leadlight windows" width="2500" height="1667"></picture>
   </a>
   <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" rel="noopener" class="insta-tile" aria-label="Courtney &amp; Co on Instagram: Glenmore Road, Coatesville">
     <picture><source type="image/avif" srcset="images/r/glenmore-09-400.avif 400w, images/r/glenmore-09-800.avif 800w, images/r/glenmore-09-1600.avif 1600w, images/r/glenmore-09-2400.avif 2400w" sizes="(max-width:768px) 33vw, 16vw"><source type="image/webp" srcset="images/r/glenmore-09-400.webp 400w, images/r/glenmore-09-800.webp 800w, images/r/glenmore-09-1600.webp 1600w, images/r/glenmore-09-2400.webp 2400w" sizes="(max-width:768px) 33vw, 16vw"><img loading="lazy" decoding="async" src="images/glenmore-09.jpg" alt="Glenmore Road, Coatesville" width="2500" height="1667"></picture>
   </a>
   <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" rel="noopener" class="insta-tile" aria-label="Courtney &amp; Co on Instagram: Villa kitchen">
-    <picture><source type="image/avif" srcset="images/r/alexandra-31-400.avif 400w, images/r/alexandra-31-800.avif 800w, images/r/alexandra-31-1600.avif 1600w, images/r/alexandra-31-2400.avif 2400w" sizes="(max-width:768px) 33vw, 16vw"><source type="image/webp" srcset="images/r/alexandra-31-400.webp 400w, images/r/alexandra-31-800.webp 800w, images/r/alexandra-31-1600.webp 1600w, images/r/alexandra-31-2400.webp 2400w" sizes="(max-width:768px) 33vw, 16vw"><img loading="lazy" decoding="async" src="images/alexandra-31.jpg" alt="Villa kitchen" width="2500" height="1667"></picture>
+    <picture><source type="image/avif" srcset="images/r/alexandra-31-400.avif 400w, images/r/alexandra-31-800.avif 800w, images/r/alexandra-31-1600.avif 1600w, images/r/alexandra-31-2400.avif 2400w" sizes="(max-width:768px) 33vw, 16vw"><source type="image/webp" srcset="images/r/alexandra-31-400.webp 400w, images/r/alexandra-31-800.webp 800w, images/r/alexandra-31-1600.webp 1600w, images/r/alexandra-31-2400.webp 2400w" sizes="(max-width:768px) 33vw, 16vw"><img loading="lazy" decoding="async" src="images/alexandra-31.jpg" alt="26 Alexandra Street, Riverhead - Covered entertaining deck at dusk" width="2500" height="1667"></picture>
   </a>
   <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" rel="noopener" class="insta-tile" aria-label="Courtney &amp; Co on Instagram: Awaroa Road, Helensville">
     <picture><source type="image/avif" srcset="images/r/awaroa-01-400.avif 400w, images/r/awaroa-01-800.avif 800w, images/r/awaroa-01-1600.avif 1600w, images/r/awaroa-01-2400.avif 2400w" sizes="(max-width:768px) 33vw, 16vw"><source type="image/webp" srcset="images/r/awaroa-01-400.webp 400w, images/r/awaroa-01-800.webp 800w, images/r/awaroa-01-1600.webp 1600w, images/r/awaroa-01-2400.webp 2400w" sizes="(max-width:768px) 33vw, 16vw"><img loading="lazy" decoding="async" src="images/awaroa-01.jpg" alt="Awaroa Road, Helensville" width="2500" height="1667"></picture>
   </a>
+</div>
 </div>
 </section>
 
@@ -3090,12 +3539,12 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
   </blockquote>
 
   <div class="vt-grid stagger">
-    <button class="vt-card" type="button" data-yt="" data-src-id="rTG1BDPoJew" data-href="https://courtneyandco.co.nz/testimonials" aria-label="Play video testimonial: Hear it from Mark &amp; Liz">
+    <button class="vt-card" type="button" data-yt="" data-src-id="rTG1BDPoJew" aria-label="Play video testimonial: Hear it from Mark &amp; Liz">
       <picture><source type="image/avif" srcset="images/r/video-mark-liz-400.avif 400w, images/r/video-mark-liz-480.avif 480w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/video-mark-liz-400.webp 400w, images/r/video-mark-liz-480.webp 480w" sizes="(max-width:900px) 100vw, 50vw"><img width="480" height="360" loading="lazy" decoding="async" src="images/video-mark-liz.webp" alt="Hear it from Mark &amp; Liz"></picture>
       <span class="vt-play"><span class="vt-play-btn"></span></span>
       <span class="vt-label">Hear it from Mark &amp; Liz</span>
     </button>
-    <button class="vt-card" type="button" data-yt="" data-src-id="TFnr5M34WnE" data-href="https://courtneyandco.co.nz/testimonials" aria-label="Play video testimonial: Hear it from Mary &amp; Kevin">
+    <button class="vt-card" type="button" data-yt="" data-src-id="TFnr5M34WnE" aria-label="Play video testimonial: Hear it from Mary &amp; Kevin">
       <picture><source type="image/avif" srcset="images/r/video-mary-kevin-400.avif 400w, images/r/video-mary-kevin-480.avif 480w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/video-mary-kevin-400.webp 400w, images/r/video-mary-kevin-480.webp 480w" sizes="(max-width:900px) 100vw, 50vw"><img width="480" height="360" loading="lazy" decoding="async" src="images/video-mary-kevin.webp" alt="Hear it from Mary &amp; Kevin"></picture>
       <span class="vt-play"><span class="vt-play-btn"></span></span>
       <span class="vt-label">Hear it from Mary &amp; Kevin</span>
@@ -3154,7 +3603,39 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
   </div>
 
   <div style="text-align:center;margin-top:56px;">
-    <a href="https://courtneyandco.co.nz/testimonials" target="_blank" class="btn-primary">Read All Testimonials</a>
+    <button type="button" class="btn-primary" id="testi-toggle" aria-expanded="false" aria-controls="testimonials-all">Read All Testimonials</button>
+  </div>
+
+  <!-- G: expands in place. A private preview should not send the client
+       off to her own live site. -->
+  <div id="testimonials-all" class="testi-grid stagger visible" hidden style="margin-top:32px;">
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <p class="testi-text">Courtney is unmatched when it comes to sales and marketing. We have been looking for our dream home for years (literally). When we were finally ready, she was hot on our heels with listings and knew exactly what we were after. Courtney is straight talking, you know exactly where you stand and there is no fluff.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">K</div>
+          <div class="testi-name">Katie &amp; Tom</div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <p class="testi-text">We contacted Courtney about selling our home as we considered her a specialist in the Riverhead area and had heard good things about Courtney &amp; Co. We listed and after one open home on Sunday, a follow up viewing on Wednesday, the home was sold unconditional on the Friday. How quick and easy was that!</p>
+        <div class="testi-author">
+          <div class="testi-avatar">B</div>
+          <div class="testi-name">Bruce Cox</div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <p class="testi-text">Courtney recently sold our property and she was a delight to deal with. We had some great chats and laughs during the time our house was on the market. Courtney was very professional, put us at ease and had our home sold in record time! Courtney knows the market and fully supported our family throughout the process.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">B</div>
+          <div class="testi-name">Bette</div>
+        </div>
+      </div>
+  </div>
+
+  <div style="text-align:center;margin-top:24px;">
   </div>
 </section>
 
@@ -3208,8 +3689,8 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
       </div>
       <div>
         <div style="font-family:var(--font-display);font-size:16px;color:white;font-weight:400;">Rubble</div>
-        <div style="font-family:var(--font-mono);font-size:11px;color:var(--blue-lt);letter-spacing:0.15em;text-transform:uppercase;margin-top:2px;">Chief Morale Officer</div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-top:6px;line-height:1.5;">Dedicated, loyal, still mastering the bathroom routine. Would someone say 'Walkies'?</div>
+        <div style="font-family:var(--font-mono);font-size:12px;color:var(--blue-lt);letter-spacing:0.15em;text-transform:uppercase;margin-top:2px;">Chief Morale Officer</div>
+        <div style="font-size:13px;color: var(--paper-3);margin-top:6px;line-height:1.5;">Dedicated, loyal, still mastering the bathroom routine. Would someone say 'Walkies'?</div>
       </div>
     </div>
   </div>
@@ -3262,7 +3743,8 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
 </main>
 
 <!-- ── NEWSLETTER ──────────────────────────────────────────────────── -->
-<section style="background:var(--cream-dark);padding:56px 60px;border-top:1px solid var(--light-line);">
+<section style="background:var(--cream-dark);padding:clamp(64px,6vw,96px) 0;border-top:1px solid var(--light-line);">
+<div class="container">
   <div style="max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;">
     <h2 style="font-family:var(--font-display);font-size:clamp(22px,2.4vw,30px);font-weight:300;color:var(--navy);line-height:1.25;margin:0;flex:1 1 320px;">Get the North West market update first.</h2>
     <div style="display:flex;gap:10px;flex:1 1 340px;flex-wrap:wrap;">
@@ -3271,37 +3753,39 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
       <button class="form-submit" style="width:auto;padding:14px 28px;white-space:nowrap;" onclick="handleFormSubmit(event)">Sign me up</button>
     </div>
   </div>
+</div>
 </section>
 
 <!-- ── FOOTER ──────────────────────────────────────────────────────── -->
 <footer>
-  <div class="footer-logo">
-    <div class="footer-logo-main">Courtney &amp; Co</div>
-    <div class="footer-logo-tag">Straight Talking Real Estate - Licensed REA 2008</div>
+  <!-- ── E: three zones on one baseline. The Trade Me and realestate.co.nz
+       circles were unreadable generic glyphs, so they are dropped rather
+       than shipped as mystery icons; those brands appear as real logos in
+       the marquee. Facebook and Instagram are dropped from the text list
+       because they are already icons. -->
+  <div class="footer-row">
+    <div class="footer-logo">
+      <div class="footer-logo-main">Courtney &amp; Co</div>
+      <div class="footer-logo-tag">Straight Talking Real Estate - Licensed REA 2008</div>
+    </div>
+
+    <div class="footer-social">
+      <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" rel="noopener" aria-label="Courtney &amp; Co on Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+      <a href="https://www.facebook.com/CourtneyandCoLtd/" target="_blank" rel="noopener" aria-label="Courtney &amp; Co on Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+    </div>
+
+    <ul class="footer-links">
+      <li><a href="#properties">Properties</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
   </div>
-  <div style="display:flex;gap:14px;margin-bottom:20px;">
-    <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-    </a>
-    <a href="https://www.facebook.com/CourtneyandCoLtd/" target="_blank" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-    </a>
-    <a href="https://www.trademe.co.nz/property" target="_blank" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
-    </a>
-    <a href="https://www.realestate.co.nz" target="_blank" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-    </a>
-  </div>
-  <ul class="footer-links">
-    <li><a href="https://courtneyandco.co.nz">Properties</a></li>
-    <li><a href="https://courtneyandco.co.nz/general-enquires">Contact</a></li>
-    <li><a href="https://www.facebook.com/CourtneyandCoLtd/" target="_blank">Facebook</a></li>
-    <li><a href="https://www.instagram.com/courtney_and_co_/" target="_blank">Instagram</a></li>
-  </ul>
-  <div class="footer-legal">
-    © 2026 Courtney &amp; Co Ltd. All rights reserved.<br>
-    Licensed under the Real Estate Agents Act 2008.
+
+  <div class="footer-fine">
+    <div class="footer-legal">
+      © 2026 Courtney &amp; Co Ltd. All rights reserved. Licensed under the Real Estate Agents Act 2008.
+    </div>
+    <!-- F: sourcing moved off the stats band, kept as substantiation here. -->
+    <div class="footer-source">Sales figures sourced from homes.co.nz, August 2026.</div>
   </div>
 </footer>
 
@@ -3341,7 +3825,7 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
       <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
     </button>
   </div>
-  <div style="padding:0 18px 12px;font-size:11px;line-height:1.45;color:var(--mid);text-align:center;">General information only. Courtney confirms all specifics.</div>
+  <div style="padding:0 18px 12px;font-size:13px;line-height:1.45;color:var(--ink-2);text-align:center;">General information only. Courtney confirms all specifics.</div>
 </div>
 
 <!-- ── SCRIPTS ─────────────────────────────────────────────────────── -->
@@ -3582,46 +4066,96 @@ document.querySelectorAll('.vt-card').forEach(function(card) {
   });
 });
 
-// -- LIGHTBOX -----------------------------------------------------
-// Indices match the onclick="openLightbox(n)" calls in the feature
-// listing and the property gallery.
+// -- H: LIGHTBOX --------------------------------------------------
+// Indices match the onclick="openLightbox(n)" calls in the feature listing
+// and the gallery mosaic.
 var LB_PHOTOS = [
-  { src: 'images/alexandra-01.jpg', cap: '26 Alexandra Street, Riverhead' },
-  { src: 'images/alexandra-15.jpg', cap: 'Family living room' },
-  { src: 'images/alexandra-31.jpg', cap: 'Upgraded kitchen' },
-  { src: 'images/alexandra-39.jpg', cap: 'Oversized master suite' },
-  { src: 'images/alexandra-23.jpg', cap: 'Leadlight windows and high stud' },
-  { src: 'images/alexandra-61.jpg', cap: 'Covered outdoor entertaining' },
-  { src: 'images/alexandra-78.jpg', cap: 'Established gardens' },
-  { src: 'images/alexandra-44.jpg', cap: 'Covered verandah' },
-  { src: 'images/alexandra-55.jpg', cap: 'Villa frontage' }
+  { stem: 'alexandra-01', room: 'Villa frontage from the street' },
+  { stem: 'alexandra-15', room: 'Street frontage and bay window' },
+  { stem: 'alexandra-31', room: 'Covered entertaining deck at dusk' },
+  { stem: 'alexandra-39', room: 'Off-street parking and entry' },
+  { stem: 'alexandra-23', room: 'The villa at dusk' },
+  { stem: 'alexandra-61', room: 'Bedroom with leadlight windows' },
+  { stem: 'alexandra-78', room: 'Wardrobe and storage' },
+  { stem: 'alexandra-44', room: 'Entry hallway' },
+  { stem: 'alexandra-55', room: 'Living room and outlook' }
 ];
-var lbIndex = 0;
+var LB_ADDR = '26 Alexandra Street, Riverhead';
+var lbIndex = 0, lbOpener = null, lbScrollY = 0;
+
+// 2x source so enlarging stays sharp
+function lbSrc(i) { return 'images/r/' + LB_PHOTOS[i].stem + '-2400.webp'; }
+function lbThumbSrc(i) { return 'images/r/' + LB_PHOTOS[i].stem + '-400.webp'; }
+
+function lbPreload(i) {
+  var n = (i + 1) % LB_PHOTOS.length, p = (i - 1 + LB_PHOTOS.length) % LB_PHOTOS.length;
+  [n, p].forEach(function (k) { var im = new Image(); im.src = lbSrc(k); });
+}
 
 function renderLB() {
   var img = document.getElementById('lb-img');
-  var cap = document.getElementById('lb-caption');
   var photo = LB_PHOTOS[lbIndex];
   if (!img || !photo) return;
-  img.src = photo.src;
-  img.alt = photo.cap;
-  if (cap) cap.textContent = photo.cap;
+  img.src = lbSrc(lbIndex);
+  img.alt = LB_ADDR + ' - ' + photo.room;
+  document.getElementById('lb-addr').textContent = LB_ADDR;
+  document.getElementById('lb-room').textContent = photo.room;
+  var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+  document.getElementById('lb-counter').textContent =
+    pad(lbIndex + 1) + ' / ' + pad(LB_PHOTOS.length);
+  document.querySelectorAll('.lb-thumb').forEach(function (t, k) {
+    t.setAttribute('aria-current', k === lbIndex ? 'true' : 'false');
+  });
+  lbPreload(lbIndex);
+}
+
+function buildFilm() {
+  var film = document.getElementById('lb-film');
+  if (!film || film.childElementCount) return;
+  LB_PHOTOS.forEach(function (ph, k) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'lb-thumb';
+    b.setAttribute('aria-label', 'Show photo ' + (k + 1) + ': ' + ph.room);
+    var im = document.createElement('img');
+    im.src = lbThumbSrc(k); im.alt = ''; im.loading = 'lazy';
+    b.appendChild(im);
+    b.addEventListener('click', function () { lbIndex = k; renderLB(); });
+    film.appendChild(b);
+  });
 }
 
 function openLightbox(i) {
   var box = document.getElementById('lightbox');
   if (!box) return;
+  lbOpener = document.activeElement;
   lbIndex = (typeof i === 'number' && LB_PHOTOS[i]) ? i : 0;
+  buildFilm();
   renderLB();
-  box.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
+  // lock scroll without losing position
+  lbScrollY = window.scrollY;
+  document.body.style.position = 'fixed';
+  document.body.style.top = (-lbScrollY) + 'px';
+  document.body.style.width = '100%';
+  box.hidden = false;
+  requestAnimationFrame(function () { box.classList.add('is-open'); });
+  document.getElementById('lb-close').focus();
 }
 
 function closeLightbox() {
   var box = document.getElementById('lightbox');
-  if (!box) return;
-  box.style.display = 'none';
-  document.body.style.overflow = '';
+  if (!box || box.hidden) return;
+  box.classList.remove('is-open');
+  var done = function () {
+    box.hidden = true;
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    window.scrollTo(0, lbScrollY);
+    if (lbOpener && lbOpener.focus) lbOpener.focus();
+  };
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) done();
+  else setTimeout(done, 200);
 }
 
 function changeLB(step) {
@@ -3629,19 +4163,38 @@ function changeLB(step) {
   renderLB();
 }
 
-// Backdrop click closes; arrow keys and Escape work while open.
-(function() {
+(function () {
   var box = document.getElementById('lightbox');
-  if (box) {
-    box.addEventListener('click', function(e) { if (e.target === box) closeLightbox(); });
-  }
-  document.addEventListener('keydown', function(e) {
-    var open = box && box.style.display === 'flex';
-    if (!open) return;
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowLeft') changeLB(-1);
-    if (e.key === 'ArrowRight') changeLB(1);
+  if (!box) return;
+  document.getElementById('lb-close').addEventListener('click', closeLightbox);
+
+  document.addEventListener('keydown', function (e) {
+    if (box.hidden) return;
+    if (e.key === 'Escape') { closeLightbox(); return; }
+    if (e.key === 'ArrowLeft')  { changeLB(-1); return; }
+    if (e.key === 'ArrowRight') { changeLB(1);  return; }
+    if (e.key === 'Tab') {                       // trap focus inside the dialog
+      var f = box.querySelectorAll('button');
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
   });
+
+  // touch: horizontal swipe pages, swipe down closes
+  var x0 = null, y0 = null;
+  box.addEventListener('touchstart', function (e) {
+    x0 = e.touches[0].clientX; y0 = e.touches[0].clientY;
+  }, { passive: true });
+  box.addEventListener('touchend', function (e) {
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0;
+    var dy = e.changedTouches[0].clientY - y0;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 45) changeLB(dx < 0 ? 1 : -1);
+    else if (dy > 70) closeLightbox();
+    x0 = y0 = null;
+  }, { passive: true });
 })();
 
 // -- DEMO FORM HANDLER --------------------------------------------
@@ -3701,6 +4254,54 @@ function handleFormSubmit(e) {
   window.addEventListener('scroll', tick, { passive: true });
   window.addEventListener('resize', tick);
   tick();
+})();
+
+// -- G: expand testimonials in place, never leave the preview ------
+(function () {
+  var btn = document.getElementById('testi-toggle');
+  var panel = document.getElementById('testimonials-all');
+  if (!btn || !panel) return;
+  btn.addEventListener('click', function () {
+    var open = panel.hidden;
+    panel.hidden = !open;
+    btn.setAttribute('aria-expanded', String(open));
+    btn.textContent = open ? 'Show Fewer Testimonials' : 'Read All Testimonials';
+    if (open) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+})();
+
+// -- I2: cover gate -----------------------------------------------
+(function () {
+  var ACCESS = 'riverhead';
+  var cover  = document.getElementById('cover');
+  var form   = document.getElementById('cover-form');
+  var input  = document.getElementById('cover-code');
+  var err    = document.getElementById('cover-err');
+  if (!cover) return;
+
+  function reveal() {
+    cover.hidden = true;
+    document.documentElement.classList.remove('cover-pending');
+    document.body.classList.remove('cover-open');
+  }
+
+  if (window.__coverPassed) { reveal(); return; }
+
+  document.body.classList.add('cover-open');
+  if (input) setTimeout(function () { input.focus(); }, 120);
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = (input.value || '').trim().toLowerCase();
+    if (v === ACCESS) {
+      window.__coverPassed = true;   // in memory only, never persisted
+      reveal();
+    } else {
+      err.hidden = false;
+      input.focus();
+      input.select();
+    }
+  });
 })();
 </script>
 <!-- D4: sticky mobile action bar. The phone is the conversion on a property site. -->
