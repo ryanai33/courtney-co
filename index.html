@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-NZ">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Courtney & Co - Straight Talking Real Estate</title>
+<meta name="description" content="Boutique real estate across Riverhead, Kumeu, Waimauku, Helensville and North West Auckland. 15+ years, 366 homes sold, straight answers.">
+<link rel="canonical" href="https://courtneyandco.co.nz/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -767,139 +769,62 @@ nav.scrolled {
   color: rgba(255,255,255,0.5);
 }
 
-/* ── AS SEEN IN - SCROLL TICKER ────────────────────────────────── */
-.ticker-section {
+/* ── LISTED AND FEATURED ON ────────────────────────────────────── */
+/* One typeface, one colour, evenly spaced. No third-party marks are
+   drawn or imitated anywhere on this page. */
+.press-section {
   background: white;
-  padding: 40px 0;
-  overflow: hidden;
-  position: relative;
+  padding: 44px 60px 48px;
   border-top: 1px solid var(--light-line);
   border-bottom: 1px solid var(--light-line);
+  text-align: center;
 }
 
-.ticker-label {
-  position: absolute;
-  left: 60px;
-  top: 50%;
-  transform: translateY(-50%);
+.press-eyebrow {
   font-family: var(--font-mono);
   font-size: 10.8px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--pink);
-  z-index: 2;
-  background: white;
-  padding-right: 20px;
+  margin-bottom: 22px;
 }
 
-.ticker-fade-left, .ticker-fade-right {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 180px;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.ticker-fade-left {
-  left: 0;
-  background: linear-gradient(to right, white, transparent);
-}
-
-.ticker-fade-right {
-  right: 0;
-  background: linear-gradient(to left, white, transparent);
-}
-
-.ticker-track {
+.press-row {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   gap: 0;
-  animation: ticker 25s linear infinite;
-  width: max-content;
+  margin: 0 auto;
+  max-width: 1100px;
 }
 
-.ticker-track:hover { animation-play-state: paused; }
-
-@keyframes ticker {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-
-.ticker-item {
-  display: flex;
-  align-items: center;
-  padding: 0 44px;
-  gap: 14px;
-  text-decoration: none;
-  color: var(--navy);
+.press-name {
   font-family: var(--font-body);
-  font-size: 15.6px;
+  font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0.04em;
-  transition: opacity 0.2s;
-  white-space: nowrap;
-  position: relative;
-  cursor: pointer;
-  opacity: 0.7;
-}
-
-.ticker-item:hover { opacity: 1; }
-
-.ticker-item::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 4px;
-  height: 4px;
-  background: var(--pink);
-  border-radius: 50%;
-  opacity: 0.4;
-}
-
-.ticker-item-logo {
-  height: 22px;
-  width: auto;
-  opacity: 0.65;
-  transition: opacity 0.2s;
-  filter: saturate(0);
-}
-
-.ticker-item:hover .ticker-item-logo { opacity: 1; filter: saturate(1); }
-
-/* SVG logo placeholders */
-.logo-svg {
-  height: 18px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.brand-logo {
-  height: 38px;
-  width: auto;
-  display: block;
-  transition: opacity 0.2s;
-  opacity: 0.75;
-}
-
-.ticker-item:hover .brand-logo { opacity: 1; }
-
-.logo-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
-  border: 1px solid var(--light-line);
-  border-radius: 3px;
-  font-size: 14.4px;
-  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   color: var(--navy);
-  transition: all 0.2s;
+  opacity: 0.55;
+  white-space: nowrap;
+  padding: 6px 0;
 }
 
-.ticker-item:hover .logo-badge { border-color: var(--pink); color: var(--pink); }
+/* Interpunct trails each name except the last. Using ::after rather than
+   ::before means a wrapped line starts with a name, not an orphaned dot. */
+.press-name:not(:last-child)::after {
+  content: "·";
+  opacity: 0.5;
+  margin: 0 18px;
+  letter-spacing: 0;
+}
+
+@media (max-width: 900px) {
+  .press-section { padding: 36px 24px 40px; }
+  .press-name { font-size: 11.5px; letter-spacing: 0.16em; }
+  .press-name:not(:last-child)::after { margin: 0 11px; }
+}
 
 /* ── LISTINGS GRID ─────────────────────────────────────────────── */
 .listings-section {
@@ -2045,7 +1970,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
   .prop-details { grid-template-columns: 1fr 1fr; }
   footer { padding: 40px 30px; }
   .nav-links { display: none; }
-  .sold-header, .ticker-label { padding: 0 30px; }
+  .sold-header { padding: 0 30px; }
   .sold-scroll-wrap { padding: 0 30px 20px; }
 }
 
@@ -2262,7 +2187,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
       </div>
       <div class="value-item">
         <div class="value-dot"></div>
-        <span class="value-text">Local knowledge, deep</span>
+        <span class="value-text">Deep local knowledge</span>
       </div>
       <div class="value-item">
         <div class="value-dot"></div>
@@ -2274,130 +2199,18 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
   </div>
 </section>
 
-<div class="ticker-section">
-  <div class="ticker-label">As Seen In</div>
-  <div class="ticker-fade-left"></div>
-  <div class="ticker-fade-right"></div>
-  <div class="ticker-track" id="ticker">
-    <!-- First set -->
-    <a class="ticker-item" href="https://www.trademe.co.nz/property" target="_blank">
-      <svg class="brand-logo" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg">
-        <text x="0" y="22" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#006e52">trademe</text>
-        <text x="62" y="22" font-family="Arial,sans-serif" font-size="10" font-weight="400" fill="#555">property</text>
-      </svg>
-    </a>
-    <a class="ticker-item" href="https://www.realestate.co.nz" target="_blank">
-      <svg class="brand-logo" viewBox="0 0 100 30" xmlns="http://www.w3.org/2000/svg">
-        <rect x="0" y="5" width="22" height="18" rx="2" fill="#e8401c"/>
-        <text x="3" y="19" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="white">re</text>
-        <text x="26" y="20" font-family="Arial,sans-serif" font-size="9.5" font-weight="500" fill="#333">realestate.co.nz</text>
-      </svg>
-    </a>
-    <a class="ticker-item" href="https://www.oneroof.co.nz" target="_blank">
-      <svg class="brand-logo" viewBox="0 0 110 30" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="12,20 22,8 32,20" fill="#f5a623" opacity="0.9"/>
-        <rect x="15" y="14" width="14" height="8" fill="#f5a623" opacity="0.9"/>
-        <text x="37" y="20" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#333">OneRoof</text>
-        <text x="87" y="20" font-family="Arial,sans-serif" font-size="9" fill="#888">.co.nz</text>
-      </svg>
-    </a>
-    <a class="ticker-item" href="https://www.homes.co.nz" target="_blank">
-      <svg class="brand-logo" viewBox="0 0 100 30" xmlns="http://www.w3.org/2000/svg">
-        <path d="M8 22 L8 14 L14 8 L20 14 L20 22 Z M11 22 L11 17 L17 17 L17 22" fill="none" stroke="#00b4d8" stroke-width="2"/>
-        <text x="25" y="20" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#00b4d8">homes</text>
-        <text x="71" y="20" font-family="Arial,sans-serif" font-size="9" fill="#888">.co.nz</text>
-      </svg>
-    </a>
-    <a class="ticker-item" href="https://www.ratemyagent.co.nz" target="_blank">
-      <svg class="brand-logo" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg">
-        <rect x="0" y="3" width="120" height="24" rx="3" fill="#1a1a2e"/>
-        <text x="8" y="20" font-family="Arial,sans-serif" font-size="10.5" font-weight="700" fill="white">ratemyagent</text>
-        <circle cx="107" cy="15" r="5" fill="#f5a623"/>
-        <text x="104" y="19" font-family="Arial,sans-serif" font-size="8" font-weight="700" fill="white">®</text>
-      </svg>
-    </a>
-    <a class="ticker-item" href="https://www.hougarden.com" target="_blank">
-      <svg class="brand-logo" viewBox="0 0 110 30" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="13" cy="15" r="11" fill="#00a0dc"/>
-        <text x="6" y="19" font-family="Arial,sans-serif" font-size="10" font-weight="700" fill="white">h</text>
-        <text x="28" y="20" font-family="Arial,sans-serif" font-size="11" font-weight="600" fill="#333">后花园</text>
-        <text x="55" y="20" font-family="Arial,sans-serif" font-size="9" fill="#888"> hougarden</text>
-      </svg>
-    </a>
-    <a class="ticker-item" href="https://www.stuff.co.nz" target="_blank">
-      <svg class="brand-logo" viewBox="0 0 70 30" xmlns="http://www.w3.org/2000/svg">
-        <text x="0" y="21" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#e31837">stuff</text>
-      </svg>
-    </a>
-    <a class="ticker-item" href="https://www.neighbourly.co.nz" target="_blank">
-      <svg class="brand-logo" viewBox="0 0 110 30" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="13" cy="15" r="10" fill="none" stroke="#4caf50" stroke-width="2"/>
-        <path d="M8 18 Q13 10 18 18" fill="none" stroke="#4caf50" stroke-width="1.5"/>
-        <text x="26" y="20" font-family="Arial,sans-serif" font-size="11" font-weight="600" fill="#4caf50">Neighbourly</text>
-      </svg>
-    </a>
-    <a class="ticker-item" href="https://m2woman.com" target="_blank">
-      <svg class="brand-logo" viewBox="0 0 90 30" xmlns="http://www.w3.org/2000/svg">
-        <text x="0" y="22" font-family="Arial Black,sans-serif" font-size="15" font-weight="900" fill="#1a1a1a" letter-spacing="-0.5">M2WOMAN</text>
-      </svg>
-    </a>
-    <!-- Duplicate for continuous loop -->
-    <a class="ticker-item" href="https://www.trademe.co.nz/property" target="_blank">
-      <svg class="brand-logo" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg">
-        <text x="0" y="22" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#006e52">trademe</text>
-        <text x="62" y="22" font-family="Arial,sans-serif" font-size="10" font-weight="400" fill="#555">property</text>
-      </svg>
-    </a>
-    <a class="ticker-item" href="https://www.realestate.co.nz" target="_blank">
-      <svg class="brand-logo" viewBox="0 0 100 30" xmlns="http://www.w3.org/2000/svg">
-        <rect x="0" y="5" width="22" height="18" rx="2" fill="#e8401c"/>
-        <text x="3" y="19" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="white">re</text>
-        <text x="26" y="20" font-family="Arial,sans-serif" font-size="9.5" font-weight="500" fill="#333">realestate.co.nz</text>
-      </svg>
-    </a>
-    <a class="ticker-item" href="https://www.oneroof.co.nz" target="_blank">
-      <svg class="brand-logo" viewBox="0 0 110 30" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="12,20 22,8 32,20" fill="#f5a623" opacity="0.9"/>
-        <rect x="15" y="14" width="14" height="8" fill="#f5a623" opacity="0.9"/>
-        <text x="37" y="20" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#333">OneRoof</text>
-        <text x="87" y="20" font-family="Arial,sans-serif" font-size="9" fill="#888">.co.nz</text>
-      </svg>
-    </a>
-    <a class="ticker-item" href="https://www.homes.co.nz" target="_blank">
-      <svg class="brand-logo" viewBox="0 0 100 30" xmlns="http://www.w3.org/2000/svg">
-        <path d="M8 22 L8 14 L14 8 L20 14 L20 22 Z M11 22 L11 17 L17 17 L17 22" fill="none" stroke="#00b4d8" stroke-width="2"/>
-        <text x="25" y="20" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#00b4d8">homes</text>
-        <text x="71" y="20" font-family="Arial,sans-serif" font-size="9" fill="#888">.co.nz</text>
-      </svg>
-    </a>
-    <a class="ticker-item" href="https://www.ratemyagent.co.nz" target="_blank">
-      <svg class="brand-logo" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg">
-        <rect x="0" y="3" width="120" height="24" rx="3" fill="#1a1a2e"/>
-        <text x="8" y="20" font-family="Arial,sans-serif" font-size="10.5" font-weight="700" fill="white">ratemyagent</text>
-        <circle cx="107" cy="15" r="5" fill="#f5a623"/>
-        <text x="104" y="19" font-family="Arial,sans-serif" font-size="8" font-weight="700" fill="white">®</text>
-      </svg>
-    </a>
-    <a class="ticker-item" href="https://www.hougarden.com" target="_blank">
-      <svg class="brand-logo" viewBox="0 0 110 30" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="13" cy="15" r="11" fill="#00a0dc"/>
-        <text x="6" y="19" font-family="Arial,sans-serif" font-size="10" font-weight="700" fill="white">h</text>
-        <text x="28" y="20" font-family="Arial,sans-serif" font-size="11" font-weight="600" fill="#333">后花园</text>
-        <text x="55" y="20" font-family="Arial,sans-serif" font-size="9" fill="#888"> hougarden</text>
-      </svg>
-    </a>
-    <a class="ticker-item" href="https://www.stuff.co.nz" target="_blank">
-      <svg class="brand-logo" viewBox="0 0 70 30" xmlns="http://www.w3.org/2000/svg">
-        <text x="0" y="21" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#e31837">stuff</text>
-      </svg>
-    </a>
-    <a class="ticker-item" href="https://www.neighbourly.co.nz" target="_blank">
-      <svg class="brand-logo" viewBox="0 0 110 30" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="13" cy="15" r="10" fill="none" stroke="#4caf50" stroke-width="2"/>
-        <path d="M8 18 Q13 10 18 18" fill="none" stroke="#4caf50" stroke-width="1.5"/>
-        <text x="26" y="20" font-family="Arial,sans-serif" font-size="11" font-weight="600" fill="#4caf50">Neighbourly</text>
-      </svg>
-    </a>
+<div class="press-section">
+  <div class="press-eyebrow">Listed and Featured On</div>
+  <div class="press-row">
+    <span class="press-name">Trade Me</span>
+    <span class="press-name">realestate.co.nz</span>
+    <span class="press-name">OneRoof</span>
+    <span class="press-name">homes.co.nz</span>
+    <span class="press-name">RateMyAgent</span>
+    <span class="press-name">HouGarden</span>
+    <span class="press-name">Stuff</span>
+    <span class="press-name">Neighbourly</span>
+    <span class="press-name">M2woman</span>
   </div>
 </div>
 
@@ -3257,6 +3070,13 @@ try {
 setTimeout(revealAll, 400);
 
 // -- COURTNEY & CO AI CONCIERGE ----------------------------------
+// Set this to the Cloudflare Worker URL to enable live model replies.
+// Empty means the widget answers locally from fallbackResponse().
+// Never put an API key in this file - the repo is public.
+var CONCIERGE_ENDPOINT = '';
+
+var CONCIERGE_SYSTEM = "You are the concierge for Courtney & Co, a boutique real estate agency specialising exclusively in North West Auckland: Riverhead, Helensville, Kumeu, Dairy Flat, Waimauku and surrounds. You speak in the agency voice: warm, knowledgeable, straight-talking, never pushy. Key facts: Courtney Wood is the lead agent, 366 properties and over $499M settled, licensed REA 2008. Office: 1047 Coatesville-Riverhead Hwy, Riverhead. Phone: 027 688 0818. Email: theteam@courtneyandco.co.nz. Current listings include 26 Alexandra Street Riverhead, 106 Awaroa Road Helensville and 208 Glenmore Road Coatesville, all price by negotiation. STRICT LIMITS, no exceptions: never state or estimate the value, price, CV or likely sale price of any property, including one the user describes or owns; never give legal, financial, tax or investment advice; never predict the market. Route every valuation, pricing or what-is-it-worth question to booking a free appraisal with Courtney. If asked for anything outside these limits, say plainly that Courtney confirms all specifics and offer the appraisal or her direct line. Always offer to arrange a free appraisal or connect the person with Courtney directly. Keep responses concise (2-4 sentences max) and conversational.";
+
 let chatOpen = false;
 let cpTyping = false;
 let cpHistory = [];
@@ -3323,15 +3143,25 @@ function sendMessageText(text) {
   // Build messages for API
   var messages = cpHistory.slice(-10);
 
-  fetch('https://api.anthropic.com/v1/messages', {
+  // CONCIERGE_ENDPOINT is the Cloudflare Worker that holds the API key
+  // server-side. It is empty in this preview build, so the widget answers
+  // from the local knowledge base below - no key is ever shipped to the
+  // browser, and calling api.anthropic.com directly from the page would
+  // fail CORS anyway. Set this to the Worker URL to switch on live replies.
+  if (!CONCIERGE_ENDPOINT) {
+    setTimeout(function() {
+      hideTyping();
+      var reply = fallbackResponse(text);
+      appendMsg('agent', reply);
+      cpHistory.push({ role: 'assistant', content: reply });
+    }, 450);
+    return;
+  }
+
+  fetch(CONCIERGE_ENDPOINT, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1000,
-      system: "You are the concierge for Courtney & Co, a boutique real estate agency specialising exclusively in North West Auckland: Riverhead, Helensville, Kumeu, Dairy Flat, Waimauku and surrounds. You speak in the agency voice: warm, knowledgeable, straight-talking, never pushy. Key facts: Courtney Wood is the lead agent, 366 properties and over $499M settled, licensed REA 2008. Office: 1047 Coatesville-Riverhead Hwy, Riverhead. Phone: 027 688 0818. Email: theteam@courtneyandco.co.nz. Current listings include 26 Alexandra Street Riverhead, 106 Awaroa Road Helensville and 208 Glenmore Road Coatesville, all price by negotiation. STRICT LIMITS, no exceptions: never state or estimate the value, price, CV or likely sale price of any property, including one the user describes or owns; never give legal, financial, tax or investment advice; never predict the market. Route every valuation, pricing or what-is-it-worth question to booking a free appraisal with Courtney. If asked for anything outside these limits, say plainly that Courtney confirms all specifics and offer the appraisal or her direct line. Always offer to arrange a free appraisal or connect the person with Courtney directly. Keep responses concise (2-4 sentences max) and conversational.",
-      messages: messages
-    })
+    body: JSON.stringify({ system: CONCIERGE_SYSTEM, messages: messages })
   })
   .then(function(res) {
     if (!res.ok) throw new Error('API ' + res.status);
