@@ -10,13 +10,34 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <!-- Hero is a CSS background-image, so it is preloaded here rather than via an <img> tag -->
-<link rel="preload" as="image" href="images/courtneyhero.webp" fetchpriority="high">
+<!-- C1: the hero is a CSS background-image. CSS image-set() selects on DPR
+     while preload imagesrcset selects on layout width, so the two cannot be
+     aligned. Both sides therefore use plain width breakpoints and image-set
+     is used only to pick the format. -->
+<link rel="preload" as="image" fetchpriority="high" type="image/avif"
+      media="(max-width: 699px)" href="images/r/courtneyhero-800.avif">
+<link rel="preload" as="image" fetchpriority="high" type="image/avif"
+      media="(min-width: 700px) and (max-width: 1500px)" href="images/r/courtneyhero-1600.avif">
+<link rel="preload" as="image" fetchpriority="high" type="image/avif"
+      media="(min-width: 1501px)" href="images/r/courtneyhero-2000.avif">
 
 <style>
+/* C4: crisper type on Retina and 4K panels. */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
 /* ── RESET & VARIABLES ─────────────────────────────────────────── */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
+  /* A1: the display serif defaults to old-style figures, which renders 1 as a
+     shape indistinguishable from capital I and 0 as O. Force lining + tabular
+     everywhere so numerals read as numerals. */
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
   --navy:      #0c1628;
   --navy-mid:  #182644;
   --cream:     #f5f3f8;
@@ -48,6 +69,17 @@
   --font-body:    'DM Sans', sans-serif;
   --font-mono:    'DM Mono', monospace;
 }
+
+/* C3: wide-gamut branch. The mauve and navy render at full saturation on
+   modern Apple displays; sRGB values above remain the fallback. */
+@supports (color: color(display-p3 1 1 1)) {
+  :root {
+    --pink:     color(display-p3 0.702 0.487 0.620);
+    --pink-lt:  color(display-p3 0.816 0.628 0.730);
+    --navy:     color(display-p3 0.055 0.086 0.153);
+  }
+}
+
 
 html { scroll-behavior: smooth; font-size: 17px; }
 
@@ -188,23 +220,46 @@ nav.scrolled {
 .hero-photo {
   position: absolute;
   inset: 0;
-  background: url('images/courtneyhero.webp') center/cover no-repeat;
-  /* Fallback gradient is already in .hero-bg */
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* Width breakpoints below; image-set only chooses AVIF over WebP. */
+  background-image: url('images/r/courtneyhero-800.webp');
+  background-image: image-set(
+    url('images/r/courtneyhero-800.avif') type('image/avif'),
+    url('images/r/courtneyhero-800.webp') type('image/webp'));
 }
 
-/* Decorative C mark */
-.hero-deco-c {
+@media (min-width: 700px) and (max-width: 1500px) {
+  .hero-photo {
+    background-image: url('images/r/courtneyhero-1600.webp');
+    background-image: image-set(
+      url('images/r/courtneyhero-1600.avif') type('image/avif'),
+      url('images/r/courtneyhero-1600.webp') type('image/webp'));
+  }
+}
+
+@media (min-width: 1501px) {
+  .hero-photo {
+    background-image: url('images/r/courtneyhero-2000.webp');
+    background-image: image-set(
+      url('images/r/courtneyhero-2000.avif') type('image/avif'),
+      url('images/r/courtneyhero-2000.webp') type('image/webp'));
+  }
+}
+
+/* B1: scrim behind the text so the headline and subline sit on tone rather
+   than on gravel and fence detail. The second gradient also softens the seam
+   into the stats bar. */
+.hero::after {
+  content: '';
   position: absolute;
-  top: 50%;
-  right: 8%;
-  transform: translateY(-50%);
-  font-family: var(--font-display);
-  font-size: 45vw;
-  font-weight: 300;
-  color: rgba(255,255,255,0.04);
-  line-height: 1;
+  inset: 0;
   pointer-events: none;
-  user-select: none;
+  z-index: 1;
+  background:
+    linear-gradient(105deg, rgba(12,22,40,0.72) 0%, rgba(12,22,40,0.45) 38%, rgba(12,22,40,0) 62%),
+    linear-gradient(to top, rgba(12,22,40,0.55) 0%, rgba(12,22,40,0) 28%);
 }
 
 .hero-content {
@@ -374,6 +429,13 @@ nav.scrolled {
   background: rgba(208,154,184,0.2);
 }
 
+/* A1: explicit lining figures on every numeral-carrying element. */
+.stat-num, .step-num, .process-num, .about-badge-num, .spec-num, .spec-value,
+.track-total, .listing-price, .sold-addr, .cp-msg-time {
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+
 .stat-num {
   font-family: var(--font-display);
   font-size: 44px;
@@ -443,11 +505,13 @@ nav.scrolled {
   aspect-ratio: 16 / 15;
 }
 
+/* B2: was the only teal left on the page and it fought the mauve. Now the
+   same greyscale-on-navy treatment as the eight team portraits. */
 .about-photo-main {
   width: 82%;
-  height: 100%;
-  background: linear-gradient(160deg, #2d4a35 0%, #1a3347 100%);
-  /* Replace with: background: url('courtney-photo.jpg') center/cover */
+  aspect-ratio: 4 / 5;
+  height: auto;
+  background: var(--navy);
   border-radius: 2px;
   position: relative;
   overflow: hidden;
@@ -457,7 +521,18 @@ nav.scrolled {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 25%;
   display: block;
+  filter: grayscale(1) contrast(1.06) brightness(0.98);
+}
+
+/* navy gradient overlay to match the team tiles */
+.about-photo-main::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(12,22,40,0.35) 0%, rgba(12,22,40,0) 45%);
 }
 
 .about-photo-inset {
@@ -505,7 +580,13 @@ nav.scrolled {
   opacity: 0.85;
 }
 
-.about-content { padding-top: 20px; }
+/* B3: the text column was starting 260px below the photo top and ending
+   200px above its base. Both columns now share a height and the text is
+   centred against the portrait. */
+.about-content {
+  padding-top: 0;
+  align-self: center;
+}
 
 .about-lead {
   font-family: var(--font-display);
@@ -918,21 +999,27 @@ nav.scrolled {
   margin-bottom: 16px;
 }
 
+/* B6: a fixed four-slot grid (beds, baths, cars, land) so the columns line up
+   vertically across all three cards. A hyphen marks an unpublished value. */
 .listing-specs {
-  display: flex;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
   padding: 14px 0;
   border-top: 1px solid var(--cream-dark);
   border-bottom: 1px solid var(--cream-dark);
   margin-bottom: 16px;
 }
+.spec-empty { opacity: 0.45; }
 
 .spec {
-  font-size: 14.4px;
+  font-size: 13.2px;
   color: var(--mid);
   display: flex;
-  align-items: center;
-  gap: 5px;
+  align-items: baseline;
+  gap: 4px;
+  min-width: 0;
+  white-space: nowrap;
 }
 
 .spec-num { font-weight: 600; color: var(--navy); }
@@ -1132,8 +1219,17 @@ nav.scrolled {
   object-fit: cover;
   object-position: center 22%;
   filter: grayscale(1) contrast(1.06) brightness(0.98);
-  transition: transform 0.5s ease, filter 0.5s ease;
+  transition: transform 0.5s cubic-bezier(.16,1,.3,1), filter 0.5s ease;
 }
+
+/* B10: Courtney's source frame is wider than the other seven, so her face sat
+   smaller and higher than the row. Scaling her tile alone brings the eye line
+   onto the same horizontal as Amy, Rebecca and Chris. */
+.team-photo-wrap img[src*="courtneyhead"] {
+  transform: scale(1.22);
+  object-position: center 26%;
+}
+.team-card:hover .team-photo-wrap img[src*="courtneyhead"] { transform: scale(1.28); }
 
 /* Unifies the mismatched studio backdrops across the team grid */
 .member-photo::after,
@@ -1498,21 +1594,33 @@ nav.scrolled {
 .form-input, .form-select, .form-textarea {
   width: 100%;
   background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(208,154,184,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
   color: white;
   padding: 14px 16px;
   font-size: 15px;
   font-family: var(--font-body);
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
   border-radius: 2px;
   outline: none;
 }
 
-.form-input:focus, .form-select:focus, .form-textarea:focus {
-  border-color: var(--blue-lt);
+/* A8: the native select rendered with OS chrome and a lighter fill than every
+   field around it. Strip the appearance and draw our own chevron. */
+.form-select {
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 44px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='rgba(255,255,255,0.55)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
 }
 
-.form-input::placeholder, .form-textarea::placeholder { color: rgba(255,255,255,0.22); }
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--blue-lt);
+  box-shadow: 0 0 0 3px rgba(208,154,184,0.22);
+}
+
+.form-input::placeholder, .form-textarea::placeholder { color: rgba(255,255,255,0.55); }
 
 .form-select option { background: #0e2040; }
 
@@ -1586,12 +1694,211 @@ footer {
 
 .footer-links a:hover { color: var(--pink-lt); }
 
+/* A3: contact icons are stroke SVGs, never emoji. */
+.c-info-icon svg { display: block; }
+.c-info-icon { display: flex; align-items: center; justify-content: center; }
+
+/* A6: real causes of the horizontal scroll at 390px, fixed at source rather
+   than masked with overflow clipping.
+   1. Sections carrying an inline 60px side padding left only 270px of content
+      width, and the Instagram handle button is 288px wide.
+   2. .footer-links was display:flex with the default flex-wrap:nowrap.
+   3. Flex header rows (title left, CTA right) could not wrap. */
+@media (max-width: 768px) {
+  main > section[style*="60px"],
+  main > div[style*="60px"] {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
+  .footer-links { flex-wrap: wrap; }
+
+  /* any inline flex row in main may wrap on small screens */
+  main div[style*="display:flex"] { flex-wrap: wrap; }
+
+  /* Long pill buttons must never exceed their column. Shrink the padding
+     rather than breaking words: overflow-wrap:anywhere split "PROPERTIES". */
+  .btn-primary, .btn-ghost, .form-submit {
+    max-width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  /* stack the hero CTAs rather than squeezing two onto one line */
+  .hero-actions { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .hero-actions .btn-primary, .hero-actions .btn-ghost { width: auto; }
+}
+
+/* B8: gallery mosaic */
+.gallery-mosaic {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: 210px;
+  gap: 2px;
+}
+.gal-tile {
+  position: relative;
+  overflow: hidden;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 0;
+  border: 0;
+  background: var(--navy);
+  display: block;
+  min-width: 0;
+}
+.gal-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(.16,1,.3,1);
+}
+.gal-tile:hover img { transform: scale(1.04); }
+.gal-tile:focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
+
+@media (max-width: 900px) {
+  .gallery-mosaic { grid-template-columns: repeat(6, 1fr); grid-auto-rows: 150px; }
+  .gal-tile { grid-column: span 3 !important; grid-row: span 1 !important; }
+  .gal-tile:first-child { grid-column: span 6 !important; grid-row: span 2 !important; }
+}
+
+/* B11: one treatment for every Instagram tile */
+.insta-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+.insta-tile {
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 3px;
+  display: block;
+  position: relative;
+  background: var(--navy);
+}
+.insta-tile img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 0.6s cubic-bezier(.16,1,.3,1);
+}
+.insta-tile:hover img { transform: scale(1.05); }
+@media (max-width: 768px) { .insta-grid { grid-template-columns: repeat(3, 1fr); } }
+
+/* D2: one hover language across listing and sold cards. */
+.listing-img, .sold-img { overflow: hidden; }
+.listing-img img, .sold-card .sold-img img {
+  transition: transform 0.6s cubic-bezier(.16,1,.3,1);
+}
+.listing-card:hover .listing-img img { transform: scale(1.04); }
+.sold-card:hover .sold-img img { transform: scale(1.58); }
+.listing-card, .sold-card { transition: transform 0.4s cubic-bezier(.16,1,.3,1); }
+.listing-card:hover .listing-body, .sold-card:hover .sold-info { transform: translateY(-2px); }
+.listing-body, .sold-info { transition: transform 0.4s cubic-bezier(.16,1,.3,1); }
+
+/* D5: deliberate scroll progress bar. */
+#scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 0;
+  background: var(--pink);
+  z-index: 10000;
+  pointer-events: none;
+  transition: width 0.1s linear;
+}
+
+/* D4: on mobile the header CTA scrolls away, so the phone stays reachable. */
+#mobile-bar { display: none; }
+@media (max-width: 768px) {
+  #mobile-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 9000;
+    background: rgba(12,22,40,0.97);
+    border-top: 1px solid rgba(255,255,255,0.12);
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+    gap: 10px;
+  }
+  #mobile-bar a {
+    text-align: center;
+    padding: 13px 10px;
+    border-radius: 2px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  #mobile-bar .mb-call { background: var(--pink); color: #fff; }
+  #mobile-bar .mb-appr { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.35); }
+  body { padding-bottom: 72px; }
+  .chat-trigger { bottom: 88px; }
+}
+
+/* D3: hero entrance. */
+@keyframes heroRise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes heroDrift { from { transform: scale(1.06); } to { transform: scale(1); } }
+body.js-loaded .hero-h1 { animation: heroRise 0.7s cubic-bezier(.16,1,.3,1) both; }
+body.js-loaded .hero-tagline { animation: heroRise 0.7s cubic-bezier(.16,1,.3,1) 0.08s both; }
+body.js-loaded .hero-actions { animation: heroRise 0.7s cubic-bezier(.16,1,.3,1) 0.16s both; }
+body.js-loaded .hero-photo { animation: heroDrift 12s cubic-bezier(.16,1,.3,1) both; }
+
+/* A7: the newsletter sits on a light band, so it needs a light-theme field.
+   .form-input is styled for the navy contact card and was invisible here. */
+.nl-input {
+  width: 100%;
+  background: #fff;
+  border: 1px solid rgba(12,22,40,0.20);
+  color: var(--navy);
+  padding: 14px 16px;
+  font-size: 15px;
+  font-family: var(--font-body);
+  border-radius: 2px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.nl-input::placeholder { color: rgba(12,22,40,0.55); }
+.nl-input:focus {
+  border-color: var(--pink);
+  box-shadow: 0 0 0 3px rgba(184,122,160,0.25);
+}
+
+/* A2: her SOLD marketing images carry a brand mark whose "L" is a small
+   C&Co roundel. At card width that roundel is illegible and the word reads
+   "SO D". The image is zoomed slightly to push the baked mark out of frame
+   and a legible badge is drawn instead. */
+.sold-img { position: relative; overflow: hidden; }
+.sold-img img {
+  transform: scale(1.52);
+  transform-origin: 92% 12%;
+}
+.sold-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  background: var(--pink);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  /* padding-right absorbs the trailing letter-space so the D is not clipped */
+  padding: 5px 8px 5px 11px;
+  border-radius: 2px;
+  line-height: 1;
+}
+
 .footer-legal {
   font-size: 13.2px;
-  color: rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.55);
   font-family: var(--font-mono);
   text-align: right;
   line-height: 1.6;
+  /* A5: was overflowing the viewport instead of wrapping. */
+  max-width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 /* ── AI CONCIERGE CHAT WIDGET ──────────────────────────────────── */
@@ -1922,11 +2229,15 @@ footer {
 
 /* ── ENTRANCE ANIMATIONS ───────────────────────────────────────── */
 /* Content is ALWAYS visible. Animations are progressive enhancement. */
-.fade-up {
-  transition: opacity 0.65s ease, transform 0.65s ease;
+/* D1: one reveal pattern for the whole page. 500ms, 16px rise,
+   cubic-bezier(.16,1,.3,1), 60ms stagger across grid children. */
+.fade-up, .reveal {
+  transition: opacity 0.5s cubic-bezier(.16,1,.3,1), transform 0.5s cubic-bezier(.16,1,.3,1);
 }
+body.js-loaded .reveal:not(.visible) { opacity: 0; transform: translateY(16px); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
 .stagger > * {
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition: opacity 0.5s cubic-bezier(.16,1,.3,1), transform 0.5s cubic-bezier(.16,1,.3,1);
 }
 
 /* Only hide when JS has loaded and opted in */
@@ -1945,11 +2256,17 @@ body.js-loaded .stagger:not(.visible) > * {
 }
 
 body.js-loaded .stagger.visible > *:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.05s; }
-body.js-loaded .stagger.visible > *:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.12s; }
-body.js-loaded .stagger.visible > *:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.19s; }
-body.js-loaded .stagger.visible > *:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.26s; }
-body.js-loaded .stagger.visible > *:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 0.33s; }
-body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: translateY(0); transition-delay: 0.40s; }
+body.js-loaded .stagger.visible > *:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.11s; }
+body.js-loaded .stagger.visible > *:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.17s; }
+body.js-loaded .stagger.visible > *:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.23s; }
+body.js-loaded .stagger.visible > *:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 0.29s; }
+body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: translateY(0); transition-delay: 0.35s; }
+body.js-loaded .stagger.visible > *:nth-child(7) { opacity: 1; transform: translateY(0); transition-delay: 0.41s; }
+body.js-loaded .stagger.visible > *:nth-child(8) { opacity: 1; transform: translateY(0); transition-delay: 0.47s; }
+body.js-loaded .stagger.visible > *:nth-child(9) { opacity: 1; transform: translateY(0); transition-delay: 0.53s; }
+body.js-loaded .stagger.visible > *:nth-child(10) { opacity: 1; transform: translateY(0); transition-delay: 0.59s; }
+body.js-loaded .stagger.visible > *:nth-child(11) { opacity: 1; transform: translateY(0); transition-delay: 0.65s; }
+body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: translateY(0); transition-delay: 0.71s; }
 
 /* ── RESPONSIVE ────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
@@ -2017,6 +2334,12 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
 /* ── REDUCED MOTION ────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
+  /* D1-D3: every reveal, hover and hero motion is off under reduced motion. */
+  body.js-loaded .reveal:not(.visible),
+  body.js-loaded .stagger:not(.visible) > * { opacity: 1 !important; transform: none !important; }
+  body.js-loaded .hero-h1, body.js-loaded .hero-tagline,
+  body.js-loaded .hero-actions, body.js-loaded .hero-photo { animation: none !important; }
+  #scroll-progress { display: none; }
   html { scroll-behavior: auto !important; }
 
   *, *::before, *::after {
@@ -2085,6 +2408,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 <body>
 
 <a class="skip-link" href="#main">Skip to main content</a>
+<div id="scroll-progress" aria-hidden="true"></div>
 
 <!-- ── NAVIGATION ──────────────────────────────────────────────────── -->
 <nav id="main-nav">
@@ -2153,7 +2477,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 <section class="about-section" id="about">
   <div class="about-visual">
     <div class="about-photo-main">
-      <img loading="lazy" decoding="async" src="images/courtneyhead.jpg" alt="Courtney Wood" style="width:100%;height:100%;object-fit:cover;object-position:center 18%;">
+      <picture><source type="image/avif" srcset="images/r/courtneyhead-400.avif 400w, images/r/courtneyhead-800.avif 800w, images/r/courtneyhead-1023.avif 1023w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/courtneyhead-400.webp 400w, images/r/courtneyhead-800.webp 800w, images/r/courtneyhead-1023.webp 1023w" sizes="(max-width:900px) 100vw, 50vw"><img width="1023" height="1023" loading="lazy" decoding="async" src="images/courtneyhead.jpg" alt="Courtney Wood" style="width:100%;height:100%;object-fit:cover;object-position:center 25%;"></picture>
     </div>
     <div class="about-badge">
       <div class="about-badge-num">15+</div>
@@ -2225,47 +2549,44 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
     <a href="https://courtneyandco.co.nz/26-alexandra-street-riverhead" target="_blank" style="font-size: 13.2px;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-lt);text-decoration:none;border-bottom:1px solid rgba(208,154,184,0.3);padding-bottom:3px;">View Full Listing →</a>
   </div>
 
-  <!-- Hero image + thumbnail stack -->
-  <div style="display:grid;grid-template-columns:1.35fr 1fr;gap:3px;border-radius:4px;overflow:hidden;margin-bottom:3px;">
-    <div style="aspect-ratio:5/4;position:relative;overflow:hidden;cursor:pointer;" onclick="openLightbox(0)">
-      <img loading="lazy" decoding="async" src="images/alexandra-01.jpg" alt="26 Alexandra Street, Riverhead - villa frontage" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
-      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(12,22,40,0.75) 0%,transparent 50%);"></div>
-      <div style="position:absolute;top:20px;left:20px;background:var(--pink);color:white;font-size: 10.8px;letter-spacing:0.2em;text-transform:uppercase;padding:6px 14px;font-family:var(--font-mono);border-radius:2px;">For Sale</div>
-      <div style="position:absolute;bottom:28px;left:28px;right:28px;">
-        <div style="font-family:var(--font-display);font-size:clamp(26px,3vw,38px);font-weight:300;color:white;line-height:1.15;margin-bottom:10px;">26 Alexandra Street,<br>Riverhead</div>
-        <div style="font-size:15px;color:var(--blue-lt);font-weight:500;letter-spacing:0.04em;margin-bottom:14px;">Price by negotiation</div>
-        <div style="display:flex;gap:20px;flex-wrap:wrap;">
-          <span style="font-size: 13.2px;color:rgba(255,255,255,0.65);font-family:var(--font-mono);">4 Bedrooms</span>
-          <span style="font-size: 13.2px;color:rgba(255,255,255,0.65);font-family:var(--font-mono);">1 Bathroom</span>
-          <span style="font-size: 13.2px;color:rgba(255,255,255,0.65);font-family:var(--font-mono);">807m² Freehold</span>
-          <span style="font-size: 13.2px;color:rgba(255,255,255,0.65);font-family:var(--font-mono);">Off-street parking</span>
-        </div>
+  <!-- B4: the hero is the widest element in the section, not the narrowest,
+       and object-position frames the villa rather than the fence and lawn.
+       The house sits in the upper half of the source frame, so the focal
+       point moves up, not down. -->
+  <div style="position:relative;aspect-ratio:21/9;overflow:hidden;border-radius:4px;margin-bottom:3px;cursor:pointer;" onclick="openLightbox(0)">
+    <picture><source type="image/avif" srcset="images/r/alexandra-01-400.avif 400w, images/r/alexandra-01-800.avif 800w, images/r/alexandra-01-1600.avif 1600w, images/r/alexandra-01-2400.avif 2400w" sizes="100vw"><source type="image/webp" srcset="images/r/alexandra-01-400.webp 400w, images/r/alexandra-01-800.webp 800w, images/r/alexandra-01-1600.webp 1600w, images/r/alexandra-01-2400.webp 2400w" sizes="100vw"><img loading="lazy" decoding="async" src="images/alexandra-01.jpg" alt="26 Alexandra Street, Riverhead - villa frontage" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;object-position:center 38%;display:block;transition:transform 0.7s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'"></picture>
+    <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(12,22,40,0.78) 0%,rgba(12,22,40,0.15) 42%,rgba(12,22,40,0) 65%);"></div>
+    <div style="position:absolute;top:20px;left:20px;background:var(--pink);color:white;font-size: 10.8px;letter-spacing:0.2em;text-transform:uppercase;padding:6px 14px;font-family:var(--font-mono);border-radius:2px;">For Sale</div>
+    <div style="position:absolute;bottom:28px;left:28px;right:28px;">
+      <div style="font-family:var(--font-display);font-size:clamp(26px,3vw,38px);font-weight:300;color:white;line-height:1.15;margin-bottom:10px;">26 Alexandra Street, Riverhead</div>
+      <div style="font-size:15px;color:var(--blue-lt);font-weight:500;letter-spacing:0.04em;margin-bottom:14px;">Price by negotiation</div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap;">
+        <span style="font-size: 13.2px;color:rgba(255,255,255,0.75);font-family:var(--font-mono);">4 Bedrooms</span>
+        <span style="font-size: 13.2px;color:rgba(255,255,255,0.75);font-family:var(--font-mono);">1 Bathroom</span>
+        <span style="font-size: 13.2px;color:rgba(255,255,255,0.75);font-family:var(--font-mono);">807m² Freehold</span>
+        <span style="font-size: 13.2px;color:rgba(255,255,255,0.75);font-family:var(--font-mono);">Off-street parking</span>
       </div>
     </div>
-    <div style="display:grid;grid-template-rows:1fr 1fr;gap:3px;height:600px;">
-      <div style="overflow:hidden;position:relative;cursor:pointer;" onclick="openLightbox(1)">
-        <img loading="lazy" decoding="async" src="images/alexandra-15.jpg" alt="Open Plan Living & Kitchen" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-              </div>
-      <div style="overflow:hidden;position:relative;cursor:pointer;" onclick="openLightbox(5)">
-        <img loading="lazy" decoding="async" src="images/alexandra-61.jpg" alt="Covered outdoor entertaining" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-              </div>
+  </div>
+
+  <!-- B3: an even four-up row, so no column runs short and leaves dead navy. -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:56px;">
+    <div style="aspect-ratio:4/3;overflow:hidden;cursor:pointer;" onclick="openLightbox(1)">
+      <picture><source type="image/avif" srcset="images/r/alexandra-15-400.avif 400w, images/r/alexandra-15-800.avif 800w, images/r/alexandra-15-1600.avif 1600w, images/r/alexandra-15-2400.avif 2400w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/alexandra-15-400.webp 400w, images/r/alexandra-15-800.webp 800w, images/r/alexandra-15-1600.webp 1600w, images/r/alexandra-15-2400.webp 2400w" sizes="(max-width:900px) 100vw, 50vw"><img loading="lazy" decoding="async" src="images/alexandra-15.jpg" alt="Family living room" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></picture>
+    </div>
+    <div style="aspect-ratio:4/3;overflow:hidden;cursor:pointer;" onclick="openLightbox(2)">
+      <picture><source type="image/avif" srcset="images/r/alexandra-31-400.avif 400w, images/r/alexandra-31-800.avif 800w, images/r/alexandra-31-1600.avif 1600w, images/r/alexandra-31-2400.avif 2400w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/alexandra-31-400.webp 400w, images/r/alexandra-31-800.webp 800w, images/r/alexandra-31-1600.webp 1600w, images/r/alexandra-31-2400.webp 2400w" sizes="(max-width:900px) 100vw, 50vw"><img loading="lazy" decoding="async" src="images/alexandra-31.jpg" alt="Upgraded kitchen" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></picture>
+    </div>
+    <div style="aspect-ratio:4/3;overflow:hidden;cursor:pointer;" onclick="openLightbox(3)">
+      <picture><source type="image/avif" srcset="images/r/alexandra-39-400.avif 400w, images/r/alexandra-39-800.avif 800w, images/r/alexandra-39-1600.avif 1600w, images/r/alexandra-39-2400.avif 2400w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/alexandra-39-400.webp 400w, images/r/alexandra-39-800.webp 800w, images/r/alexandra-39-1600.webp 1600w, images/r/alexandra-39-2400.webp 2400w" sizes="(max-width:900px) 100vw, 50vw"><img loading="lazy" decoding="async" src="images/alexandra-39.jpg" alt="Oversized master suite" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></picture>
+    </div>
+    <div style="aspect-ratio:4/3;overflow:hidden;cursor:pointer;" onclick="openLightbox(5)">
+      <picture><source type="image/avif" srcset="images/r/alexandra-61-400.avif 400w, images/r/alexandra-61-800.avif 800w, images/r/alexandra-61-1600.avif 1600w, images/r/alexandra-61-2400.avif 2400w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/alexandra-61-400.webp 400w, images/r/alexandra-61-800.webp 800w, images/r/alexandra-61-1600.webp 1600w, images/r/alexandra-61-2400.webp 2400w" sizes="(max-width:900px) 100vw, 50vw"><img loading="lazy" decoding="async" src="images/alexandra-61.jpg" alt="Covered outdoor entertaining" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></picture>
     </div>
   </div>
 
-  <!-- Second row of images -->
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;margin-bottom:56px;">
-    <div style="height:240px;overflow:hidden;cursor:pointer;position:relative;" onclick="openLightbox(2)">
-      <img loading="lazy" decoding="async" src="images/alexandra-31.jpg" alt="Upgraded kitchen" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-          </div>
-    <div style="height:240px;overflow:hidden;cursor:pointer;position:relative;" onclick="openLightbox(3)">
-      <img loading="lazy" decoding="async" src="images/alexandra-39.jpg" alt="Oversized master suite" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-          </div>
-    <div style="height:240px;overflow:hidden;cursor:pointer;position:relative;" onclick="openLightbox(4)">
-      <img loading="lazy" decoding="async" src="images/alexandra-23.jpg" alt="Leadlight windows and high stud" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-          </div>
-  </div>
-
-  <!-- Property stats bar -->
+  <!-- Property stats bar. Verified against courtneyandco.co.nz and
+       realestate.co.nz; unpublished values show a hyphen. -->
   <div style="display:grid;grid-template-columns:repeat(5,1fr);border:1px solid rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;margin-bottom:60px;">
     <div style="padding:24px 28px;border-right:1px solid rgba(255,255,255,0.08);">
       <div style="font-family:var(--font-mono);font-size: 10.8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:8px;">Type</div>
@@ -2273,75 +2594,79 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
     </div>
     <div style="padding:24px 28px;border-right:1px solid rgba(255,255,255,0.08);">
       <div style="font-family:var(--font-mono);font-size: 10.8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:8px;">Land Area</div>
-      <div style="font-family:var(--font-display);font-size:20px;font-weight:400;color:white;">600 <span style="font-size: 15.6px;color:rgba(255,255,255,0.45);">m²</span></div>
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:400;color:white;">807 <span style="font-size: 15.6px;color:rgba(255,255,255,0.45);">m²</span></div>
     </div>
     <div style="padding:24px 28px;border-right:1px solid rgba(255,255,255,0.08);">
-      <div style="font-family:var(--font-mono);font-size: 10.8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:8px;">Floor Area</div>
-      <div style="font-family:var(--font-display);font-size:20px;font-weight:400;color:white;">316 <span style="font-size: 15.6px;color:rgba(255,255,255,0.45);">m²</span></div>
+      <div style="font-family:var(--font-mono);font-size: 10.8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:8px;">Bedrooms</div>
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:400;color:white;">4</div>
     </div>
     <div style="padding:24px 28px;border-right:1px solid rgba(255,255,255,0.08);">
+      <div style="font-family:var(--font-mono);font-size: 10.8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:8px;">Bathrooms</div>
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:400;color:white;">1</div>
+    </div>
+    <div style="padding:24px 28px;">
       <div style="font-family:var(--font-mono);font-size: 10.8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:8px;">District</div>
       <div style="font-family:var(--font-display);font-size:20px;font-weight:400;color:white;">Riverhead</div>
     </div>
-    <div style="padding:24px 28px;">
-      <div style="font-family:var(--font-mono);font-size: 10.8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:8px;">Builder</div>
-      <div style="font-family:var(--font-display);font-size:20px;font-weight:400;color:white;">MDS Masonry</div>
-    </div>
   </div>
 
-  <!-- Editorial property description + floor plan side by side -->
+  <!-- Description drawn from her own listing copy for 26 Alexandra Street. -->
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;">
 
     <!-- Left: Description -->
     <div>
       <div class="section-label" style="color:var(--blue-lt);margin-bottom:20px;">Property Description</div>
-      <p style="font-family:var(--font-display);font-size:22px;font-weight:300;font-style:italic;line-height:1.55;color:rgba(255,255,255,0.9);margin-bottom:28px;">Positioned in a quiet Riverhead enclave - craftsmanship, materiality and design integrity, with no detail overlooked.</p>
-      <p style="font-size:15px;line-height:1.85;color:rgba(255,255,255,0.58);margin-bottom:18px;font-weight:300;">A Monier Portuguese Classico antique clay tile roof paired with cedar fascia and a solid cedar front door creates a timeless, grounded presence. Outside, Antique Shahabad limestone paving adds a distinctly European character to Shafer-designed landscaped grounds.</p>
-      <p style="font-size:15px;line-height:1.85;color:rgba(255,255,255,0.58);margin-bottom:18px;font-weight:300;">Inside, 316m² of considered living unfolds across four bedrooms - including two masters - three bathrooms, and a double internal-access garage. Timber flooring runs throughout; custom Customtone cabinetry in kitchen, laundry and bathrooms. Burlington matt white tiles and Grohe tapware finish every wet room to an exacting standard.</p>
-      <p style="font-size:15px;line-height:1.85;color:rgba(255,255,255,0.58);margin-bottom:32px;font-weight:300;">A substantial family home that balances architectural integrity with everyday livability - in one of Riverhead's most peaceful residential pockets, minutes from motorway access, schools and village amenity.</p>
+      <p style="font-family:var(--font-display);font-size:22px;font-weight:300;font-style:italic;line-height:1.55;color:rgba(255,255,255,0.9);margin-bottom:28px;">Character homes of this calibre are a rare find in Riverhead. Jasmine Villa sits on a generous 807m² freehold site on a quiet no-exit street.</p>
+      <p style="font-size:15px;line-height:1.85;color:rgba(255,255,255,0.58);margin-bottom:18px;font-weight:300;">A covered verandah with a classic bullnose roofline, ornate fretwork and extra-wide entry stairs sets the tone. Mature hedging, established trees and granite pavers frame the home, and the quiet setting adds to the sense of retreat.</p>
+      <p style="font-size:15px;line-height:1.85;color:rgba(255,255,255,0.58);margin-bottom:18px;font-weight:300;">Inside, soaring high-stud ceilings, leadlight windows and a calm contemporary palette create a light-filled home. The hard work is done: fresh interior paint, new drainage, designer lighting, a moisture barrier, underfloor and ceiling insulation, and ducted heating and cooling to every room.</p>
+      <p style="font-size:15px;line-height:1.85;color:rgba(255,255,255,0.58);margin-bottom:32px;font-weight:300;">Four generous bedrooms include an oversized master with a bay window and walk-in wardrobe. Outside, a covered entertaining area and oversized rear deck overlook established gardens and lawn, with a workshop, garden shed and lit attic storage.</p>
 
-      <!-- Key features -->
+      <!-- Key features. Sans, not mono: mono is reserved for numerals and metadata. -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;margin-bottom:40px;">
         <div style="display:flex;gap:10px;align-items:center;">
           <div style="width:5px;height:5px;background:var(--blue-lt);border-radius:50%;flex-shrink:0;"></div>
-          <span style="font-size: 15.6px;color:rgba(255,255,255,0.6);font-family:var(--font-mono);">MDS Masonry construction</span>
+          <span style="font-size: 15.6px;color:rgba(255,255,255,0.72);font-weight:300;">Renovated character villa</span>
         </div>
         <div style="display:flex;gap:10px;align-items:center;">
           <div style="width:5px;height:5px;background:var(--blue-lt);border-radius:50%;flex-shrink:0;"></div>
-          <span style="font-size: 15.6px;color:rgba(255,255,255,0.6);font-family:var(--font-mono);">Grohe tapware throughout</span>
+          <span style="font-size: 15.6px;color:rgba(255,255,255,0.72);font-weight:300;">807m² freehold site</span>
         </div>
         <div style="display:flex;gap:10px;align-items:center;">
           <div style="width:5px;height:5px;background:var(--blue-lt);border-radius:50%;flex-shrink:0;"></div>
-          <span style="font-size: 15.6px;color:rgba(255,255,255,0.6);font-family:var(--font-mono);">Customtone bespoke cabinetry</span>
+          <span style="font-size: 15.6px;color:rgba(255,255,255,0.72);font-weight:300;">Ducted heating and cooling</span>
         </div>
         <div style="display:flex;gap:10px;align-items:center;">
           <div style="width:5px;height:5px;background:var(--blue-lt);border-radius:50%;flex-shrink:0;"></div>
-          <span style="font-size: 15.6px;color:rgba(255,255,255,0.6);font-family:var(--font-mono);">Shafer landscaped grounds</span>
+          <span style="font-size: 15.6px;color:rgba(255,255,255,0.72);font-weight:300;">High-stud ceilings, leadlight windows</span>
         </div>
         <div style="display:flex;gap:10px;align-items:center;">
           <div style="width:5px;height:5px;background:var(--blue-lt);border-radius:50%;flex-shrink:0;"></div>
-          <span style="font-size: 15.6px;color:rgba(255,255,255,0.6);font-family:var(--font-mono);">Limestone outdoor paving</span>
+          <span style="font-size: 15.6px;color:rgba(255,255,255,0.72);font-weight:300;">Covered entertaining and rear deck</span>
         </div>
         <div style="display:flex;gap:10px;align-items:center;">
           <div style="width:5px;height:5px;background:var(--blue-lt);border-radius:50%;flex-shrink:0;"></div>
-          <span style="font-size: 15.6px;color:rgba(255,255,255,0.6);font-family:var(--font-mono);">Dual master suites</span>
+          <span style="font-size: 15.6px;color:rgba(255,255,255,0.72);font-weight:300;">Attic storage and workshop</span>
         </div>
       </div>
 
       <a href="https://courtneyandco.co.nz/26-alexandra-street-riverhead" target="_blank" class="btn-primary" style="background:var(--blue-deep);">View Full Listing &amp; Gallery →</a>
-    </div>
 
-    <!-- Right: Floor plan -->
-    <div>
-      <div class="section-label" style="color:var(--blue-lt);margin-bottom:20px;">Floor Plan</div>
-      <div style="border:1px solid rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;">
-        <img loading="lazy" decoding="async" src="images/alexandra-55.jpg" alt="26 Alexandra Street - covered verandah" style="width:100%;display:block;">
-      </div>
-      <div style="margin-top:20px;padding:20px 24px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:3px;">
+      <!-- Agent card moved into the left column so it sits under the CTA
+           rather than leaving a tall void beside the image (B3). -->
+      <div style="margin-top:28px;padding:20px 24px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:3px;max-width:340px;">
         <div style="font-family:var(--font-mono);font-size: 10.8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:12px;">Agent</div>
         <div style="font-family:var(--font-display);font-size:18px;color:white;font-weight:400;margin-bottom:4px;">Courtney Wood</div>
         <div style="font-family:var(--font-mono);font-size: 13.2px;color:var(--blue-lt);margin-bottom:14px;">027 688 0818</div>
         <a href="tel:0276880818" class="btn-primary" style="font-size: 12.0px;padding:12px 24px;background:var(--pink);">Call Courtney Direct →</a>
+      </div>
+    </div>
+
+    <!-- Right: a tall image, not a mislabelled "floor plan". No floor plan
+         has been supplied for this listing. -->
+    <div>
+      <div class="section-label" style="color:var(--blue-lt);margin-bottom:20px;">The Home</div>
+      <div style="border:1px solid rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;aspect-ratio:3/4;">
+        <picture><source type="image/avif" srcset="images/r/alexandra-55-400.avif 400w, images/r/alexandra-55-800.avif 800w, images/r/alexandra-55-1600.avif 1600w, images/r/alexandra-55-2400.avif 2400w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/alexandra-55-400.webp 400w, images/r/alexandra-55-800.webp 800w, images/r/alexandra-55-1600.webp 1600w, images/r/alexandra-55-2400.webp 2400w" sizes="(max-width:900px) 100vw, 50vw"><img width="2500" height="1667" loading="lazy" decoding="async" src="images/alexandra-55.jpg" alt="26 Alexandra Street - covered verandah and frontage" style="width:100%;height:100%;object-fit:cover;display:block;"></picture>
       </div>
     </div>
 
@@ -2357,28 +2682,31 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
     </div>
     <a href="https://courtneyandco.co.nz/26-alexandra-street-riverhead" target="_blank" style="font-size: 13.2px;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue-lt);text-decoration:none;">View All Photos →</a>
   </div>
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;">
-    <div style="grid-column:1/3;height:300px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(0)">
-      <img loading="lazy" decoding="async" src="images/alexandra-01.jpg" alt="26 Alexandra Street, Riverhead" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-    </div>
-    <div style="height:300px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(1)">
-      <img loading="lazy" decoding="async" src="images/alexandra-15.jpg" alt="Family living room" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-    </div>
-    <div style="height:300px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(2)">
-      <img loading="lazy" decoding="async" src="images/alexandra-31.jpg" alt="Upgraded kitchen" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-    </div>
-    <div style="height:220px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(3)">
-      <img loading="lazy" decoding="async" src="images/alexandra-61.jpg" alt="Covered outdoor entertaining" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-    </div>
-    <div style="height:220px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(4)">
-      <img loading="lazy" decoding="async" src="images/alexandra-23.jpg" alt="Leadlight windows and high stud" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-    </div>
-    <div style="height:220px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(5)">
-      <img loading="lazy" decoding="async" src="images/alexandra-39.jpg" alt="Family bathroom" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-    </div>
-    <div style="height:220px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(6)">
-      <img loading="lazy" decoding="async" src="images/alexandra-78.jpg" alt="Garden & Grounds" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-    </div>
+  <!-- B8: 12-column editorial mosaic. One anchor tile spanning 8 columns and
+       two rows, 4- and 3-column tiles around it. Every cell has a fixed
+       aspect via grid-auto-rows and object-fit:cover, so nothing letterboxes. -->
+  <div class="gallery-mosaic">
+    <button type="button" class="gal-tile" style="grid-column:span 8;grid-row:span 2;" onclick="openLightbox(0)" aria-label="Open photo: 26 Alexandra Street, Riverhead">
+      <picture><source type="image/avif" srcset="images/r/alexandra-01-400.avif 400w, images/r/alexandra-01-800.avif 800w, images/r/alexandra-01-1600.avif 1600w, images/r/alexandra-01-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-01-400.webp 400w, images/r/alexandra-01-800.webp 800w, images/r/alexandra-01-1600.webp 1600w, images/r/alexandra-01-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-01.jpg" alt="26 Alexandra Street, Riverhead" width="2500" height="1667"></picture>
+    </button>
+    <button type="button" class="gal-tile" style="grid-column:span 4;" onclick="openLightbox(1)" aria-label="Open photo: Family living room">
+      <picture><source type="image/avif" srcset="images/r/alexandra-15-400.avif 400w, images/r/alexandra-15-800.avif 800w, images/r/alexandra-15-1600.avif 1600w, images/r/alexandra-15-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-15-400.webp 400w, images/r/alexandra-15-800.webp 800w, images/r/alexandra-15-1600.webp 1600w, images/r/alexandra-15-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-15.jpg" alt="Family living room" width="2500" height="1667"></picture>
+    </button>
+    <button type="button" class="gal-tile" style="grid-column:span 4;" onclick="openLightbox(2)" aria-label="Open photo: Upgraded kitchen">
+      <picture><source type="image/avif" srcset="images/r/alexandra-31-400.avif 400w, images/r/alexandra-31-800.avif 800w, images/r/alexandra-31-1600.avif 1600w, images/r/alexandra-31-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-31-400.webp 400w, images/r/alexandra-31-800.webp 800w, images/r/alexandra-31-1600.webp 1600w, images/r/alexandra-31-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-31.jpg" alt="Upgraded kitchen" width="2500" height="1667"></picture>
+    </button>
+    <button type="button" class="gal-tile" style="grid-column:span 3;" onclick="openLightbox(5)" aria-label="Open photo: Covered outdoor entertaining">
+      <picture><source type="image/avif" srcset="images/r/alexandra-61-400.avif 400w, images/r/alexandra-61-800.avif 800w, images/r/alexandra-61-1600.avif 1600w, images/r/alexandra-61-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-61-400.webp 400w, images/r/alexandra-61-800.webp 800w, images/r/alexandra-61-1600.webp 1600w, images/r/alexandra-61-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-61.jpg" alt="Covered outdoor entertaining" width="2500" height="1667"></picture>
+    </button>
+    <button type="button" class="gal-tile" style="grid-column:span 3;" onclick="openLightbox(4)" aria-label="Open photo: Leadlight windows and high stud">
+      <picture><source type="image/avif" srcset="images/r/alexandra-23-400.avif 400w, images/r/alexandra-23-800.avif 800w, images/r/alexandra-23-1600.avif 1600w, images/r/alexandra-23-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-23-400.webp 400w, images/r/alexandra-23-800.webp 800w, images/r/alexandra-23-1600.webp 1600w, images/r/alexandra-23-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-23.jpg" alt="Leadlight windows and high stud" width="2500" height="1667"></picture>
+    </button>
+    <button type="button" class="gal-tile" style="grid-column:span 3;" onclick="openLightbox(3)" aria-label="Open photo: Oversized master suite">
+      <picture><source type="image/avif" srcset="images/r/alexandra-39-400.avif 400w, images/r/alexandra-39-800.avif 800w, images/r/alexandra-39-1600.avif 1600w, images/r/alexandra-39-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-39-400.webp 400w, images/r/alexandra-39-800.webp 800w, images/r/alexandra-39-1600.webp 1600w, images/r/alexandra-39-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-39.jpg" alt="Oversized master suite" width="2500" height="1667"></picture>
+    </button>
+    <button type="button" class="gal-tile" style="grid-column:span 3;" onclick="openLightbox(6)" aria-label="Open photo: Established gardens">
+      <picture><source type="image/avif" srcset="images/r/alexandra-78-400.avif 400w, images/r/alexandra-78-800.avif 800w, images/r/alexandra-78-1600.avif 1600w, images/r/alexandra-78-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-78-400.webp 400w, images/r/alexandra-78-800.webp 800w, images/r/alexandra-78-1600.webp 1600w, images/r/alexandra-78-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-78.jpg" alt="Established gardens" width="2500" height="1667"></picture>
+    </button>
   </div>
 </section>
 
@@ -2411,7 +2739,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
     <!-- Cards injected dynamically + static demos -->
     <div class="listing-card">
       <div class="listing-img">
-        <img loading="lazy" decoding="async" src="images/alexandra-44.jpg" alt="26 Alexandra Street, Riverhead" style="width:100%;height:100%;object-fit:cover;display:block;">
+        <picture><source type="image/avif" srcset="images/r/alexandra-44-400.avif 400w, images/r/alexandra-44-800.avif 800w, images/r/alexandra-44-1600.avif 1600w, images/r/alexandra-44-2400.avif 2400w" sizes="(max-width:900px) 100vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-44-400.webp 400w, images/r/alexandra-44-800.webp 800w, images/r/alexandra-44-1600.webp 1600w, images/r/alexandra-44-2400.webp 2400w" sizes="(max-width:900px) 100vw, 33vw"><img width="2500" height="1667" loading="lazy" decoding="async" src="images/alexandra-44.jpg" alt="26 Alexandra Street, Riverhead" style="width:100%;height:100%;object-fit:cover;display:block;"></picture>
         <span class="listing-tag">For Sale</span>
       </div>
       <div class="listing-body">
@@ -2420,7 +2748,8 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
         <div class="listing-specs">
           <span class="spec"><span class="spec-num">4</span> Beds</span>
           <span class="spec"><span class="spec-num">1</span> Bath</span>
-          <span class="spec"><span class="spec-num">807m²</span></span>
+          <span class="spec spec-empty"><span class="spec-num">-</span> Cars</span>
+          <span class="spec"><span class="spec-num">807m²</span> </span>
         </div>
         <div class="listing-cta">
           <div class="listing-price">Price by negotiation</div>
@@ -2431,7 +2760,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
     <div class="listing-card">
       <div class="listing-img">
-        <img loading="lazy" decoding="async" src="images/awaroa-01.jpg" alt="106 Awaroa Road, Helensville" style="width:100%;height:100%;object-fit:cover;display:block;">
+        <picture><source type="image/avif" srcset="images/r/awaroa-01-400.avif 400w, images/r/awaroa-01-800.avif 800w, images/r/awaroa-01-1600.avif 1600w, images/r/awaroa-01-2400.avif 2400w" sizes="(max-width:900px) 100vw, 33vw"><source type="image/webp" srcset="images/r/awaroa-01-400.webp 400w, images/r/awaroa-01-800.webp 800w, images/r/awaroa-01-1600.webp 1600w, images/r/awaroa-01-2400.webp 2400w" sizes="(max-width:900px) 100vw, 33vw"><img width="2500" height="1667" loading="lazy" decoding="async" src="images/awaroa-01.jpg" alt="106 Awaroa Road, Helensville" style="width:100%;height:100%;object-fit:cover;display:block;"></picture>
         <span class="listing-tag">For Sale</span>
       </div>
       <div class="listing-body">
@@ -2440,7 +2769,8 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
         <div class="listing-specs">
           <span class="spec"><span class="spec-num">4</span> Beds</span>
           <span class="spec"><span class="spec-num">1</span> Bath</span>
-          <span class="spec"><span class="spec-num">1</span> Garage</span>
+          <span class="spec"><span class="spec-num">1</span> Car</span>
+          <span class="spec spec-empty"><span class="spec-num">-</span> </span>
         </div>
         <div class="listing-cta">
           <div class="listing-price">Price by negotiation</div>
@@ -2451,7 +2781,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
     <div class="listing-card">
       <div class="listing-img">
-        <img loading="lazy" decoding="async" src="images/glenmore-09.jpg" alt="208 Glenmore Road, Coatesville" style="width:100%;height:100%;object-fit:cover;display:block;">
+        <picture><source type="image/avif" srcset="images/r/glenmore-09-400.avif 400w, images/r/glenmore-09-800.avif 800w, images/r/glenmore-09-1600.avif 1600w, images/r/glenmore-09-2400.avif 2400w" sizes="(max-width:900px) 100vw, 33vw"><source type="image/webp" srcset="images/r/glenmore-09-400.webp 400w, images/r/glenmore-09-800.webp 800w, images/r/glenmore-09-1600.webp 1600w, images/r/glenmore-09-2400.webp 2400w" sizes="(max-width:900px) 100vw, 33vw"><img width="2500" height="1667" loading="lazy" decoding="async" src="images/glenmore-09.jpg" alt="208 Glenmore Road, Coatesville" style="width:100%;height:100%;object-fit:cover;display:block;"></picture>
         <span class="listing-tag">For Sale</span>
       </div>
       <div class="listing-body">
@@ -2460,7 +2790,8 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
         <div class="listing-specs">
           <span class="spec"><span class="spec-num">3</span> Beds</span>
           <span class="spec"><span class="spec-num">2</span> Baths</span>
-          <span class="spec"><span class="spec-num">2.28ha</span></span>
+          <span class="spec spec-empty"><span class="spec-num">-</span> Cars</span>
+          <span class="spec"><span class="spec-num">2.28ha</span> </span>
         </div>
         <div class="listing-cta">
           <div class="listing-price">Price by negotiation</div>
@@ -2487,51 +2818,51 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
   <div class="sold-scroll-wrap">
     <div class="sold-track">
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-albert-14.jpg" alt="Sold - #14 Albert Street, Riverhead" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-albert-14-400.avif 400w, images/r/sold-albert-14-800.avif 800w, images/r/sold-albert-14-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-albert-14-400.webp 400w, images/r/sold-albert-14-800.webp 800w, images/r/sold-albert-14-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-albert-14.jpg" alt="Sold - #14 Albert Street, Riverhead" style="width:100%;height:100%;object-fit:cover;"></picture></div>
         <div class="sold-info"><div class="sold-addr">#14 Albert Street</div><div class="sold-loc">Riverhead</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-turpin-23.jpg" alt="Sold - #23 Turpin Road, Riverhead" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-turpin-23-400.avif 400w, images/r/sold-turpin-23-800.avif 800w, images/r/sold-turpin-23-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-turpin-23-400.webp 400w, images/r/sold-turpin-23-800.webp 800w, images/r/sold-turpin-23-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-turpin-23.jpg" alt="Sold - #23 Turpin Road, Riverhead" style="width:100%;height:100%;object-fit:cover;"></picture></div>
         <div class="sold-info"><div class="sold-addr">#23 Turpin Road</div><div class="sold-loc">Riverhead</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-pohutukawa-96.jpg" alt="Sold - #96 Pohutukawa Parade, Riverhead" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-pohutukawa-96-400.avif 400w, images/r/sold-pohutukawa-96-800.avif 800w, images/r/sold-pohutukawa-96-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-pohutukawa-96-400.webp 400w, images/r/sold-pohutukawa-96-800.webp 800w, images/r/sold-pohutukawa-96-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-pohutukawa-96.jpg" alt="Sold - #96 Pohutukawa Parade, Riverhead" style="width:100%;height:100%;object-fit:cover;"></picture></div>
         <div class="sold-info"><div class="sold-addr">#96 Pohutukawa Parade</div><div class="sold-loc">Riverhead</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-amber-10.jpg" alt="Sold - #10 Amber Place, Waimauku" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-amber-10-400.avif 400w, images/r/sold-amber-10-800.avif 800w, images/r/sold-amber-10-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-amber-10-400.webp 400w, images/r/sold-amber-10-800.webp 800w, images/r/sold-amber-10-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-amber-10.jpg" alt="Sold - #10 Amber Place, Waimauku" style="width:100%;height:100%;object-fit:cover;"></picture></div>
         <div class="sold-info"><div class="sold-addr">#10 Amber Place</div><div class="sold-loc">Waimauku</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-school-244.jpg" alt="Sold - #244 School Road, Waimauku" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-school-244-400.avif 400w, images/r/sold-school-244-800.avif 800w, images/r/sold-school-244-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-school-244-400.webp 400w, images/r/sold-school-244-800.webp 800w, images/r/sold-school-244-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-school-244.jpg" alt="Sold - #244 School Road, Waimauku" style="width:100%;height:100%;object-fit:cover;"></picture></div>
         <div class="sold-info"><div class="sold-addr">#244 School Road</div><div class="sold-loc">Waimauku</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-amreins-225b.jpg" alt="Sold - #225B Amreins Road, Taupaki" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-amreins-225b-400.avif 400w, images/r/sold-amreins-225b-800.avif 800w, images/r/sold-amreins-225b-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-amreins-225b-400.webp 400w, images/r/sold-amreins-225b-800.webp 800w, images/r/sold-amreins-225b-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-amreins-225b.jpg" alt="Sold - #225B Amreins Road, Taupaki" style="width:100%;height:100%;object-fit:cover;"></picture></div>
         <div class="sold-info"><div class="sold-addr">#225B Amreins Road</div><div class="sold-loc">Taupaki</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-trigg-29a.jpg" alt="Sold - #29A Trigg Road, Kumeu" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-trigg-29a-400.avif 400w, images/r/sold-trigg-29a-800.avif 800w, images/r/sold-trigg-29a-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-trigg-29a-400.webp 400w, images/r/sold-trigg-29a-800.webp 800w, images/r/sold-trigg-29a-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-trigg-29a.jpg" alt="Sold - #29A Trigg Road, Kumeu" style="width:100%;height:100%;object-fit:cover;"></picture></div>
         <div class="sold-info"><div class="sold-addr">#29A Trigg Road</div><div class="sold-loc">Kumeu</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-lenireland-16.jpg" alt="Sold - #16 Len Ireland Drive, Kumeu" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-lenireland-16-400.avif 400w, images/r/sold-lenireland-16-800.avif 800w, images/r/sold-lenireland-16-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-lenireland-16-400.webp 400w, images/r/sold-lenireland-16-800.webp 800w, images/r/sold-lenireland-16-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-lenireland-16.jpg" alt="Sold - #16 Len Ireland Drive, Kumeu" style="width:100%;height:100%;object-fit:cover;"></picture></div>
         <div class="sold-info"><div class="sold-addr">#16 Len Ireland Drive</div><div class="sold-loc">Kumeu</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-robertmight-30.jpg" alt="Sold - #30 Robert Might Road, Huapai" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-robertmight-30-400.avif 400w, images/r/sold-robertmight-30-800.avif 800w, images/r/sold-robertmight-30-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-robertmight-30-400.webp 400w, images/r/sold-robertmight-30-800.webp 800w, images/r/sold-robertmight-30-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-robertmight-30.jpg" alt="Sold - #30 Robert Might Road, Huapai" style="width:100%;height:100%;object-fit:cover;"></picture></div>
         <div class="sold-info"><div class="sold-addr">#30 Robert Might Road</div><div class="sold-loc">Huapai</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-paihere-12.jpg" alt="Sold - #12 Paihere Street, Huapai" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-paihere-12-400.avif 400w, images/r/sold-paihere-12-800.avif 800w, images/r/sold-paihere-12-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-paihere-12-400.webp 400w, images/r/sold-paihere-12-800.webp 800w, images/r/sold-paihere-12-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-paihere-12.jpg" alt="Sold - #12 Paihere Street, Huapai" style="width:100%;height:100%;object-fit:cover;"></picture></div>
         <div class="sold-info"><div class="sold-addr">#12 Paihere Street</div><div class="sold-loc">Huapai</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-kaiparaview-10.jpg" alt="Sold - #10 Kaipara View Road, Helensville" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-kaiparaview-10-400.avif 400w, images/r/sold-kaiparaview-10-800.avif 800w, images/r/sold-kaiparaview-10-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-kaiparaview-10-400.webp 400w, images/r/sold-kaiparaview-10-800.webp 800w, images/r/sold-kaiparaview-10-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-kaiparaview-10.jpg" alt="Sold - #10 Kaipara View Road, Helensville" style="width:100%;height:100%;object-fit:cover;"></picture></div>
         <div class="sold-info"><div class="sold-addr">#10 Kaipara View Road</div><div class="sold-loc">Helensville</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-manarini-24.jpg" alt="Sold - #24 Manarini Road, Westgate" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-manarini-24-400.avif 400w, images/r/sold-manarini-24-800.avif 800w, images/r/sold-manarini-24-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-manarini-24-400.webp 400w, images/r/sold-manarini-24-800.webp 800w, images/r/sold-manarini-24-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-manarini-24.jpg" alt="Sold - #24 Manarini Road, Westgate" style="width:100%;height:100%;object-fit:cover;"></picture></div>
         <div class="sold-info"><div class="sold-addr">#24 Manarini Road</div><div class="sold-loc">Westgate</div></div>
       </div>
     </div>
@@ -2550,52 +2881,29 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
       @courtney_and_co_
     </a>
   </div>
-<div style="display:grid;grid-template-columns:repeat(6,1fr);gap:6px;" id="insta-grid">
-
-    <!-- Tile 1: OPEN HOMES branded - pink -->
-    <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" style="aspect-ratio:1;overflow:hidden;border-radius:3px;cursor:pointer;position:relative;display:block;background:#e8b4c8;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-      <img loading="lazy" decoding="async" src="images/kumeu_2.webp" style="width:100%;height:100%;object-fit:cover;opacity:0.45;position:absolute;inset:0;">
-      <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:10px;">
-        <div style="font-family:var(--font-mono);font-size:8px;letter-spacing:0.2em;color:rgba(13,31,45,0.7);text-transform:uppercase;margin-bottom:2px;">C &amp; CO</div>
-        <div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:#0d1f2d;line-height:1.1;text-transform:uppercase;">OPEN<br>HOMES</div>
-        <div style="font-family:var(--font-mono);font-size:8px;letter-spacing:0.12em;color:rgba(13,31,45,0.65);margin-top:4px;text-transform:uppercase;">Saturday &amp; Sunday</div>
-      </div>
-    </a>
-
-    <!-- Tile 2: Property photo -->
-    <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" style="aspect-ratio:1;overflow:hidden;border-radius:3px;cursor:pointer;display:block;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-      <img loading="lazy" decoding="async" src="images/alexandra-01.jpg" style="width:100%;height:100%;object-fit:cover;">
-    </a>
-
-    <!-- Tile 3: SOLD OFF MARKET - pink/navy -->
-    <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" style="aspect-ratio:1;overflow:hidden;border-radius:3px;cursor:pointer;position:relative;display:block;background:#daa0c0;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-      <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:12px;">
-        <div style="font-family:var(--font-display);font-size:26px;font-weight:900;color:#0d1f2d;line-height:1;text-transform:uppercase;letter-spacing:-0.01em;">SOLD<br><span style="font-size:16px;letter-spacing:0.05em;">OFF MARKET</span></div>
-        <div style="font-family:var(--font-mono);font-size:8px;letter-spacing:0.15em;color:rgba(13,31,45,0.6);margin-top:8px;text-transform:uppercase;">Courtney Wood<br>027 688 0818</div>
-      </div>
-    </a>
-
-    <!-- Tile 4: Property photo -->
-    <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" style="aspect-ratio:1;overflow:hidden;border-radius:3px;cursor:pointer;display:block;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-      <img loading="lazy" decoding="async" src="images/alexandra-15.jpg" style="width:100%;height:100%;object-fit:cover;">
-    </a>
-
-    <!-- Tile 5: OPEN SUNDAY - navy -->
-    <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" style="aspect-ratio:1;overflow:hidden;border-radius:3px;cursor:pointer;position:relative;display:block;background:#0d1f2d;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-      <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:10px;text-align:center;">
-        <div style="font-family:var(--font-mono);font-size:8px;letter-spacing:0.2em;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:6px;">C &amp; CO</div>
-        <div style="font-family:var(--font-display);font-size:22px;font-weight:700;color:white;line-height:1.1;text-transform:uppercase;">OPEN<br>SUNDAY</div>
-        <div style="width:36px;height:1px;background:var(--pink);margin:8px auto;"></div>
-        <div style="font-family:var(--font-mono);font-size:8px;letter-spacing:0.12em;color:rgba(255,255,255,0.45);text-transform:uppercase;">Riverhead</div>
-      </div>
-    </a>
-
-    <!-- Tile 6: Property photo -->
-    <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" style="aspect-ratio:1;overflow:hidden;border-radius:3px;cursor:pointer;display:block;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-      <img loading="lazy" decoding="async" src="images/kumeu.webp" style="width:100%;height:100%;object-fit:cover;">
-    </a>
-
-  </div>
+<!-- B11: her own photography under one treatment. The previous tiles were
+     invented "OPEN HOMES" / "SOLD OFF MARKET" graphics carrying two pinks,
+     neither of which was the brand mauve. -->
+<div class="insta-grid" id="insta-grid">
+  <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" rel="noopener" class="insta-tile" aria-label="Courtney &amp; Co on Instagram: Riverhead villa">
+    <picture><source type="image/avif" srcset="images/r/alexandra-01-400.avif 400w, images/r/alexandra-01-800.avif 800w, images/r/alexandra-01-1600.avif 1600w, images/r/alexandra-01-2400.avif 2400w" sizes="(max-width:768px) 33vw, 16vw"><source type="image/webp" srcset="images/r/alexandra-01-400.webp 400w, images/r/alexandra-01-800.webp 800w, images/r/alexandra-01-1600.webp 1600w, images/r/alexandra-01-2400.webp 2400w" sizes="(max-width:768px) 33vw, 16vw"><img loading="lazy" decoding="async" src="images/alexandra-01.jpg" alt="Riverhead villa" width="2500" height="1667"></picture>
+  </a>
+  <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" rel="noopener" class="insta-tile" aria-label="Courtney &amp; Co on Instagram: Pohutukawa Parade, Riverhead">
+    <picture><source type="image/avif" srcset="images/r/sold-pohutukawa-96-400.avif 400w, images/r/sold-pohutukawa-96-800.avif 800w, images/r/sold-pohutukawa-96-1000.avif 1000w" sizes="(max-width:768px) 33vw, 16vw"><source type="image/webp" srcset="images/r/sold-pohutukawa-96-400.webp 400w, images/r/sold-pohutukawa-96-800.webp 800w, images/r/sold-pohutukawa-96-1000.webp 1000w" sizes="(max-width:768px) 33vw, 16vw"><img loading="lazy" decoding="async" src="images/sold-pohutukawa-96.jpg" alt="Pohutukawa Parade, Riverhead" width="1000" height="667"></picture>
+  </a>
+  <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" rel="noopener" class="insta-tile" aria-label="Courtney &amp; Co on Instagram: Outdoor entertaining">
+    <picture><source type="image/avif" srcset="images/r/alexandra-61-400.avif 400w, images/r/alexandra-61-800.avif 800w, images/r/alexandra-61-1600.avif 1600w, images/r/alexandra-61-2400.avif 2400w" sizes="(max-width:768px) 33vw, 16vw"><source type="image/webp" srcset="images/r/alexandra-61-400.webp 400w, images/r/alexandra-61-800.webp 800w, images/r/alexandra-61-1600.webp 1600w, images/r/alexandra-61-2400.webp 2400w" sizes="(max-width:768px) 33vw, 16vw"><img loading="lazy" decoding="async" src="images/alexandra-61.jpg" alt="Outdoor entertaining" width="2500" height="1667"></picture>
+  </a>
+  <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" rel="noopener" class="insta-tile" aria-label="Courtney &amp; Co on Instagram: Glenmore Road, Coatesville">
+    <picture><source type="image/avif" srcset="images/r/glenmore-09-400.avif 400w, images/r/glenmore-09-800.avif 800w, images/r/glenmore-09-1600.avif 1600w, images/r/glenmore-09-2400.avif 2400w" sizes="(max-width:768px) 33vw, 16vw"><source type="image/webp" srcset="images/r/glenmore-09-400.webp 400w, images/r/glenmore-09-800.webp 800w, images/r/glenmore-09-1600.webp 1600w, images/r/glenmore-09-2400.webp 2400w" sizes="(max-width:768px) 33vw, 16vw"><img loading="lazy" decoding="async" src="images/glenmore-09.jpg" alt="Glenmore Road, Coatesville" width="2500" height="1667"></picture>
+  </a>
+  <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" rel="noopener" class="insta-tile" aria-label="Courtney &amp; Co on Instagram: Villa kitchen">
+    <picture><source type="image/avif" srcset="images/r/alexandra-31-400.avif 400w, images/r/alexandra-31-800.avif 800w, images/r/alexandra-31-1600.avif 1600w, images/r/alexandra-31-2400.avif 2400w" sizes="(max-width:768px) 33vw, 16vw"><source type="image/webp" srcset="images/r/alexandra-31-400.webp 400w, images/r/alexandra-31-800.webp 800w, images/r/alexandra-31-1600.webp 1600w, images/r/alexandra-31-2400.webp 2400w" sizes="(max-width:768px) 33vw, 16vw"><img loading="lazy" decoding="async" src="images/alexandra-31.jpg" alt="Villa kitchen" width="2500" height="1667"></picture>
+  </a>
+  <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" rel="noopener" class="insta-tile" aria-label="Courtney &amp; Co on Instagram: Awaroa Road, Helensville">
+    <picture><source type="image/avif" srcset="images/r/awaroa-01-400.avif 400w, images/r/awaroa-01-800.avif 800w, images/r/awaroa-01-1600.avif 1600w, images/r/awaroa-01-2400.avif 2400w" sizes="(max-width:768px) 33vw, 16vw"><source type="image/webp" srcset="images/r/awaroa-01-400.webp 400w, images/r/awaroa-01-800.webp 800w, images/r/awaroa-01-1600.webp 1600w, images/r/awaroa-01-2400.webp 2400w" sizes="(max-width:768px) 33vw, 16vw"><img loading="lazy" decoding="async" src="images/awaroa-01.jpg" alt="Awaroa Road, Helensville" width="2500" height="1667"></picture>
+  </a>
+</div>
 </section>
 
 <!-- ── PROCESS ─────────────────────────────────────────────────────── -->
@@ -2648,11 +2956,11 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
   <div class="team-grid stagger">
     <div class="team-card">
       <div class="team-photo-wrap">
-        <img loading="lazy" decoding="async" src="images/courtneyhead.jpg" alt="Courtney Wood" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;">
+        <picture><source type="image/avif" srcset="images/r/courtneyhead-400.avif 400w, images/r/courtneyhead-800.avif 800w, images/r/courtneyhead-1023.avif 1023w" sizes="(max-width:900px) 50vw, 25vw"><source type="image/webp" srcset="images/r/courtneyhead-400.webp 400w, images/r/courtneyhead-800.webp 800w, images/r/courtneyhead-1023.webp 1023w" sizes="(max-width:900px) 50vw, 25vw"><img width="1023" height="1023" loading="lazy" decoding="async" src="images/courtneyhead.jpg" alt="Courtney Wood" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;"></picture>
         <div class="team-overlay">
           <div class="team-contact-links">
-            <a href="tel:0276880818">📞</a>
-            <a href="mailto:theteam@courtneyandco.co.nz">✉</a>
+            <a href="tel:0276880818"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></a>
+            <a href="mailto:theteam@courtneyandco.co.nz"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></a>
           </div>
         </div>
       </div>
@@ -2663,11 +2971,11 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
     <div class="team-card">
       <div class="team-photo-wrap">
-        <img loading="lazy" decoding="async" src="images/Amy1.webp" alt="Amy Wood" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;">
+        <picture><source type="image/avif" srcset="images/r/Amy1-400.avif 400w" sizes="(max-width:900px) 50vw, 25vw"><source type="image/webp" srcset="images/r/Amy1-400.webp 400w" sizes="(max-width:900px) 50vw, 25vw"><img width="400" height="450" loading="lazy" decoding="async" src="images/Amy1.webp" alt="Amy Wood" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;"></picture>
         <div class="team-overlay">
           <div class="team-contact-links">
-            <a href="tel:094129903">📞</a>
-            <a href="mailto:theteam@courtneyandco.co.nz">✉</a>
+            <a href="tel:094129903"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></a>
+            <a href="mailto:theteam@courtneyandco.co.nz"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></a>
           </div>
         </div>
       </div>
@@ -2678,11 +2986,11 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
     <div class="team-card">
       <div class="team-photo-wrap">
-        <img loading="lazy" decoding="async" src="images/rebecca.webp" alt="Rebecca" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;">
+        <picture><source type="image/avif" srcset="images/r/rebecca-354.avif 354w" sizes="(max-width:900px) 50vw, 25vw"><source type="image/webp" srcset="images/r/rebecca-354.webp 354w" sizes="(max-width:900px) 50vw, 25vw"><img width="354" height="354" loading="lazy" decoding="async" src="images/rebecca.webp" alt="Rebecca" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;"></picture>
         <div class="team-overlay">
           <div class="team-contact-links">
-            <a href="tel:094129903">📞</a>
-            <a href="mailto:theteam@courtneyandco.co.nz">✉</a>
+            <a href="tel:094129903"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></a>
+            <a href="mailto:theteam@courtneyandco.co.nz"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></a>
           </div>
         </div>
       </div>
@@ -2693,11 +3001,11 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
     <div class="team-card">
       <div class="team-photo-wrap">
-        <img loading="lazy" decoding="async" src="images/Chris.webp" alt="Chris" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;">
+        <picture><source type="image/avif" srcset="images/r/Chris-400.avif 400w" sizes="(max-width:900px) 50vw, 25vw"><source type="image/webp" srcset="images/r/Chris-400.webp 400w" sizes="(max-width:900px) 50vw, 25vw"><img width="400" height="450" loading="lazy" decoding="async" src="images/Chris.webp" alt="Chris" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;"></picture>
         <div class="team-overlay">
           <div class="team-contact-links">
-            <a href="tel:094129903">📞</a>
-            <a href="mailto:theteam@courtneyandco.co.nz">✉</a>
+            <a href="tel:094129903"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></a>
+            <a href="mailto:theteam@courtneyandco.co.nz"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></a>
           </div>
         </div>
       </div>
@@ -2708,11 +3016,11 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
     <div class="team-card">
       <div class="team-photo-wrap">
-        <img loading="lazy" decoding="async" src="images/amy2.webp" alt="Amy Creative" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;">
+        <picture><source type="image/avif" srcset="images/r/amy2-400.avif 400w" sizes="(max-width:900px) 50vw, 25vw"><source type="image/webp" srcset="images/r/amy2-400.webp 400w" sizes="(max-width:900px) 50vw, 25vw"><img width="400" height="450" loading="lazy" decoding="async" src="images/amy2.webp" alt="Amy Creative" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;"></picture>
         <div class="team-overlay">
           <div class="team-contact-links">
-            <a href="tel:094129903">📞</a>
-            <a href="mailto:theteam@courtneyandco.co.nz">✉</a>
+            <a href="tel:094129903"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></a>
+            <a href="mailto:theteam@courtneyandco.co.nz"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></a>
           </div>
         </div>
       </div>
@@ -2723,11 +3031,11 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
     <div class="team-card">
       <div class="team-photo-wrap">
-        <img loading="lazy" decoding="async" src="images/C_CO_11.webp" alt="Lisa" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;">
+        <picture><source type="image/avif" srcset="images/r/C_CO_11-400.avif 400w, images/r/C_CO_11-800.avif 800w, images/r/C_CO_11-1000.avif 1000w" sizes="(max-width:900px) 50vw, 25vw"><source type="image/webp" srcset="images/r/C_CO_11-400.webp 400w, images/r/C_CO_11-800.webp 800w, images/r/C_CO_11-1000.webp 1000w" sizes="(max-width:900px) 50vw, 25vw"><img width="1000" height="1000" loading="lazy" decoding="async" src="images/C_CO_11.webp" alt="Lisa" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;"></picture>
         <div class="team-overlay">
           <div class="team-contact-links">
-            <a href="tel:094129903">📞</a>
-            <a href="mailto:theteam@courtneyandco.co.nz">✉</a>
+            <a href="tel:094129903"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></a>
+            <a href="mailto:theteam@courtneyandco.co.nz"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></a>
           </div>
         </div>
       </div>
@@ -2738,10 +3046,10 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
     <div class="team-card">
       <div class="team-photo-wrap">
-        <img loading="lazy" decoding="async" src="images/C_CO_08.webp" alt="Jenny" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;">
+        <picture><source type="image/avif" srcset="images/r/C_CO_08-400.avif 400w, images/r/C_CO_08-800.avif 800w, images/r/C_CO_08-1000.avif 1000w" sizes="(max-width:900px) 50vw, 25vw"><source type="image/webp" srcset="images/r/C_CO_08-400.webp 400w, images/r/C_CO_08-800.webp 800w, images/r/C_CO_08-1000.webp 1000w" sizes="(max-width:900px) 50vw, 25vw"><img width="1000" height="1000" loading="lazy" decoding="async" src="images/C_CO_08.webp" alt="Jenny" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;"></picture>
         <div class="team-overlay">
           <div class="team-contact-links">
-            <a href="tel:094129903">📞</a>
+            <a href="tel:094129903"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></a>
           </div>
         </div>
       </div>
@@ -2752,11 +3060,11 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
     <div class="team-card">
       <div class="team-photo-wrap">
-        <img loading="lazy" decoding="async" src="images/Darren.webp" alt="Darren" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;">
+        <picture><source type="image/avif" srcset="images/r/Darren-328.avif 328w" sizes="(max-width:900px) 50vw, 25vw"><source type="image/webp" srcset="images/r/Darren-328.webp 328w" sizes="(max-width:900px) 50vw, 25vw"><img width="328" height="328" loading="lazy" decoding="async" src="images/Darren.webp" alt="Darren" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;"></picture>
         <div class="team-overlay">
           <div class="team-contact-links">
-            <a href="tel:094129903">📞</a>
-            <a href="mailto:theteam@courtneyandco.co.nz">✉</a>
+            <a href="tel:094129903"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></a>
+            <a href="mailto:theteam@courtneyandco.co.nz"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></a>
           </div>
         </div>
       </div>
@@ -2769,28 +3077,26 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
 <!-- ── TESTIMONIALS ────────────────────────────────────────────────── -->
 <section class="testimonials-section" id="testimonials">
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-bottom:56px;">
-    <div>
-      <div class="section-label">Client Stories</div>
-      <h2 class="section-title">Don't take it<br>from <em>us.</em></h2>
-    </div>
-    <div style="padding-top:16px;">
-      <p style="font-family:var(--font-display);font-size:clamp(18px,2vw,24px);font-weight:300;font-style:italic;line-height:1.6;color:var(--navy-mid);">"Dealing with Courtney was a breath of fresh air. No BS. Straight up &amp; relaxed."</p>
-      <div style="margin-top:18px;display:flex;align-items:center;gap:12px;">
-        <div style="width:36px;height:36px;border-radius:50%;background:var(--pink-pale);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);color:var(--pink);font-size:14px;">D</div>
-        <div class="testi-name">Debbie</div>
-      </div>
-    </div>
+  <div style="margin-bottom:44px;">
+    <div class="section-label">Client Stories</div>
+    <h2 class="section-title">Don't take it<br>from <em>us.</em></h2>
   </div>
+
+  <!-- B9: the Debbie quote was orphaned beside the heading with dead space on
+       all sides. It now opens the section as a full-width pull quote. -->
+  <blockquote style="margin:0 0 56px;padding:0 0 0 28px;border-left:3px solid var(--pink);max-width:1000px;">
+    <p style="font-family:var(--font-display);font-size:clamp(28px,3.4vw,44px);font-weight:300;font-style:italic;line-height:1.35;color:var(--navy);margin:0 0 18px;">"Dealing with Courtney was a breath of fresh air. No BS. Straight up &amp; relaxed."</p>
+    <cite class="testi-name" style="font-style:normal;">Debbie</cite>
+  </blockquote>
 
   <div class="vt-grid stagger">
     <button class="vt-card" type="button" data-yt="" data-src-id="rTG1BDPoJew" data-href="https://courtneyandco.co.nz/testimonials" aria-label="Play video testimonial: Hear it from Mark &amp; Liz">
-      <img loading="lazy" decoding="async" src="images/video-mark-liz.webp" alt="Hear it from Mark &amp; Liz">
+      <picture><source type="image/avif" srcset="images/r/video-mark-liz-400.avif 400w, images/r/video-mark-liz-480.avif 480w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/video-mark-liz-400.webp 400w, images/r/video-mark-liz-480.webp 480w" sizes="(max-width:900px) 100vw, 50vw"><img width="480" height="360" loading="lazy" decoding="async" src="images/video-mark-liz.webp" alt="Hear it from Mark &amp; Liz"></picture>
       <span class="vt-play"><span class="vt-play-btn"></span></span>
       <span class="vt-label">Hear it from Mark &amp; Liz</span>
     </button>
     <button class="vt-card" type="button" data-yt="" data-src-id="TFnr5M34WnE" data-href="https://courtneyandco.co.nz/testimonials" aria-label="Play video testimonial: Hear it from Mary &amp; Kevin">
-      <img loading="lazy" decoding="async" src="images/video-mary-kevin.webp" alt="Hear it from Mary &amp; Kevin">
+      <picture><source type="image/avif" srcset="images/r/video-mary-kevin-400.avif 400w, images/r/video-mary-kevin-480.avif 480w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/video-mary-kevin-400.webp 400w, images/r/video-mary-kevin-480.webp 480w" sizes="(max-width:900px) 100vw, 50vw"><img width="480" height="360" loading="lazy" decoding="async" src="images/video-mary-kevin.webp" alt="Hear it from Mary &amp; Kevin"></picture>
       <span class="vt-play"><span class="vt-play-btn"></span></span>
       <span class="vt-label">Hear it from Mary &amp; Kevin</span>
     </button>
@@ -2862,21 +3168,21 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
     </p>
     <div class="contact-info-items">
       <div class="contact-info-item">
-        <div class="c-info-icon">📍</div>
+        <div class="c-info-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 5.5-8 12-8 12s-8-6.5-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
         <div>
           <div class="c-info-label">Main Office</div>
           <div class="c-info-value">1047 Coatesville-Riverhead Hwy, Riverhead</div>
         </div>
       </div>
       <div class="contact-info-item">
-        <div class="c-info-icon">📍</div>
+        <div class="c-info-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 5.5-8 12-8 12s-8-6.5-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
         <div>
           <div class="c-info-label">Satellite Office</div>
           <div class="c-info-value">9 Factory Road, Shop 15C, Waimauku</div>
         </div>
       </div>
       <div class="contact-info-item">
-        <div class="c-info-icon">📞</div>
+        <div class="c-info-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></div>
         <div>
           <div class="c-info-label">Call Us</div>
           <div class="c-info-value">
@@ -2887,7 +3193,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
         </div>
       </div>
       <div class="contact-info-item">
-        <div class="c-info-icon">✉</div>
+        <div class="c-info-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></div>
         <div>
           <div class="c-info-label">Email</div>
           <div class="c-info-value"><a href="mailto:theteam@courtneyandco.co.nz">theteam@courtneyandco.co.nz</a></div>
@@ -2898,7 +3204,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
     <!-- Rubble -->
     <div style="margin-top:32px;display:flex;align-items:center;gap:18px;padding:20px;background:rgba(255,255,255,0.06);border-radius:6px;border:1px solid rgba(255,255,255,0.08);">
       <div style="width:72px;height:72px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid rgba(255,255,255,0.15);">
-        <img loading="lazy" decoding="async" src="images/Rubble.webp" alt="Rubble" style="width:100%;height:100%;object-fit:cover;">
+        <picture><source type="image/avif" srcset="images/r/Rubble-328.avif 328w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/Rubble-328.webp 328w" sizes="(max-width:900px) 100vw, 50vw"><img width="328" height="328" loading="lazy" decoding="async" src="images/Rubble.webp" alt="Rubble" style="width:100%;height:100%;object-fit:cover;"></picture>
       </div>
       <div>
         <div style="font-family:var(--font-display);font-size:16px;color:white;font-weight:400;">Rubble</div>
@@ -2961,7 +3267,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
     <h2 style="font-family:var(--font-display);font-size:clamp(22px,2.4vw,30px);font-weight:300;color:var(--navy);line-height:1.25;margin:0;flex:1 1 320px;">Get the North West market update first.</h2>
     <div style="display:flex;gap:10px;flex:1 1 340px;flex-wrap:wrap;">
       <label for="nl-email" class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Email address</label>
-      <input id="nl-email" class="form-input" type="email" placeholder="Email address" style="flex:1 1 200px;min-width:0;">
+      <input id="nl-email" class="nl-input" type="email" placeholder="Email address" style="flex:1 1 200px;min-width:0;">
       <button class="form-submit" style="width:auto;padding:14px 28px;white-space:nowrap;" onclick="handleFormSubmit(event)">Sign me up</button>
     </div>
   </div>
@@ -3008,7 +3314,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 <div class="chat-panel" id="chat-panel">
   <div class="chat-header">
     <div style="width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid rgba(255,255,255,0.2);">
-      <img loading="lazy" decoding="async" src="images/courtneyhead.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center 18%;">
+      <picture><source type="image/avif" srcset="images/r/courtneyhead-400.avif 400w, images/r/courtneyhead-800.avif 800w, images/r/courtneyhead-1023.avif 1023w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/courtneyhead-400.webp 400w, images/r/courtneyhead-800.webp 800w, images/r/courtneyhead-1023.webp 1023w" sizes="(max-width:900px) 100vw, 50vw"><img width="1023" height="1023" loading="lazy" decoding="async" src="images/courtneyhead.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center 18%;"></picture>
     </div>
     <div class="chat-agent-info">
       <div class="chat-agent-name">Courtney &amp; Co Concierge</div>
@@ -3353,6 +3659,55 @@ function handleFormSubmit(e) {
     btn.textContent = original;
   }, 3200);
 }
+
+// -- D1: one reveal pattern applied to every major section ----------
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var targets = document.querySelectorAll(
+    'main > section, main > div.press-section, main > .stats-strip, footer');
+  targets.forEach(function (el) {
+    if (el.classList.contains('hero')) return;   // hero has its own entrance
+    el.classList.add('reveal');
+  });
+  if (reduce) {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('visible'); });
+    return;
+  }
+  try {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  } catch (err) {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('visible'); });
+  }
+  // failsafe: nothing stays invisible
+  setTimeout(function () {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('visible'); });
+  }, 2500);
+})();
+
+// -- D5: scroll progress ------------------------------------------
+(function () {
+  var bar = document.getElementById('scroll-progress');
+  if (!bar) return;
+  var tick = function () {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = h > 0 ? (window.scrollY / h) * 100 : 0;
+    bar.style.width = Math.min(100, Math.max(0, pct)) + '%';
+  };
+  window.addEventListener('scroll', tick, { passive: true });
+  window.addEventListener('resize', tick);
+  tick();
+})();
 </script>
+<!-- D4: sticky mobile action bar. The phone is the conversion on a property site. -->
+<div id="mobile-bar">
+  <a class="mb-call" href="tel:0276880818">Call Courtney</a>
+  <a class="mb-appr" href="#contact">Free Appraisal</a>
+</div>
+
 </body>
 </html>
