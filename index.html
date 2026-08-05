@@ -3,10 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Courtney & Co — Straight Talking Real Estate</title>
+<title>Courtney & Co - Straight Talking Real Estate</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Hero is a CSS background-image, so it is preloaded here rather than via an <img> tag -->
+<link rel="preload" as="image" href="images/courtneyhero.webp" fetchpriority="high">
 
 <style>
 /* ── RESET & VARIABLES ─────────────────────────────────────────── */
@@ -22,16 +24,19 @@
   --pink-lt:   #d09ab8;
   --pink-pale: #f0e4ef;
   --pink-deep: #9a5f88;
-  --blue:      #7bbec8;
-  --blue-lt:   #9ecdd5;
-  --blue-pale: #ddf0f4;
-  --blue-deep: #4fa0ae;
-  --blue-mid:  #5eafc0;
+  /* One signature accent. The former teal ramp is now an alias of the
+     mauve pink above, so the page reads with a single accent colour.
+     Names are kept so existing rules keep resolving. */
+  --blue:      var(--pink);
+  --blue-lt:   var(--pink-lt);
+  --blue-pale: var(--pink-pale);
+  --blue-deep: var(--pink-deep);
+  --blue-mid:  var(--pink-lt);
   --copper:    #b87aa0;
   --copper-lt: #d09ab8;
   --copper-pale:#f0e4ef;
-  --sage:      #7bbec8;
-  --sage-pale: #e0f1f4;
+  --sage:      var(--pink);
+  --sage-pale: var(--pink-pale);
   --charcoal:  #2c2a3c;
   --mid:       #6a6580;
   --light-line:#ddd8e8;
@@ -49,6 +54,29 @@ body {
   background: var(--warm-white);
   color: var(--navy);
   overflow-x: hidden;
+}
+
+/* ── SKIP LINK (visible on keyboard focus only) ─────────────────── */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 200;
+  padding: 12px 20px;
+  background: var(--navy);
+  color: white;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  left: 12px;
+  top: 12px;
+  outline: 2px solid var(--pink-lt);
+  outline-offset: 2px;
 }
 
 /* ── SCROLLBAR ─────────────────────────────────────────────────── */
@@ -155,7 +183,7 @@ nav.scrolled {
   background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
-/* Placeholder photo effect — replace src with real image */
+/* Placeholder photo effect - replace src with real image */
 .hero-photo {
   position: absolute;
   inset: 0;
@@ -302,8 +330,8 @@ nav.scrolled {
 .stats-strip {
   background: linear-gradient(135deg, #0e1e38 0%, #0c2240 50%, #0e2a48 100%);
   padding: 40px 60px;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   align-items: center;
   gap: 24px;
   position: relative;
@@ -315,7 +343,7 @@ nav.scrolled {
   position: absolute;
   top: -80px; right: -40px;
   width: 300px; height: 300px;
-  background: radial-gradient(circle, rgba(158,205,213,0.18) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(208,154,184,0.18) 0%, transparent 65%);
   pointer-events: none;
 }
 
@@ -338,11 +366,11 @@ nav.scrolled {
 .stat-item + .stat-item::before {
   content: '';
   position: absolute;
-  left: 0; top: 50%;
+  left: -12px; top: 50%;
   transform: translateY(-50%);
   height: 40px;
   width: 1px;
-  background: rgba(158,205,213,0.2);
+  background: rgba(208,154,184,0.2);
 }
 
 .stat-num {
@@ -353,7 +381,7 @@ nav.scrolled {
   line-height: 1;
 }
 
-.stat-label {
+.stat-lbl {
   font-size: 12.0px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -411,7 +439,7 @@ nav.scrolled {
 
 .about-visual {
   position: relative;
-  height: 580px;
+  aspect-ratio: 16 / 15;
 }
 
 .about-photo-main {
@@ -740,7 +768,7 @@ nav.scrolled {
   color: rgba(255,255,255,0.5);
 }
 
-/* ── AS SEEN IN — SCROLL TICKER ────────────────────────────────── */
+/* ── AS SEEN IN - SCROLL TICKER ────────────────────────────────── */
 .ticker-section {
   background: white;
   padding: 40px 0;
@@ -907,7 +935,7 @@ nav.scrolled {
 }
 
 .listing-img {
-  height: 240px;
+  aspect-ratio: 16 / 9;
   position: relative;
   overflow: hidden;
 }
@@ -1037,7 +1065,7 @@ nav.scrolled {
   font-family: var(--font-display);
   font-size: 80px;
   font-weight: 400;
-  color: rgba(158,205,213,0.2);
+  color: rgba(208,154,184,0.2);
   line-height: 1;
 }
 
@@ -1069,7 +1097,7 @@ nav.scrolled {
 }
 
 .sold-img {
-  height: 200px;
+  aspect-ratio: 7 / 5;
   background: linear-gradient(135deg, #243322 0%, #1a2d38 100%);
   position: relative;
   overflow: hidden;
@@ -1166,7 +1194,7 @@ nav.scrolled {
 }
 
 .team-photo-wrap {
-  height: 320px;
+  aspect-ratio: 1 / 1;
   position: relative;
   overflow: hidden;
   border-radius: 2px;
@@ -1178,11 +1206,23 @@ nav.scrolled {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top;
-  transition: transform 0.5s ease;
+  object-position: center 22%;
+  filter: grayscale(1) contrast(1.06) brightness(0.98);
+  transition: transform 0.5s ease, filter 0.5s ease;
 }
 
-.team-card:hover .team-photo-wrap img { transform: scale(1.04); }
+/* Unifies the mismatched studio backdrops across the team grid */
+.member-photo::after,
+.team-photo-wrap::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to bottom,
+    rgba(12,22,40,0.06) 0%, rgba(12,22,40,0) 38%, rgba(12,22,40,0.28) 100%);
+}
+
+.team-card:hover .team-photo-wrap img {
+  transform: scale(1.04);
+  filter: grayscale(0) contrast(1) brightness(1);
+}
 
 .team-photo-placeholder {
   width: 100%;
@@ -1279,28 +1319,34 @@ nav.scrolled {
 }
 
 .process-item:hover { background: var(--blue-deep); }
-.process-item:hover .process-num { color: rgba(158,205,213,0.5); }
+.process-item:hover .process-num { color: rgba(208,154,184,0.5); }
 .process-item:hover .process-title { color: white; }
 .process-item:hover .process-desc { color: rgba(255,255,255,0.55); }
-.process-item:hover .process-icon { color: var(--copper-lt); }
+.process-item:hover .process-icon { color: var(--copper-lt); border-color: var(--copper-lt); }
 
 .process-num {
   font-family: var(--font-display);
   font-size: 72px;
   font-weight: 300;
-  color: rgba(158,205,213,0.75);
+  color: rgba(208,154,184,0.75);
   line-height: 1;
   margin-bottom: 20px;
   transition: color 0.3s;
 }
 
 .process-icon {
-  font-size: 26px;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--pink);
   color: var(--pink);
   margin-bottom: 18px;
-  display: block;
-  transition: color 0.3s;
+  transition: color 0.3s, border-color 0.3s;
 }
+
+.process-icon svg { display: block; }
 
 .process-title {
   font-family: var(--font-display);
@@ -1319,7 +1365,7 @@ nav.scrolled {
   transition: color 0.3s;
 }
 
-.process-item:hover .process-icon { color: var(--pink-lt); }
+.process-item:hover .process-icon { color: var(--pink-lt); border-color: var(--pink-lt); }
 
 /* ── TESTIMONIALS ──────────────────────────────────────────────── */
 .testimonials-section {
@@ -1446,8 +1492,8 @@ nav.scrolled {
 .c-info-icon {
   width: 40px;
   height: 40px;
-  background: rgba(158,205,213,0.08);
-  border: 1px solid rgba(158,205,213,0.18);
+  background: rgba(208,154,184,0.08);
+  border: 1px solid rgba(208,154,184,0.18);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1477,7 +1523,7 @@ nav.scrolled {
 /* Contact Form */
 .contact-form {
   background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(158,205,213,0.15);
+  border: 1px solid rgba(208,154,184,0.15);
   padding: 44px 40px;
   border-radius: 3px;
 }
@@ -1513,7 +1559,7 @@ nav.scrolled {
 .form-input, .form-select, .form-textarea {
   width: 100%;
   background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(158,205,213,0.15);
+  border: 1px solid rgba(208,154,184,0.15);
   color: white;
   padding: 14px 16px;
   font-size: 15px;
@@ -1975,7 +2021,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
   .featured-section { padding: 70px 30px; }
   .contact-section { padding: 70px 30px; grid-template-columns: 1fr; }
   .hero-content { padding: 0 30px 70px; }
-  .stats-strip { padding: 28px 30px; flex-wrap: wrap; }
+  .stats-strip { padding: 28px 30px; grid-template-columns: repeat(2, 1fr); row-gap: 28px; }
   .listings-grid { grid-template-columns: 1fr 1fr; }
   .team-grid { grid-template-columns: 1fr 1fr; }
   .process-grid { grid-template-columns: 1fr 1fr; }
@@ -1996,9 +2042,109 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
   .process-grid { grid-template-columns: 1fr; }
   .chat-panel { width: calc(100vw - 20px); right: 10px; bottom: 90px; }
 }
+
+/* ── PRINT ─────────────────────────────────────────────────────── */
+@media print {
+  nav,
+  .chat-trigger, .chat-panel, .chat-pulse,
+  .contact-form,
+  .skip-link,
+  .scroll-line,
+  #lightbox { display: none !important; }
+
+  html, body { background: #fff !important; color: #000 !important; }
+
+  .hero, .hero-bg, .hero-bg::after,
+  .stats-strip, .stats-strip::before, .stats-strip::after,
+  .featured-section, .sold-section, .testimonials-section,
+  .contact-section, .process-section, footer, section {
+    background: #fff !important;
+    background-image: none !important;
+    color: #000 !important;
+  }
+
+  .hero *, .stats-strip *, .featured-section *, .sold-section *,
+  .testimonials-section *, .contact-section *, footer * {
+    color: #000 !important;
+    border-color: #bbb !important;
+  }
+
+  .team-photo-wrap::after, .member-photo::after { display: none !important; }
+  .team-photo-wrap img { filter: none !important; }
+
+  a { text-decoration: underline; }
+  * { box-shadow: none !important; text-shadow: none !important; }
+}
+
+/* ── REDUCED MOTION ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 </style>
+
+<!-- Private preview: keep this page out of search results -->
+<meta name="robots" content="noindex">
+
+<!-- Social preview -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Courtney &amp; Co | Real Estate Riverhead, Kumeu &amp; North West Auckland">
+<meta property="og:description" content="Boutique real estate across North West Auckland. 15+ years and hundreds of millions sold.">
+<meta property="og:image" content="https://ryanai33.github.io/courtney-co/images/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0c1628">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "RealEstateAgent",
+  "name": "Courtney & Co",
+  "url": "https://courtneyandco.co.nz/",
+  "telephone": "+64-9-412-9903",
+  "email": "info@courtneyandco.co.nz",
+  "foundingDate": "2018",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1047 Coatesville-Riverhead Highway",
+    "addressLocality": "Riverhead",
+    "addressRegion": "Auckland",
+    "addressCountry": "NZ"
+  },
+  "areaServed": [
+    {"@type":"Place","name":"Riverhead"},
+    {"@type":"Place","name":"Kumeu"},
+    {"@type":"Place","name":"Huapai"},
+    {"@type":"Place","name":"Waimauku"},
+    {"@type":"Place","name":"Helensville"},
+    {"@type":"Place","name":"Coatesville"},
+    {"@type":"Place","name":"Taupaki"},
+    {"@type":"Place","name":"Dairy Flat"}
+  ],
+  "employee": {
+    "@type": "Person",
+    "name": "Courtney Wood",
+    "jobTitle": "Licensed Real Estate Agent (REAA 2008)"
+  },
+  "sameAs": [
+    "https://www.facebook.com/CourtneyandCoLtd/",
+    "https://www.instagram.com/courtney_and_co_/"
+  ]
+}
+</script>
 </head>
 <body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <!-- ── NAVIGATION ──────────────────────────────────────────────────── -->
 <nav id="main-nav">
@@ -2015,6 +2161,8 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
   </ul>
 </nav>
 
+<main id="main">
+
 <!-- ── HERO ────────────────────────────────────────────────────────── -->
 <section class="hero">
   <div class="hero-bg"></div>
@@ -2026,7 +2174,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
       <em>straight up.</em>
     </h1>
     <p class="hero-tagline">
-      No jargon. No waffle. Just clear communication, local knowledge, and the kind of results that speak for themselves — in Helensville, Riverhead, Dairy Flat and beyond.
+      No jargon. No waffle. Just clear communication, local knowledge, and the kind of results that speak for themselves - in Helensville, Riverhead, Dairy Flat and beyond.
     </p>
     <div class="hero-actions">
       <a href="#properties" class="btn-primary">View Properties</a>
@@ -2042,20 +2190,16 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
     <div class="stat-lbl">Property Sold</div>
   </div>
   <div class="stat-item">
-    <div class="stat-num">10+</div>
+    <div class="stat-num">15+</div>
     <div class="stat-lbl">Years in the Market</div>
   </div>
   <div class="stat-item">
-    <div class="stat-num">100%</div>
-    <div class="stat-lbl">Local Specialists</div>
+    <div class="stat-num">356</div>
+    <div class="stat-lbl">Properties Sold</div>
   </div>
   <div class="stat-item">
-    <div class="stat-num">5★</div>
-    <div class="stat-lbl">Client Satisfaction</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">NW Auckland</div>
-    <div class="stat-lbl">Our Territory</div>
+    <div class="stat-num">5.0</div>
+    <div class="stat-lbl">Google Rating</div>
   </div>
 </div>
 
@@ -2066,10 +2210,10 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 <section class="about-section" id="about">
   <div class="about-visual">
     <div class="about-photo-main">
-      <img src="images/courtneyhead.jpg" alt="Courtney Wood" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
+      <img loading="lazy" decoding="async" src="images/courtneyhead.jpg" alt="Courtney Wood" style="width:100%;height:100%;object-fit:cover;object-position:center 18%;">
     </div>
     <div class="about-badge">
-      <div class="about-badge-num">10+</div>
+      <div class="about-badge-num">15+</div>
       <div class="about-badge-text">Years<br>Local</div>
     </div>
   </div>
@@ -2079,14 +2223,14 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
     <h2 class="section-title">We say what others<br>won't <em>dare to.</em></h2>
 
     <p class="about-lead">
-      Courtney & Co was born from a single conviction: property owners deserve an agent who tells them the truth — not what they want to hear.
+      Courtney & Co was born from a single conviction: property owners deserve an agent who tells them the truth - not what they want to hear.
     </p>
 
     <p class="about-body">
-      We're a boutique agency rooted in North West Auckland. Riverhead, Helensville, Dairy Flat, Kumeu, Waimauku — this is our backyard, and we know every road, school zone, and emerging pocket worth watching.
+      We're a boutique agency rooted in North West Auckland. Riverhead, Helensville, Dairy Flat, Kumeu, Waimauku - this is our backyard, and we know every road, school zone, and emerging pocket worth watching.
     </p>
     <p class="about-body">
-      While the big agencies follow franchise scripts, we craft the marketing your home actually deserves — photography, design, and storytelling that gets buyers through the door and keeps them there.
+      While the big agencies follow franchise scripts, we craft the marketing your home actually deserves - photography, design, and storytelling that gets buyers through the door and keeps them there.
     </p>
 
     <div class="about-values">
@@ -2252,13 +2396,13 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
       <div class="section-label" style="color:var(--blue-lt);">Feature Listing</div>
       <h2 class="section-title" style="color:white;">A home built with<br><em>no detail overlooked.</em></h2>
     </div>
-    <a href="https://courtneyandco.co.nz/8-tauwaka-crescent-riverhead" target="_blank" style="font-size: 13.2px;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-lt);text-decoration:none;border-bottom:1px solid rgba(158,205,213,0.3);padding-bottom:3px;">View Full Listing →</a>
+    <a href="https://courtneyandco.co.nz/8-tauwaka-crescent-riverhead" target="_blank" style="font-size: 13.2px;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-lt);text-decoration:none;border-bottom:1px solid rgba(208,154,184,0.3);padding-bottom:3px;">View Full Listing →</a>
   </div>
 
   <!-- Hero image + thumbnail stack -->
   <div style="display:grid;grid-template-columns:1.35fr 1fr;gap:3px;border-radius:4px;overflow:hidden;margin-bottom:3px;">
-    <div style="height:600px;position:relative;overflow:hidden;cursor:pointer;" onclick="openLightbox(0)">
-      <img src="images/tauwaka-09.webp" alt="8 Tauwaka Crescent — Dusk facade" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+    <div style="aspect-ratio:5/4;position:relative;overflow:hidden;cursor:pointer;" onclick="openLightbox(0)">
+      <img loading="lazy" decoding="async" src="images/tauwaka-09.webp" alt="8 Tauwaka Crescent - Dusk facade" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
       <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(12,22,40,0.75) 0%,transparent 50%);"></div>
       <div style="position:absolute;top:20px;left:20px;background:var(--pink);color:white;font-size: 10.8px;letter-spacing:0.2em;text-transform:uppercase;padding:6px 14px;font-family:var(--font-mono);border-radius:2px;">For Sale</div>
       <div style="position:absolute;bottom:28px;left:28px;right:28px;">
@@ -2275,10 +2419,10 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
     </div>
     <div style="display:grid;grid-template-rows:1fr 1fr;gap:3px;height:600px;">
       <div style="overflow:hidden;position:relative;cursor:pointer;" onclick="openLightbox(1)">
-        <img src="images/tauwaka-42.webp" alt="Open Plan Living & Kitchen" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        <img loading="lazy" decoding="async" src="images/tauwaka-42.webp" alt="Open Plan Living & Kitchen" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
               </div>
       <div style="overflow:hidden;position:relative;cursor:pointer;" onclick="openLightbox(5)">
-        <img src="images/tauwaka-06.webp" alt="Outdoor Entertaining" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        <img loading="lazy" decoding="async" src="images/tauwaka-06.webp" alt="Outdoor Entertaining" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
               </div>
     </div>
   </div>
@@ -2286,13 +2430,13 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
   <!-- Second row of images -->
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;margin-bottom:56px;">
     <div style="height:240px;overflow:hidden;cursor:pointer;position:relative;" onclick="openLightbox(2)">
-      <img src="images/tauwaka-34.webp" alt="Bespoke Kitchen" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      <img loading="lazy" decoding="async" src="images/tauwaka-34.webp" alt="Bespoke Kitchen" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
           </div>
     <div style="height:240px;overflow:hidden;cursor:pointer;position:relative;" onclick="openLightbox(3)">
-      <img src="images/tauwaka-48.webp" alt="Master Ensuite" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      <img loading="lazy" decoding="async" src="images/tauwaka-48.webp" alt="Master Ensuite" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
           </div>
     <div style="height:240px;overflow:hidden;cursor:pointer;position:relative;" onclick="openLightbox(4)">
-      <img src="images/tauwaka-14.webp" alt="Formal Lounge" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      <img loading="lazy" decoding="async" src="images/tauwaka-14.webp" alt="Formal Lounge" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
           </div>
   </div>
 
@@ -2326,10 +2470,10 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
     <!-- Left: Description -->
     <div>
       <div class="section-label" style="color:var(--blue-lt);margin-bottom:20px;">Property Description</div>
-      <p style="font-family:var(--font-display);font-size:22px;font-weight:300;font-style:italic;line-height:1.55;color:rgba(255,255,255,0.9);margin-bottom:28px;">Positioned in a quiet Riverhead enclave — craftsmanship, materiality and design integrity, with no detail overlooked.</p>
+      <p style="font-family:var(--font-display);font-size:22px;font-weight:300;font-style:italic;line-height:1.55;color:rgba(255,255,255,0.9);margin-bottom:28px;">Positioned in a quiet Riverhead enclave - craftsmanship, materiality and design integrity, with no detail overlooked.</p>
       <p style="font-size:15px;line-height:1.85;color:rgba(255,255,255,0.58);margin-bottom:18px;font-weight:300;">A Monier Portuguese Classico antique clay tile roof paired with cedar fascia and a solid cedar front door creates a timeless, grounded presence. Outside, Antique Shahabad limestone paving adds a distinctly European character to Shafer-designed landscaped grounds.</p>
-      <p style="font-size:15px;line-height:1.85;color:rgba(255,255,255,0.58);margin-bottom:18px;font-weight:300;">Inside, 316m² of considered living unfolds across four bedrooms — including two masters — three bathrooms, and a double internal-access garage. Timber flooring runs throughout; custom Customtone cabinetry in kitchen, laundry and bathrooms. Burlington matt white tiles and Grohe tapware finish every wet room to an exacting standard.</p>
-      <p style="font-size:15px;line-height:1.85;color:rgba(255,255,255,0.58);margin-bottom:32px;font-weight:300;">A substantial family home that balances architectural integrity with everyday livability — in one of Riverhead's most peaceful residential pockets, minutes from motorway access, schools and village amenity.</p>
+      <p style="font-size:15px;line-height:1.85;color:rgba(255,255,255,0.58);margin-bottom:18px;font-weight:300;">Inside, 316m² of considered living unfolds across four bedrooms - including two masters - three bathrooms, and a double internal-access garage. Timber flooring runs throughout; custom Customtone cabinetry in kitchen, laundry and bathrooms. Burlington matt white tiles and Grohe tapware finish every wet room to an exacting standard.</p>
+      <p style="font-size:15px;line-height:1.85;color:rgba(255,255,255,0.58);margin-bottom:32px;font-weight:300;">A substantial family home that balances architectural integrity with everyday livability - in one of Riverhead's most peaceful residential pockets, minutes from motorway access, schools and village amenity.</p>
 
       <!-- Key features -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;margin-bottom:40px;">
@@ -2366,7 +2510,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
     <div>
       <div class="section-label" style="color:var(--blue-lt);margin-bottom:20px;">Floor Plan</div>
       <div style="border:1px solid rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;">
-        <img src="images/tauwaka-60.webp" alt="8 Tauwaka Crescent — Floor Plan" style="width:100%;display:block;">
+        <img loading="lazy" decoding="async" src="images/tauwaka-60.webp" alt="8 Tauwaka Crescent - Floor Plan" style="width:100%;display:block;">
       </div>
       <div style="margin-top:20px;padding:20px 24px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:3px;">
         <div style="font-family:var(--font-mono);font-size: 10.8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:12px;">Agent</div>
@@ -2390,25 +2534,25 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
   </div>
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;">
     <div style="grid-column:1/3;height:300px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(0)">
-      <img src="images/tauwaka-09.webp" alt="8 Tauwaka Crescent" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+      <img loading="lazy" decoding="async" src="images/tauwaka-09.webp" alt="8 Tauwaka Crescent" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
     </div>
     <div style="height:300px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(1)">
-      <img src="images/tauwaka-42.webp" alt="Open Plan Living" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+      <img loading="lazy" decoding="async" src="images/tauwaka-42.webp" alt="Open Plan Living" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
     </div>
     <div style="height:300px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(2)">
-      <img src="images/tauwaka-34.webp" alt="Kitchen" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+      <img loading="lazy" decoding="async" src="images/tauwaka-34.webp" alt="Kitchen" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
     </div>
     <div style="height:220px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(3)">
-      <img src="images/tauwaka-06.webp" alt="Outdoor Entertaining" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+      <img loading="lazy" decoding="async" src="images/tauwaka-06.webp" alt="Outdoor Entertaining" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
     </div>
     <div style="height:220px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(4)">
-      <img src="images/tauwaka-14.webp" alt="Formal Lounge" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+      <img loading="lazy" decoding="async" src="images/tauwaka-14.webp" alt="Formal Lounge" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
     </div>
     <div style="height:220px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(5)">
-      <img src="images/tauwaka-48.webp" alt="Bathroom" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+      <img loading="lazy" decoding="async" src="images/tauwaka-48.webp" alt="Bathroom" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
     </div>
     <div style="height:220px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(6)">
-      <img src="images/tauwaka-27.webp" alt="Garden & Grounds" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+      <img loading="lazy" decoding="async" src="images/tauwaka-27.webp" alt="Garden & Grounds" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
     </div>
   </div>
 </section>
@@ -2417,7 +2561,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 <div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(12,22,40,0.97);z-index:9999;align-items:center;justify-content:center;flex-direction:column;">
   <button onclick="closeLightbox()" style="position:absolute;top:24px;right:30px;background:none;border:none;color:white;font-size:32px;cursor:pointer;opacity:0.7;">✕</button>
   <button onclick="changeLB(-1)" style="position:absolute;left:20px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.1);border:none;color:white;font-size:28px;cursor:pointer;padding:16px 20px;border-radius:3px;">‹</button>
-  <img id="lb-img" style="max-height:85vh;max-width:90vw;object-fit:contain;border-radius:3px;">
+  <img loading="lazy" decoding="async" id="lb-img" style="max-height:85vh;max-width:90vw;object-fit:contain;border-radius:3px;">
   <div id="lb-caption" style="color:rgba(255,255,255,0.5);font-family:var(--font-mono);font-size: 12.0px;letter-spacing:0.3em;text-transform:uppercase;margin-top:16px;"></div>
   <button onclick="changeLB(1)" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.1);border:none;color:white;font-size:28px;cursor:pointer;padding:16px 20px;border-radius:3px;">›</button>
 </div>
@@ -2436,7 +2580,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
     <!-- Cards injected dynamically + static demos -->
     <div class="listing-card">
       <div class="listing-img">
-        <img src="images/tauwaka-04.webp" alt="8 Tauwaka Crescent, Riverhead" style="width:100%;height:100%;object-fit:cover;display:block;">
+        <img loading="lazy" decoding="async" src="images/tauwaka-04.webp" alt="8 Tauwaka Crescent, Riverhead" style="width:100%;height:100%;object-fit:cover;display:block;">
         <span class="listing-tag">For Sale</span>
       </div>
       <div class="listing-body">
@@ -2444,9 +2588,9 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
         <div class="listing-addr">8 Tauwaka Crescent</div>
         <div class="listing-specs">
           <span class="spec"><span class="spec-num">4</span> Beds</span>
-          <span class="spec"><span class="spec-num">2</span> Baths</span>
+          <span class="spec"><span class="spec-num">3</span> Baths</span>
           <span class="spec"><span class="spec-num">2</span> Garage</span>
-          <span class="spec"><span class="spec-num">800m²</span></span>
+          <span class="spec"><span class="spec-num">600m²</span></span>
         </div>
         <div class="listing-cta">
           <div class="listing-price">By Negotiation</div>
@@ -2457,7 +2601,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
     <div class="listing-card">
       <div class="listing-img">
-        <img src="images/kumeu.webp" alt="Helensville Property" style="width:100%;height:100%;object-fit:cover;display:block;">
+        <img loading="lazy" decoding="async" src="images/kumeu.webp" alt="Helensville Property" style="width:100%;height:100%;object-fit:cover;display:block;">
         <span class="listing-tag">For Sale</span>
       </div>
       <div class="listing-body">
@@ -2477,7 +2621,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
     <div class="listing-card">
       <div class="listing-img">
-        <img src="images/kumeu_2.webp" alt="Kumeu Property" style="width:100%;height:100%;object-fit:cover;display:block;">
+        <img loading="lazy" decoding="async" src="images/kumeu_2.webp" alt="Kumeu Property" style="width:100%;height:100%;object-fit:cover;display:block;">
         <span class="listing-tag new">New</span>
       </div>
       <div class="listing-body">
@@ -2513,51 +2657,51 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
   <div class="sold-scroll-wrap">
     <div class="sold-track">
       <div class="sold-card">
-        <div class="sold-img"><img src="images/tauwaka-23.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/tauwaka-23.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
         <div class="sold-info"><div class="sold-addr">Coatesville-Riverhead Hwy</div><div class="sold-loc">Riverhead - Above CV</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img src="images/kumeu.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/kumeu.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
         <div class="sold-info"><div class="sold-addr">Oraha Road</div><div class="sold-loc">Kumeu - Lifestyle Block</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img src="images/tauwaka-14.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/tauwaka-14.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
         <div class="sold-info"><div class="sold-addr">Factory Road</div><div class="sold-loc">Waimauku - Premium Price</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img src="images/tauwaka-48.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/tauwaka-48.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
         <div class="sold-info"><div class="sold-addr">Dairy Flat Highway</div><div class="sold-loc">Dairy Flat - Rural Retreat</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img src="images/tauwaka-06.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/tauwaka-06.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
         <div class="sold-info"><div class="sold-addr">Helensville Village</div><div class="sold-loc">Helensville - Fast Sale</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img src="images/kumeu_2.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/kumeu_2.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
         <div class="sold-info"><div class="sold-addr">Matua Valley Road</div><div class="sold-loc">Riverhead - Multiple Offers</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img src="images/tauwaka-25.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/tauwaka-25.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
         <div class="sold-info"><div class="sold-addr">The Concourse</div><div class="sold-loc">Hobsonville - Above RV</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img src="images/tauwaka-27.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/tauwaka-27.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
         <div class="sold-info"><div class="sold-addr">Coatesville Road</div><div class="sold-loc">Coatesville - Equestrian</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img src="images/tauwaka-04.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/tauwaka-04.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
         <div class="sold-info"><div class="sold-addr">Mangawhai Heads</div><div class="sold-loc">Mangawhai - Coastal</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img src="images/tauwaka-34.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/tauwaka-34.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
         <div class="sold-info"><div class="sold-addr">Waimauku Village</div><div class="sold-loc">Waimauku - Record Street Price</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img src="images/tauwaka-42.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/tauwaka-42.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
         <div class="sold-info"><div class="sold-addr">Henderson Valley Road</div><div class="sold-loc">Henderson - 8 Days on Market</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img src="images/tauwaka-09.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/tauwaka-09.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
         <div class="sold-info"><div class="sold-addr">8 Tauwaka Crescent</div><div class="sold-loc">Riverhead - Premium Result</div></div>
       </div>
     </div>
@@ -2580,7 +2724,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
     <!-- Tile 1: OPEN HOMES branded - pink -->
     <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" style="aspect-ratio:1;overflow:hidden;border-radius:3px;cursor:pointer;position:relative;display:block;background:#e8b4c8;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-      <img src="images/kumeu_2.webp" style="width:100%;height:100%;object-fit:cover;opacity:0.45;position:absolute;inset:0;">
+      <img loading="lazy" decoding="async" src="images/kumeu_2.webp" style="width:100%;height:100%;object-fit:cover;opacity:0.45;position:absolute;inset:0;">
       <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:10px;">
         <div style="font-family:var(--font-mono);font-size:8px;letter-spacing:0.2em;color:rgba(13,31,45,0.7);text-transform:uppercase;margin-bottom:2px;">C &amp; CO</div>
         <div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:#0d1f2d;line-height:1.1;text-transform:uppercase;">OPEN<br>HOMES</div>
@@ -2590,7 +2734,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
     <!-- Tile 2: Property photo -->
     <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" style="aspect-ratio:1;overflow:hidden;border-radius:3px;cursor:pointer;display:block;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-      <img src="images/tauwaka-09.webp" style="width:100%;height:100%;object-fit:cover;">
+      <img loading="lazy" decoding="async" src="images/tauwaka-09.webp" style="width:100%;height:100%;object-fit:cover;">
     </a>
 
     <!-- Tile 3: SOLD OFF MARKET - pink/navy -->
@@ -2603,7 +2747,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
     <!-- Tile 4: Property photo -->
     <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" style="aspect-ratio:1;overflow:hidden;border-radius:3px;cursor:pointer;display:block;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-      <img src="images/tauwaka-42.webp" style="width:100%;height:100%;object-fit:cover;">
+      <img loading="lazy" decoding="async" src="images/tauwaka-42.webp" style="width:100%;height:100%;object-fit:cover;">
     </a>
 
     <!-- Tile 5: OPEN SUNDAY - navy -->
@@ -2618,10 +2762,9 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
     <!-- Tile 6: Property photo -->
     <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" style="aspect-ratio:1;overflow:hidden;border-radius:3px;cursor:pointer;display:block;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-      <img src="images/kumeu.webp" style="width:100%;height:100%;object-fit:cover;">
+      <img loading="lazy" decoding="async" src="images/kumeu.webp" style="width:100%;height:100%;object-fit:cover;">
     </a>
 
-  </div>
   </div>
 </section>
 
@@ -2635,27 +2778,27 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
   <div class="process-grid stagger">
     <div class="process-item">
       <div class="process-num">01</div>
-      <span class="process-icon">🔍</span>
+      <span class="process-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
       <div class="process-title">Honest Appraisal</div>
-      <p class="process-desc">We tell you exactly what your property is worth — not what you want to hear. That honesty sets the strategy that wins.</p>
+      <p class="process-desc">We tell you exactly what your property is worth - not what you want to hear. That honesty sets the strategy that wins.</p>
     </div>
     <div class="process-item">
       <div class="process-num">02</div>
-      <span class="process-icon">🎨</span>
+      <span class="process-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="1"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></span>
       <div class="process-title">Bespoke Marketing</div>
-      <p class="process-desc">In-house design, world-class photography, and multi-platform reach — tailored to your home, not a franchise template.</p>
+      <p class="process-desc">In-house design, world-class photography, and multi-platform reach - tailored to your home, not a franchise template.</p>
     </div>
     <div class="process-item">
       <div class="process-num">03</div>
-      <span class="process-icon">🤝</span>
+      <span class="process-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span>
       <div class="process-title">Skilled Negotiation</div>
       <p class="process-desc">Courtney has negotiated hundreds of millions in sales. She doesn't blink. You get the price your home deserves.</p>
     </div>
     <div class="process-item">
       <div class="process-num">04</div>
-      <span class="process-icon">✅</span>
+      <span class="process-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>
       <div class="process-title">Done &amp; Dusted</div>
-      <p class="process-desc">Our in-house legal eagle, stager, and operations team means smooth settlements — start to finish, no surprises.</p>
+      <p class="process-desc">Our in-house legal eagle, stager, and operations team means smooth settlements - start to finish, no surprises.</p>
     </div>
   </div>
 </section>
@@ -2668,14 +2811,14 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
       <h2 class="section-title">The movers &amp;<br><em>shakers.</em></h2>
     </div>
     <div>
-      <p class="team-lead-text">"We're not a franchise. We're a family — and every specialist on our team was chosen because they're genuinely the best at what they do."</p>
+      <p class="team-lead-text">"We're not a franchise. We're a family - and every specialist on our team was chosen because they're genuinely the best at what they do."</p>
     </div>
   </div>
 
   <div class="team-grid stagger">
     <div class="team-card">
       <div class="team-photo-wrap">
-        <img src="images/courtneyhead.jpg" alt="Courtney Wood" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
+        <img loading="lazy" decoding="async" src="images/courtneyhead.jpg" alt="Courtney Wood" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;">
         <div class="team-overlay">
           <div class="team-contact-links">
             <a href="tel:0276880818">📞</a>
@@ -2685,12 +2828,12 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
       </div>
       <div class="team-role">Licensed RE Agent</div>
       <div class="team-name">Courtney</div>
-      <p class="team-bio">Master negotiator. Bold thinker. With 10+ years and hundreds of millions sold, she's a household name in North West Auckland real estate.</p>
+      <p class="team-bio">Master negotiator. Bold thinker. With 15+ years and hundreds of millions sold, she's a household name in North West Auckland real estate.</p>
     </div>
 
     <div class="team-card">
       <div class="team-photo-wrap">
-        <img src="images/Amy1.webp" alt="Amy Wood" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
+        <img loading="lazy" decoding="async" src="images/Amy1.webp" alt="Amy Wood" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;">
         <div class="team-overlay">
           <div class="team-contact-links">
             <a href="tel:094129903">📞</a>
@@ -2700,12 +2843,12 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
       </div>
       <div class="team-role">Branch Manager</div>
       <div class="team-name">Amy</div>
-      <p class="team-bio">Keeping every deal on track — compliance, legal admin, and the business running beautifully behind the scenes.</p>
+      <p class="team-bio">Keeping every deal on track - compliance, legal admin, and the business running beautifully behind the scenes.</p>
     </div>
 
     <div class="team-card">
       <div class="team-photo-wrap">
-        <img src="images/rebecca.webp" alt="Rebecca" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
+        <img loading="lazy" decoding="async" src="images/rebecca.webp" alt="Rebecca" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;">
         <div class="team-overlay">
           <div class="team-contact-links">
             <a href="tel:094129903">📞</a>
@@ -2715,12 +2858,12 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
       </div>
       <div class="team-role">Staging &amp; Interior</div>
       <div class="team-name">Rebecca</div>
-      <p class="team-bio">Transforms homes with smart restyling — no big budget needed, just a skilled eye. Your space, reimagined for buyers.</p>
+      <p class="team-bio">Transforms homes with smart restyling - no big budget needed, just a skilled eye. Your space, reimagined for buyers.</p>
     </div>
 
     <div class="team-card">
       <div class="team-photo-wrap">
-        <img src="images/Chris.webp" alt="Chris" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
+        <img loading="lazy" decoding="async" src="images/Chris.webp" alt="Chris" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;">
         <div class="team-overlay">
           <div class="team-contact-links">
             <a href="tel:094129903">📞</a>
@@ -2735,7 +2878,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
     <div class="team-card">
       <div class="team-photo-wrap">
-        <img src="images/amy2.webp" alt="Amy Creative" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
+        <img loading="lazy" decoding="async" src="images/amy2.webp" alt="Amy Creative" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;">
         <div class="team-overlay">
           <div class="team-contact-links">
             <a href="tel:094129903">📞</a>
@@ -2745,12 +2888,12 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
       </div>
       <div class="team-role">Creative Genius</div>
       <div class="team-name">Amy</div>
-      <p class="team-bio">Art direction, branding, advertising — ensuring every property is marketed to its absolute potential.</p>
+      <p class="team-bio">Art direction, branding, advertising - ensuring every property is marketed to its absolute potential.</p>
     </div>
 
     <div class="team-card">
       <div class="team-photo-wrap">
-        <img src="images/C_CO_11.webp" alt="Lisa" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
+        <img loading="lazy" decoding="async" src="images/C_CO_11.webp" alt="Lisa" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;">
         <div class="team-overlay">
           <div class="team-contact-links">
             <a href="tel:094129903">📞</a>
@@ -2760,12 +2903,12 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
       </div>
       <div class="team-role">Legal Eagle</div>
       <div class="team-name">Lisa</div>
-      <p class="team-bio">25 years as a senior legal exec at top Auckland firms. Now ensuring every i is dotted and t crossed — personally.</p>
+      <p class="team-bio">25 years as a senior legal exec at top Auckland firms. Now ensuring every i is dotted and t crossed - personally.</p>
     </div>
 
     <div class="team-card">
       <div class="team-photo-wrap">
-        <img src="images/C_CO_08.webp" alt="Jenny" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
+        <img loading="lazy" decoding="async" src="images/C_CO_08.webp" alt="Jenny" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;">
         <div class="team-overlay">
           <div class="team-contact-links">
             <a href="tel:094129903">📞</a>
@@ -2779,7 +2922,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
     <div class="team-card">
       <div class="team-photo-wrap">
-        <img src="images/Darren.webp" alt="Darren" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
+        <img loading="lazy" decoding="async" src="images/Darren.webp" alt="Darren" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;">
         <div class="team-overlay">
           <div class="team-contact-links">
             <a href="tel:094129903">📞</a>
@@ -2832,7 +2975,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
       </div>
     </div>
     <div style="margin-left:auto;">
-      <a href="https://courtneyandco.co.nz" target="_blank" style="font-size: 13.2px;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue-deep);text-decoration:none;border-bottom:1px solid rgba(79,160,174,0.3);padding-bottom:2px;">Read All Reviews →</a>
+      <a href="https://courtneyandco.co.nz" target="_blank" style="font-size: 13.2px;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue-deep);text-decoration:none;border-bottom:1px solid rgba(154,95,136,0.3);padding-bottom:2px;">Read All Reviews →</a>
     </div>
   </div>
 
@@ -2852,7 +2995,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
     <div class="testi-card">
       <div class="testi-quote">"</div>
-      <p class="testi-text">The marketing was genuinely different — beautiful photography, design that stood out on every platform. We had multiple offers in the first weekend.</p>
+      <p class="testi-text">The marketing was genuinely different - beautiful photography, design that stood out on every platform. We had multiple offers in the first weekend.</p>
       <div class="testi-author">
         <div class="testi-avatar">S</div>
         <div>
@@ -2891,7 +3034,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
     <div class="testi-card">
       <div class="testi-quote">"</div>
-      <p class="testi-text">Sold in 10 days, above CV, with three competing offers. Courtney's knowledge of the NW market is unmatched — she knew exactly who would buy our place.</p>
+      <p class="testi-text">Sold in 10 days, above CV, with three competing offers. Courtney's knowledge of the NW market is unmatched - she knew exactly who would buy our place.</p>
       <div class="testi-author">
         <div class="testi-avatar">D</div>
         <div>
@@ -2927,7 +3070,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
     <div class="section-label">Get in Touch</div>
     <h2 class="section-title">Local knowledge<br>is a call <em>away.</em></h2>
     <p class="contact-intro">
-      Whether you're selling, buying, or just wondering what your home is worth — we'll give you the straight answer. No obligation, no pressure.
+      Whether you're selling, buying, or just wondering what your home is worth - we'll give you the straight answer. No obligation, no pressure.
     </p>
     <div class="contact-info-items">
       <div class="contact-info-item">
@@ -2966,7 +3109,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
     <!-- Rubble -->
     <div style="margin-top:32px;display:flex;align-items:center;gap:18px;padding:20px;background:rgba(255,255,255,0.06);border-radius:6px;border:1px solid rgba(255,255,255,0.08);">
       <div style="width:72px;height:72px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid rgba(255,255,255,0.15);">
-        <img src="images/Rubble.webp" alt="Rubble" style="width:100%;height:100%;object-fit:cover;">
+        <img loading="lazy" decoding="async" src="images/Rubble.webp" alt="Rubble" style="width:100%;height:100%;object-fit:cover;">
       </div>
       <div>
         <div style="font-family:var(--font-display);font-size:16px;color:white;font-weight:400;">Rubble</div>
@@ -3021,6 +3164,8 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
   </div>
 </section>
 
+</main>
+
 <!-- ── FOOTER ──────────────────────────────────────────────────────── -->
 <footer>
   <div class="footer-logo">
@@ -3062,7 +3207,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 <div class="chat-panel" id="chat-panel">
   <div class="chat-header">
     <div style="width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid rgba(255,255,255,0.2);">
-      <img src="images/courtneyhead.jpg" style="width:100%;height:100%;object-fit:cover;object-position:top;">
+      <img loading="lazy" decoding="async" src="images/courtneyhead.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center 18%;">
     </div>
     <div class="chat-agent-info">
       <div class="chat-agent-name">Courtney &amp; Co Concierge</div>
@@ -3073,7 +3218,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
   <div class="chat-messages" id="cp-messages">
     <div class="cp-msg cp-msg--agent">
-      <div class="cp-msg-bubble">Good <span id="cp-tod"></span>! I'm the Courtney &amp; Co concierge — your specialist for Riverhead, Helensville, Kumeu, Dairy Flat and surrounds. How can I help you today?</div>
+      <div class="cp-msg-bubble">Good <span id="cp-tod"></span>! I'm the Courtney &amp; Co concierge - your specialist for Riverhead, Helensville, Kumeu, Dairy Flat and surrounds. How can I help you today?</div>
     </div>
     <div class="cp-chips" id="cp-chips">
       <button class="cp-chip" onclick="sendChip(this)">Free Appraisal</button>
