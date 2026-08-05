@@ -183,11 +183,10 @@ nav.scrolled {
   background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
-/* Placeholder photo effect - replace src with real image */
 .hero-photo {
   position: absolute;
   inset: 0;
-  background: url('hero-courtney.jpg') center/cover no-repeat;
+  background: url('images/courtneyhero.webp') center/cover no-repeat;
   /* Fallback gradient is already in .hero-bg */
 }
 
@@ -1435,10 +1434,25 @@ nav.scrolled {
 }
 
 .testi-name {
-  font-size: 15.6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
   font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   color: var(--navy);
 }
+
+/* Video testimonial facades */
+.vt-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:56px; }
+.vt-card { position:relative; border-radius:3px; overflow:hidden; background:var(--navy); aspect-ratio:16/9; cursor:pointer; border:0; padding:0; width:100%; display:block; }
+.vt-card img, .vt-card iframe { width:100%; height:100%; display:block; border:0; object-fit:cover; }
+.vt-card .vt-play { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:linear-gradient(to top,rgba(12,22,40,0.72) 0%,rgba(12,22,40,0.12) 60%); transition:background 0.3s; }
+.vt-card:hover .vt-play { background:linear-gradient(to top,rgba(12,22,40,0.82) 0%,rgba(12,22,40,0.25) 60%); }
+.vt-play-btn { width:62px; height:62px; border-radius:50%; background:rgba(255,255,255,0.94); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 20px rgba(0,0,0,0.3); transition:transform 0.3s; }
+.vt-card:hover .vt-play-btn { transform:scale(1.08); }
+.vt-play-btn::after { content:""; margin-left:5px; border-style:solid; border-width:11px 0 11px 18px; border-color:transparent transparent transparent var(--navy); }
+.vt-label { position:absolute; left:20px; bottom:18px; right:20px; font-family:var(--font-mono); font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:#fff; text-align:left; }
+@media (max-width:900px){ .vt-grid { grid-template-columns:1fr; } }
 
 .testi-loc {
   font-size: 13.2px;
@@ -2103,6 +2117,8 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0c1628">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='8' fill='%230c1628'/><text x='32' y='46' font-family='Georgia,serif' font-size='42' font-style='italic' fill='%23d09ab8' text-anchor='middle'>&amp;</text></svg>">
+<link rel="apple-touch-icon" href="images/og-cover.jpg">
 
 <script type="application/ld+json">
 {
@@ -2111,8 +2127,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
   "name": "Courtney & Co",
   "url": "https://courtneyandco.co.nz/",
   "telephone": "+64-9-412-9903",
-  "email": "info@courtneyandco.co.nz",
-  "foundingDate": "2018",
+  "email": "theteam@courtneyandco.co.nz",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "1047 Coatesville-Riverhead Highway",
@@ -2174,7 +2189,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
       <em>straight up.</em>
     </h1>
     <p class="hero-tagline">
-      No jargon. No waffle. Just clear communication, local knowledge, and the kind of results that speak for themselves - in Helensville, Riverhead, Dairy Flat and beyond.
+      No jargon. No waffle. Straight answers, deep local knowledge and 366 homes sold across the North West.
     </p>
     <div class="hero-actions">
       <a href="#properties" class="btn-primary">View Properties</a>
@@ -2186,7 +2201,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 <!-- ── STATS STRIP ─────────────────────────────────────────────────── -->
 <div class="stats-strip" id="stats">
   <div class="stat-item">
-    <div class="stat-num">$400M+</div>
+    <div class="stat-num">$499M+</div>
     <div class="stat-lbl">Property Sold</div>
   </div>
   <div class="stat-item">
@@ -2194,13 +2209,16 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
     <div class="stat-lbl">Years in the Market</div>
   </div>
   <div class="stat-item">
-    <div class="stat-num">356</div>
+    <div class="stat-num">366</div>
     <div class="stat-lbl">Properties Sold</div>
   </div>
   <div class="stat-item">
-    <div class="stat-num">5.0</div>
-    <div class="stat-lbl">Google Rating</div>
+    <div class="stat-num">$81M+</div>
+    <div class="stat-lbl">Sold in the last 24 months</div>
   </div>
+</div>
+<div style="background:var(--navy);text-align:center;padding:0 20px 18px;font-family:var(--font-mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.45);">
+  Confirmed sales, homes.co.nz, August 2026.
 </div>
 
 <!-- ── ABOUT ───────────────────────────────────────────────────────── -->
@@ -2220,17 +2238,17 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
   <div class="about-content">
     <div class="section-label">Who We Are</div>
-    <h2 class="section-title">We say what others<br>won't <em>dare to.</em></h2>
+    <h2 class="section-title">We say what others<br><em>won't.</em></h2>
 
     <p class="about-lead">
-      Courtney & Co was born from a single conviction: property owners deserve an agent who tells them the truth - not what they want to hear.
+      Courtney &amp; Co was built on one conviction: you deserve the truth about your home, not the price that wins your listing. Some agents quote high to get the signature. Courtney quotes right to get the sale.
     </p>
 
     <p class="about-body">
       We're a boutique agency rooted in North West Auckland. Riverhead, Helensville, Dairy Flat, Kumeu, Waimauku - this is our backyard, and we know every road, school zone, and emerging pocket worth watching.
     </p>
     <p class="about-body">
-      While the big agencies follow franchise scripts, we craft the marketing your home actually deserves - photography, design, and storytelling that gets buyers through the door and keeps them there.
+      While the big agencies follow franchise scripts, we build every campaign in-house: photography, design and copy made for your home, not a template.
     </p>
 
     <div class="about-values">
@@ -2323,7 +2341,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
         <text x="0" y="22" font-family="Arial Black,sans-serif" font-size="15" font-weight="900" fill="#1a1a1a" letter-spacing="-0.5">M2WOMAN</text>
       </svg>
     </a>
-    <!-- Duplicate for seamless loop -->
+    <!-- Duplicate for continuous loop -->
     <a class="ticker-item" href="https://www.trademe.co.nz/property" target="_blank">
       <svg class="brand-logo" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg">
         <text x="0" y="22" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#006e52">trademe</text>
@@ -2380,11 +2398,6 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
         <text x="26" y="20" font-family="Arial,sans-serif" font-size="11" font-weight="600" fill="#4caf50">Neighbourly</text>
       </svg>
     </a>
-    <a class="ticker-item" href="https://m2woman.com" target="_blank">
-      <svg class="brand-logo" viewBox="0 0 90 30" xmlns="http://www.w3.org/2000/svg">
-        <text x="0" y="22" font-family="Arial Black,sans-serif" font-size="15" font-weight="900" fill="#1a1a1a" letter-spacing="-0.5">M2WOMAN</text>
-      </svg>
-    </a>
   </div>
 </div>
 
@@ -2394,35 +2407,34 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
   <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;">
     <div>
       <div class="section-label" style="color:var(--blue-lt);">Feature Listing</div>
-      <h2 class="section-title" style="color:white;">A home built with<br><em>no detail overlooked.</em></h2>
+      <h2 class="section-title" style="color:white;">Character, without<br><em>compromise.</em></h2>
     </div>
-    <a href="https://courtneyandco.co.nz/8-tauwaka-crescent-riverhead" target="_blank" style="font-size: 13.2px;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-lt);text-decoration:none;border-bottom:1px solid rgba(208,154,184,0.3);padding-bottom:3px;">View Full Listing →</a>
+    <a href="https://courtneyandco.co.nz/26-alexandra-street-riverhead" target="_blank" style="font-size: 13.2px;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-lt);text-decoration:none;border-bottom:1px solid rgba(208,154,184,0.3);padding-bottom:3px;">View Full Listing →</a>
   </div>
 
   <!-- Hero image + thumbnail stack -->
   <div style="display:grid;grid-template-columns:1.35fr 1fr;gap:3px;border-radius:4px;overflow:hidden;margin-bottom:3px;">
     <div style="aspect-ratio:5/4;position:relative;overflow:hidden;cursor:pointer;" onclick="openLightbox(0)">
-      <img loading="lazy" decoding="async" src="images/tauwaka-09.webp" alt="8 Tauwaka Crescent - Dusk facade" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+      <img loading="lazy" decoding="async" src="images/alexandra-01.jpg" alt="26 Alexandra Street, Riverhead - villa frontage" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
       <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(12,22,40,0.75) 0%,transparent 50%);"></div>
       <div style="position:absolute;top:20px;left:20px;background:var(--pink);color:white;font-size: 10.8px;letter-spacing:0.2em;text-transform:uppercase;padding:6px 14px;font-family:var(--font-mono);border-radius:2px;">For Sale</div>
       <div style="position:absolute;bottom:28px;left:28px;right:28px;">
-        <div style="font-family:var(--font-display);font-size:clamp(26px,3vw,38px);font-weight:300;color:white;line-height:1.15;margin-bottom:10px;">8 Tauwaka Crescent,<br>Riverhead</div>
-        <div style="font-size:15px;color:var(--blue-lt);font-weight:500;letter-spacing:0.04em;margin-bottom:14px;">By Negotiation</div>
+        <div style="font-family:var(--font-display);font-size:clamp(26px,3vw,38px);font-weight:300;color:white;line-height:1.15;margin-bottom:10px;">26 Alexandra Street,<br>Riverhead</div>
+        <div style="font-size:15px;color:var(--blue-lt);font-weight:500;letter-spacing:0.04em;margin-bottom:14px;">Price by negotiation</div>
         <div style="display:flex;gap:20px;flex-wrap:wrap;">
           <span style="font-size: 13.2px;color:rgba(255,255,255,0.65);font-family:var(--font-mono);">4 Bedrooms</span>
-          <span style="font-size: 13.2px;color:rgba(255,255,255,0.65);font-family:var(--font-mono);">3 Bathrooms</span>
-          <span style="font-size: 13.2px;color:rgba(255,255,255,0.65);font-family:var(--font-mono);">2-Car Garage</span>
-          <span style="font-size: 13.2px;color:rgba(255,255,255,0.65);font-family:var(--font-mono);">600m² Section</span>
-          <span style="font-size: 13.2px;color:rgba(255,255,255,0.65);font-family:var(--font-mono);">316m² Floor</span>
+          <span style="font-size: 13.2px;color:rgba(255,255,255,0.65);font-family:var(--font-mono);">1 Bathroom</span>
+          <span style="font-size: 13.2px;color:rgba(255,255,255,0.65);font-family:var(--font-mono);">807m² Freehold</span>
+          <span style="font-size: 13.2px;color:rgba(255,255,255,0.65);font-family:var(--font-mono);">Off-street parking</span>
         </div>
       </div>
     </div>
     <div style="display:grid;grid-template-rows:1fr 1fr;gap:3px;height:600px;">
       <div style="overflow:hidden;position:relative;cursor:pointer;" onclick="openLightbox(1)">
-        <img loading="lazy" decoding="async" src="images/tauwaka-42.webp" alt="Open Plan Living & Kitchen" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        <img loading="lazy" decoding="async" src="images/alexandra-15.jpg" alt="Open Plan Living & Kitchen" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
               </div>
       <div style="overflow:hidden;position:relative;cursor:pointer;" onclick="openLightbox(5)">
-        <img loading="lazy" decoding="async" src="images/tauwaka-06.webp" alt="Outdoor Entertaining" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        <img loading="lazy" decoding="async" src="images/alexandra-61.jpg" alt="Covered outdoor entertaining" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
               </div>
     </div>
   </div>
@@ -2430,13 +2442,13 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
   <!-- Second row of images -->
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;margin-bottom:56px;">
     <div style="height:240px;overflow:hidden;cursor:pointer;position:relative;" onclick="openLightbox(2)">
-      <img loading="lazy" decoding="async" src="images/tauwaka-34.webp" alt="Bespoke Kitchen" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      <img loading="lazy" decoding="async" src="images/alexandra-31.jpg" alt="Upgraded kitchen" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
           </div>
     <div style="height:240px;overflow:hidden;cursor:pointer;position:relative;" onclick="openLightbox(3)">
-      <img loading="lazy" decoding="async" src="images/tauwaka-48.webp" alt="Master Ensuite" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      <img loading="lazy" decoding="async" src="images/alexandra-39.jpg" alt="Oversized master suite" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
           </div>
     <div style="height:240px;overflow:hidden;cursor:pointer;position:relative;" onclick="openLightbox(4)">
-      <img loading="lazy" decoding="async" src="images/tauwaka-14.webp" alt="Formal Lounge" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      <img loading="lazy" decoding="async" src="images/alexandra-23.jpg" alt="Leadlight windows and high stud" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
           </div>
   </div>
 
@@ -2503,14 +2515,14 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
         </div>
       </div>
 
-      <a href="https://courtneyandco.co.nz/8-tauwaka-crescent-riverhead" target="_blank" class="btn-primary" style="background:var(--blue-deep);">View Full Listing &amp; Gallery →</a>
+      <a href="https://courtneyandco.co.nz/26-alexandra-street-riverhead" target="_blank" class="btn-primary" style="background:var(--blue-deep);">View Full Listing &amp; Gallery →</a>
     </div>
 
     <!-- Right: Floor plan -->
     <div>
       <div class="section-label" style="color:var(--blue-lt);margin-bottom:20px;">Floor Plan</div>
       <div style="border:1px solid rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;">
-        <img loading="lazy" decoding="async" src="images/tauwaka-60.webp" alt="8 Tauwaka Crescent - Floor Plan" style="width:100%;display:block;">
+        <img loading="lazy" decoding="async" src="images/alexandra-55.jpg" alt="26 Alexandra Street - covered verandah" style="width:100%;display:block;">
       </div>
       <div style="margin-top:20px;padding:20px 24px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:3px;">
         <div style="font-family:var(--font-mono);font-size: 10.8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:12px;">Agent</div>
@@ -2530,29 +2542,29 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
       <div class="section-label" style="color:var(--blue-lt);">Property Gallery</div>
       <h2 class="section-title" style="color:white;">Every detail, <em style="color:var(--pink-lt);">considered.</em></h2>
     </div>
-    <a href="https://courtneyandco.co.nz/8-tauwaka-crescent-riverhead" target="_blank" style="font-size: 13.2px;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue-lt);text-decoration:none;">View All Photos →</a>
+    <a href="https://courtneyandco.co.nz/26-alexandra-street-riverhead" target="_blank" style="font-size: 13.2px;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue-lt);text-decoration:none;">View All Photos →</a>
   </div>
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;">
     <div style="grid-column:1/3;height:300px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(0)">
-      <img loading="lazy" decoding="async" src="images/tauwaka-09.webp" alt="8 Tauwaka Crescent" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+      <img loading="lazy" decoding="async" src="images/alexandra-01.jpg" alt="26 Alexandra Street, Riverhead" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
     </div>
     <div style="height:300px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(1)">
-      <img loading="lazy" decoding="async" src="images/tauwaka-42.webp" alt="Open Plan Living" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+      <img loading="lazy" decoding="async" src="images/alexandra-15.jpg" alt="Family living room" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
     </div>
     <div style="height:300px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(2)">
-      <img loading="lazy" decoding="async" src="images/tauwaka-34.webp" alt="Kitchen" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+      <img loading="lazy" decoding="async" src="images/alexandra-31.jpg" alt="Upgraded kitchen" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
     </div>
     <div style="height:220px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(3)">
-      <img loading="lazy" decoding="async" src="images/tauwaka-06.webp" alt="Outdoor Entertaining" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+      <img loading="lazy" decoding="async" src="images/alexandra-61.jpg" alt="Covered outdoor entertaining" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
     </div>
     <div style="height:220px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(4)">
-      <img loading="lazy" decoding="async" src="images/tauwaka-14.webp" alt="Formal Lounge" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+      <img loading="lazy" decoding="async" src="images/alexandra-23.jpg" alt="Leadlight windows and high stud" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
     </div>
     <div style="height:220px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(5)">
-      <img loading="lazy" decoding="async" src="images/tauwaka-48.webp" alt="Bathroom" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+      <img loading="lazy" decoding="async" src="images/alexandra-39.jpg" alt="Family bathroom" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
     </div>
     <div style="height:220px;overflow:hidden;border-radius:3px;cursor:pointer;" onclick="openLightbox(6)">
-      <img loading="lazy" decoding="async" src="images/tauwaka-27.webp" alt="Garden & Grounds" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+      <img loading="lazy" decoding="async" src="images/alexandra-78.jpg" alt="Garden & Grounds" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
     </div>
   </div>
 </section>
@@ -2567,74 +2579,79 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 </div>
 
 <!-- ── LISTINGS GRID ───────────────────────────────────────────────── -->
+<!-- ── OPEN HOMES STRIP ────────────────────────────────────────────── -->
+<div style="background:var(--navy);padding:18px 60px;display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;text-align:center;border-top:1px solid rgba(255,255,255,0.07);border-bottom:1px solid rgba(255,255,255,0.07);">
+  <span style="font-size:14px;color:rgba(255,255,255,0.75);font-weight:300;letter-spacing:0.01em;">Open homes run Saturday and Sunday. Times are on each listing.</span>
+  <a href="#listings-grid" style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-lt);text-decoration:none;border-bottom:1px solid rgba(208,154,184,0.4);padding-bottom:2px;">See this week's open homes →</a>
+</div>
+
 <section class="listings-section">
   <div class="listings-header fade-up">
     <div>
       <div class="section-label">Current Listings</div>
       <h2 class="section-title">Homes worth <em>knowing.</em></h2>
     </div>
-    <a href="https://courtneyandco.co.nz/properties" target="_blank" class="btn-primary">View All Properties</a>
+    <a href="https://courtneyandco.co.nz/properties-new" target="_blank" class="btn-primary">View All Properties</a>
   </div>
 
   <div class="listings-grid stagger" id="listings-grid">
     <!-- Cards injected dynamically + static demos -->
     <div class="listing-card">
       <div class="listing-img">
-        <img loading="lazy" decoding="async" src="images/tauwaka-04.webp" alt="8 Tauwaka Crescent, Riverhead" style="width:100%;height:100%;object-fit:cover;display:block;">
+        <img loading="lazy" decoding="async" src="images/alexandra-44.jpg" alt="26 Alexandra Street, Riverhead" style="width:100%;height:100%;object-fit:cover;display:block;">
         <span class="listing-tag">For Sale</span>
       </div>
       <div class="listing-body">
         <div class="listing-suburb">Riverhead</div>
-        <div class="listing-addr">8 Tauwaka Crescent</div>
+        <div class="listing-addr">26 Alexandra Street</div>
         <div class="listing-specs">
           <span class="spec"><span class="spec-num">4</span> Beds</span>
-          <span class="spec"><span class="spec-num">3</span> Baths</span>
-          <span class="spec"><span class="spec-num">2</span> Garage</span>
-          <span class="spec"><span class="spec-num">600m²</span></span>
+          <span class="spec"><span class="spec-num">1</span> Bath</span>
+          <span class="spec"><span class="spec-num">807m²</span></span>
         </div>
         <div class="listing-cta">
-          <div class="listing-price">By Negotiation</div>
-          <a href="https://courtneyandco.co.nz/8-tauwaka-crescent-riverhead" target="_blank" class="listing-link">View →</a>
+          <div class="listing-price">Price by negotiation</div>
+          <a href="https://courtneyandco.co.nz/26-alexandra-street-riverhead" target="_blank" class="listing-link">View →</a>
         </div>
       </div>
     </div>
 
     <div class="listing-card">
       <div class="listing-img">
-        <img loading="lazy" decoding="async" src="images/kumeu.webp" alt="Helensville Property" style="width:100%;height:100%;object-fit:cover;display:block;">
+        <img loading="lazy" decoding="async" src="images/awaroa-01.jpg" alt="106 Awaroa Road, Helensville" style="width:100%;height:100%;object-fit:cover;display:block;">
         <span class="listing-tag">For Sale</span>
       </div>
       <div class="listing-body">
         <div class="listing-suburb">Helensville</div>
-        <div class="listing-addr">Country lifestyle, village heart</div>
+        <div class="listing-addr">106 Awaroa Road</div>
         <div class="listing-specs">
-          <span class="spec"><span class="spec-num">3</span> Beds</span>
-          <span class="spec"><span class="spec-num">2</span> Baths</span>
+          <span class="spec"><span class="spec-num">4</span> Beds</span>
+          <span class="spec"><span class="spec-num">1</span> Bath</span>
           <span class="spec"><span class="spec-num">1</span> Garage</span>
         </div>
         <div class="listing-cta">
-          <div class="listing-price">Enquire</div>
-          <a href="https://courtneyandco.co.nz/properties" target="_blank" class="listing-link">View →</a>
+          <div class="listing-price">Price by negotiation</div>
+          <a href="https://courtneyandco.co.nz/106-awaroa-road-helensville" target="_blank" class="listing-link">View →</a>
         </div>
       </div>
     </div>
 
     <div class="listing-card">
       <div class="listing-img">
-        <img loading="lazy" decoding="async" src="images/kumeu_2.webp" alt="Kumeu Property" style="width:100%;height:100%;object-fit:cover;display:block;">
-        <span class="listing-tag new">New</span>
+        <img loading="lazy" decoding="async" src="images/glenmore-09.jpg" alt="208 Glenmore Road, Coatesville" style="width:100%;height:100%;object-fit:cover;display:block;">
+        <span class="listing-tag">For Sale</span>
       </div>
       <div class="listing-body">
-        <div class="listing-suburb">Kumeu</div>
-        <div class="listing-addr">Lifestyle on the fringe</div>
+        <div class="listing-suburb">Coatesville</div>
+        <div class="listing-addr">208 Glenmore Road</div>
         <div class="listing-specs">
-          <span class="spec"><span class="spec-num">4</span> Beds</span>
-          <span class="spec"><span class="spec-num">3</span> Baths</span>
-          <span class="spec"><span class="spec-num">2</span> Garage</span>
+          <span class="spec"><span class="spec-num">3</span> Beds</span>
+          <span class="spec"><span class="spec-num">2</span> Baths</span>
+          <span class="spec"><span class="spec-num">2.28ha</span></span>
         </div>
         <div class="listing-cta">
-          <div class="listing-price">By Negotiation</div>
-          <a href="https://courtneyandco.co.nz/properties" target="_blank" class="listing-link">View →</a>
+          <div class="listing-price">Price by negotiation</div>
+          <a href="https://courtneyandco.co.nz/208-glenmore-road-coatesville" target="_blank" class="listing-link">View →</a>
         </div>
       </div>
     </div>
@@ -2649,7 +2666,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
       <h2 class="section-title" style="color:white;">Sold. <em style="color:var(--pink-lt);">Delivered.</em></h2>
     </div>
     <div style="text-align:right;">
-      <div style="font-family:var(--font-display);font-size:clamp(52px,6vw,88px);font-weight:400;color:white;line-height:1;letter-spacing:-0.02em;">$400<span style="color:var(--blue-lt);">M</span></div>
+      <div style="font-family:var(--font-display);font-size:clamp(52px,6vw,88px);font-weight:400;color:white;line-height:1;letter-spacing:-0.02em;">$499<span style="color:var(--blue-lt);">M+</span></div>
       <div style="font-family:var(--font-mono);font-size: 12.0px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:6px;">Total Settled Sales</div>
     </div>
   </div>
@@ -2657,52 +2674,52 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
   <div class="sold-scroll-wrap">
     <div class="sold-track">
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/tauwaka-23.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
-        <div class="sold-info"><div class="sold-addr">Coatesville-Riverhead Hwy</div><div class="sold-loc">Riverhead - Above CV</div></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-albert-14.jpg" alt="Sold - #14 Albert Street, Riverhead" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-info"><div class="sold-addr">#14 Albert Street</div><div class="sold-loc">Riverhead</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/kumeu.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
-        <div class="sold-info"><div class="sold-addr">Oraha Road</div><div class="sold-loc">Kumeu - Lifestyle Block</div></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-turpin-23.jpg" alt="Sold - #23 Turpin Road, Riverhead" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-info"><div class="sold-addr">#23 Turpin Road</div><div class="sold-loc">Riverhead</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/tauwaka-14.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
-        <div class="sold-info"><div class="sold-addr">Factory Road</div><div class="sold-loc">Waimauku - Premium Price</div></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-pohutukawa-96.jpg" alt="Sold - #96 Pohutukawa Parade, Riverhead" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-info"><div class="sold-addr">#96 Pohutukawa Parade</div><div class="sold-loc">Riverhead</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/tauwaka-48.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
-        <div class="sold-info"><div class="sold-addr">Dairy Flat Highway</div><div class="sold-loc">Dairy Flat - Rural Retreat</div></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-amber-10.jpg" alt="Sold - #10 Amber Place, Waimauku" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-info"><div class="sold-addr">#10 Amber Place</div><div class="sold-loc">Waimauku</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/tauwaka-06.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
-        <div class="sold-info"><div class="sold-addr">Helensville Village</div><div class="sold-loc">Helensville - Fast Sale</div></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-school-244.jpg" alt="Sold - #244 School Road, Waimauku" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-info"><div class="sold-addr">#244 School Road</div><div class="sold-loc">Waimauku</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/kumeu_2.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
-        <div class="sold-info"><div class="sold-addr">Matua Valley Road</div><div class="sold-loc">Riverhead - Multiple Offers</div></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-amreins-225b.jpg" alt="Sold - #225B Amreins Road, Taupaki" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-info"><div class="sold-addr">#225B Amreins Road</div><div class="sold-loc">Taupaki</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/tauwaka-25.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
-        <div class="sold-info"><div class="sold-addr">The Concourse</div><div class="sold-loc">Hobsonville - Above RV</div></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-trigg-29a.jpg" alt="Sold - #29A Trigg Road, Kumeu" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-info"><div class="sold-addr">#29A Trigg Road</div><div class="sold-loc">Kumeu</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/tauwaka-27.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
-        <div class="sold-info"><div class="sold-addr">Coatesville Road</div><div class="sold-loc">Coatesville - Equestrian</div></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-lenireland-16.jpg" alt="Sold - #16 Len Ireland Drive, Kumeu" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-info"><div class="sold-addr">#16 Len Ireland Drive</div><div class="sold-loc">Kumeu</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/tauwaka-04.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
-        <div class="sold-info"><div class="sold-addr">Mangawhai Heads</div><div class="sold-loc">Mangawhai - Coastal</div></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-robertmight-30.jpg" alt="Sold - #30 Robert Might Road, Huapai" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-info"><div class="sold-addr">#30 Robert Might Road</div><div class="sold-loc">Huapai</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/tauwaka-34.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
-        <div class="sold-info"><div class="sold-addr">Waimauku Village</div><div class="sold-loc">Waimauku - Record Street Price</div></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-paihere-12.jpg" alt="Sold - #12 Paihere Street, Huapai" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-info"><div class="sold-addr">#12 Paihere Street</div><div class="sold-loc">Huapai</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/tauwaka-42.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
-        <div class="sold-info"><div class="sold-addr">Henderson Valley Road</div><div class="sold-loc">Henderson - 8 Days on Market</div></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-kaiparaview-10.jpg" alt="Sold - #10 Kaipara View Road, Helensville" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-info"><div class="sold-addr">#10 Kaipara View Road</div><div class="sold-loc">Helensville</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><img loading="lazy" decoding="async" src="images/tauwaka-09.webp" alt="Sold" style="width:100%;height:100%;object-fit:cover;"><span class="sold-stamp">Sold</span></div>
-        <div class="sold-info"><div class="sold-addr">8 Tauwaka Crescent</div><div class="sold-loc">Riverhead - Premium Result</div></div>
+        <div class="sold-img"><img loading="lazy" decoding="async" src="images/sold-manarini-24.jpg" alt="Sold - #24 Manarini Road, Westgate" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="sold-info"><div class="sold-addr">#24 Manarini Road</div><div class="sold-loc">Westgate</div></div>
       </div>
     </div>
   </div>
@@ -2734,7 +2751,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
     <!-- Tile 2: Property photo -->
     <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" style="aspect-ratio:1;overflow:hidden;border-radius:3px;cursor:pointer;display:block;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-      <img loading="lazy" decoding="async" src="images/tauwaka-09.webp" style="width:100%;height:100%;object-fit:cover;">
+      <img loading="lazy" decoding="async" src="images/alexandra-01.jpg" style="width:100%;height:100%;object-fit:cover;">
     </a>
 
     <!-- Tile 3: SOLD OFF MARKET - pink/navy -->
@@ -2747,7 +2764,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
     <!-- Tile 4: Property photo -->
     <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" style="aspect-ratio:1;overflow:hidden;border-radius:3px;cursor:pointer;display:block;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-      <img loading="lazy" decoding="async" src="images/tauwaka-42.webp" style="width:100%;height:100%;object-fit:cover;">
+      <img loading="lazy" decoding="async" src="images/alexandra-15.jpg" style="width:100%;height:100%;object-fit:cover;">
     </a>
 
     <!-- Tile 5: OPEN SUNDAY - navy -->
@@ -2808,7 +2825,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
   <div class="team-intro fade-up">
     <div>
       <div class="section-label">Our People</div>
-      <h2 class="section-title">The movers &amp;<br><em>shakers.</em></h2>
+      <h2 class="section-title">Small team.<br><em>No passengers.</em></h2>
     </div>
     <div>
       <p class="team-lead-text">"We're not a franchise. We're a family - and every specialist on our team was chosen because they're genuinely the best at what they do."</p>
@@ -2837,7 +2854,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
         <div class="team-overlay">
           <div class="team-contact-links">
             <a href="tel:094129903">📞</a>
-            <a href="mailto:info@courtneyandco.co.nz">✉</a>
+            <a href="mailto:theteam@courtneyandco.co.nz">✉</a>
           </div>
         </div>
       </div>
@@ -2852,7 +2869,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
         <div class="team-overlay">
           <div class="team-contact-links">
             <a href="tel:094129903">📞</a>
-            <a href="mailto:info@courtneyandco.co.nz">✉</a>
+            <a href="mailto:theteam@courtneyandco.co.nz">✉</a>
           </div>
         </div>
       </div>
@@ -2867,7 +2884,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
         <div class="team-overlay">
           <div class="team-contact-links">
             <a href="tel:094129903">📞</a>
-            <a href="mailto:info@courtneyandco.co.nz">✉</a>
+            <a href="mailto:theteam@courtneyandco.co.nz">✉</a>
           </div>
         </div>
       </div>
@@ -2882,7 +2899,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
         <div class="team-overlay">
           <div class="team-contact-links">
             <a href="tel:094129903">📞</a>
-            <a href="mailto:info@courtneyandco.co.nz">✉</a>
+            <a href="mailto:theteam@courtneyandco.co.nz">✉</a>
           </div>
         </div>
       </div>
@@ -2897,7 +2914,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
         <div class="team-overlay">
           <div class="team-contact-links">
             <a href="tel:094129903">📞</a>
-            <a href="mailto:info@courtneyandco.co.nz">✉</a>
+            <a href="mailto:theteam@courtneyandco.co.nz">✉</a>
           </div>
         </div>
       </div>
@@ -2926,7 +2943,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
         <div class="team-overlay">
           <div class="team-contact-links">
             <a href="tel:094129903">📞</a>
-            <a href="mailto:info@courtneyandco.co.nz">✉</a>
+            <a href="mailto:theteam@courtneyandco.co.nz">✉</a>
           </div>
         </div>
       </div>
@@ -2939,128 +2956,86 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
 <!-- ── TESTIMONIALS ────────────────────────────────────────────────── -->
 <section class="testimonials-section" id="testimonials">
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-bottom:64px;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-bottom:56px;">
     <div>
       <div class="section-label">Client Stories</div>
       <h2 class="section-title">Don't take it<br>from <em>us.</em></h2>
     </div>
     <div style="padding-top:16px;">
-      <p style="font-family:var(--font-display);font-size:clamp(18px,2vw,24px);font-weight:300;font-style:italic;line-height:1.6;color:var(--navy-mid);">"The difference with Courtney is simple: she tells you the truth. In a market full of promises, that's worth everything."</p>
-      <div style="margin-top:16px;display:flex;align-items:center;gap:12px;">
-        <div style="width:36px;height:36px;border-radius:50%;background:var(--pink-pale);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);color:var(--pink);font-size:14px;">A</div>
-        <div>
-          <div style="font-size: 15.6px;font-weight:600;color:var(--navy);">Anna &amp; Craig</div>
-          <div style="font-size: 13.2px;color:var(--mid);font-family:var(--font-mono);">Dairy Flat</div>
-        </div>
-        <div style="margin-left:auto;color:var(--gold);font-size: 15.6px;letter-spacing:2px;">★★★★★</div>
+      <p style="font-family:var(--font-display);font-size:clamp(18px,2vw,24px);font-weight:300;font-style:italic;line-height:1.6;color:var(--navy-mid);">"Dealing with Courtney was a breath of fresh air. No BS. Straight up &amp; relaxed."</p>
+      <div style="margin-top:18px;display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--pink-pale);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);color:var(--pink);font-size:14px;">D</div>
+        <div class="testi-name">Debbie</div>
       </div>
     </div>
   </div>
 
-  <!-- Google reviews bar -->
-  <div style="background:var(--cream-dark);border-radius:3px;padding:20px 28px;display:flex;align-items:center;gap:24px;margin-bottom:48px;border:1px solid var(--light-line);">
-    <div style="flex-shrink:0;">
-      <svg width="68" height="24" viewBox="0 0 68 24" fill="none">
-        <path d="M8.5 3.5C5.5 3.5 3 5.5 3 8.5c0 2.7 2 4.5 4 5.5L12 17.5l5-3.5c2-1 4-2.8 4-5.5 0-3-2.5-5-5.5-5S8.5 3.5 8.5 3.5z" fill="#4285F4"/>
-        <text x="22" y="17" font-family="Arial,sans-serif" font-size="14" font-weight="700" fill="#4285F4">G</text>
-        <text x="32" y="17" font-family="Arial,sans-serif" font-size="13" fill="#333">oogle Reviews</text>
-      </svg>
-    </div>
-    <div style="width:1px;height:32px;background:var(--light-line);"></div>
-    <div style="display:flex;align-items:center;gap:8px;">
-      <span style="font-family:var(--font-display);font-size:28px;font-weight:400;color:var(--navy);line-height:1;">5.0</span>
-      <div>
-        <div style="color:#FBBC04;font-size:14px;letter-spacing:2px;">★★★★★</div>
-        <div style="font-size: 13.2px;color:var(--mid);font-family:var(--font-mono);margin-top:2px;">Based on 47 reviews</div>
-      </div>
-    </div>
-    <div style="margin-left:auto;">
-      <a href="https://courtneyandco.co.nz" target="_blank" style="font-size: 13.2px;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue-deep);text-decoration:none;border-bottom:1px solid rgba(154,95,136,0.3);padding-bottom:2px;">Read All Reviews →</a>
-    </div>
+  <div class="vt-grid stagger">
+    <button class="vt-card" type="button" data-yt="" data-src-id="rTG1BDPoJew" data-href="https://courtneyandco.co.nz/testimonials" aria-label="Play video testimonial: Hear it from Mark &amp; Liz">
+      <img loading="lazy" decoding="async" src="images/video-mark-liz.webp" alt="Hear it from Mark &amp; Liz">
+      <span class="vt-play"><span class="vt-play-btn"></span></span>
+      <span class="vt-label">Hear it from Mark &amp; Liz</span>
+    </button>
+    <button class="vt-card" type="button" data-yt="" data-src-id="TFnr5M34WnE" data-href="https://courtneyandco.co.nz/testimonials" aria-label="Play video testimonial: Hear it from Mary &amp; Kevin">
+      <img loading="lazy" decoding="async" src="images/video-mary-kevin.webp" alt="Hear it from Mary &amp; Kevin">
+      <span class="vt-play"><span class="vt-play-btn"></span></span>
+      <span class="vt-label">Hear it from Mary &amp; Kevin</span>
+    </button>
   </div>
 
   <div class="testi-grid stagger">
     <div class="testi-card">
       <div class="testi-quote">"</div>
-      <p class="testi-text">Courtney sold our home for significantly more than every other agent quoted. Her honesty at the start saved us weeks and got us a far better result.</p>
-      <div class="testi-author">
-        <div class="testi-avatar">M</div>
-        <div>
-          <div class="testi-name">Mark &amp; Liz</div>
-          <div class="testi-loc">Riverhead</div>
-          <div class="testi-stars">★★★★★</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="testi-card">
-      <div class="testi-quote">"</div>
-      <p class="testi-text">The marketing was genuinely different - beautiful photography, design that stood out on every platform. We had multiple offers in the first weekend.</p>
-      <div class="testi-author">
-        <div class="testi-avatar">S</div>
-        <div>
-          <div class="testi-name">Sarah &amp; Tom</div>
-          <div class="testi-loc">Kumeu</div>
-          <div class="testi-stars">★★★★★</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="testi-card">
-      <div class="testi-quote">"</div>
-      <p class="testi-text">What makes Courtney different? She actually listens. And then she delivers. We've recommended her to every single person we know out west.</p>
+      <p class="testi-text">Great agent, straight shooter and got us a quick deal in a slowing market. Very happy.</p>
       <div class="testi-author">
         <div class="testi-avatar">R</div>
-        <div>
-          <div class="testi-name">Rob &amp; Lynne</div>
-          <div class="testi-loc">Helensville</div>
-          <div class="testi-stars">★★★★★</div>
-        </div>
+        <div class="testi-name">Reade &amp; Chelsea</div>
       </div>
     </div>
-
     <div class="testi-card">
       <div class="testi-quote">"</div>
-      <p class="testi-text">We interviewed four agents. Courtney was the only one who gave us a realistic number and explained exactly how she'd achieve it. She did, and then some.</p>
+      <p class="testi-text">We have had a few dealings with Courtney over the years with the most recent being her selling our Riverhead home during the covid lockdown. Her straight talking, no nonsense yet totally professional attitude is a breath of fresh air and Courtney seems to just nail it every time!</p>
       <div class="testi-author">
-        <div class="testi-avatar">J</div>
-        <div>
-          <div class="testi-name">James &amp; Pip</div>
-          <div class="testi-loc">Waimauku</div>
-          <div class="testi-stars">★★★★★</div>
-        </div>
+        <div class="testi-avatar">V</div>
+        <div class="testi-name">Vicky &amp; Dean</div>
       </div>
     </div>
-
     <div class="testi-card">
       <div class="testi-quote">"</div>
-      <p class="testi-text">Sold in 10 days, above CV, with three competing offers. Courtney's knowledge of the NW market is unmatched - she knew exactly who would buy our place.</p>
+      <p class="testi-text">We initially bought the house through Courtney and because of the hassle-free process, didn't hesitate to contact her when it came to selling. The 'straight talking' attitude gives you an accurate representation of where the market is, and what the expectations are.</p>
       <div class="testi-author">
-        <div class="testi-avatar">D</div>
-        <div>
-          <div class="testi-name">Dave &amp; Karen</div>
-          <div class="testi-loc">Dairy Flat</div>
-          <div class="testi-stars">★★★★★</div>
-        </div>
+        <div class="testi-avatar">C</div>
+        <div class="testi-name">Craig &amp; Nikki</div>
       </div>
     </div>
-
     <div class="testi-card">
       <div class="testi-quote">"</div>
-      <p class="testi-text">Buying through Courtney was a completely different experience. Transparent, fast, no games. She made a stressful process feel straightforward. Rare.</p>
+      <p class="testi-text">Straight forward, no dramas experience. We viewed multiple homes that Courtney had listed, landed on our dream home in Riverhead. Really appreciated the smoothness of the whole process.</p>
       <div class="testi-author">
-        <div class="testi-avatar">N</div>
-        <div>
-          <div class="testi-name">Ngaio &amp; Ben</div>
-          <div class="testi-loc">Coatesville</div>
-          <div class="testi-stars">★★★★★</div>
-        </div>
+        <div class="testi-avatar">K</div>
+        <div class="testi-name">Keith</div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Courtney &amp; Co. The very biggest THANK YOU. 6 days on the market with an unconditional sale.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">K</div>
+        <div class="testi-name">Kevin, Dawn, Jason &amp; Urshula Pengelly</div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">We had been searching for a home for nearly a year and met many agents along the way, but Courtney stood out right from the start. She is incredibly approachable, down-to-earth, and truly knows the best listings in Riverhead and beyond.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">K</div>
+        <div class="testi-name">Kaitlyn &amp; Matthew</div>
       </div>
     </div>
   </div>
 
   <div style="text-align:center;margin-top:56px;">
-    <a href="https://courtneyandco.co.nz" target="_blank" class="btn-primary">Read All Testimonials</a>
+    <a href="https://courtneyandco.co.nz/testimonials" target="_blank" class="btn-primary">Read All Testimonials</a>
   </div>
 </section>
 
@@ -3093,7 +3068,8 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
           <div class="c-info-label">Call Us</div>
           <div class="c-info-value">
             <a href="tel:094129903">Office: 09 412 9903</a><br>
-            <a href="tel:0276880818">Courtney: 027 688 0818</a>
+            <a href="tel:0276880818">Courtney: 027 688 0818</a><br>
+            <a href="mailto:courtney@courtneyandco.co.nz">courtney@courtneyandco.co.nz</a>
           </div>
         </div>
       </div>
@@ -3101,7 +3077,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
         <div class="c-info-icon">✉</div>
         <div>
           <div class="c-info-label">Email</div>
-          <div class="c-info-value"><a href="mailto:info@courtneyandco.co.nz">info@courtneyandco.co.nz</a></div>
+          <div class="c-info-value"><a href="mailto:theteam@courtneyandco.co.nz">theteam@courtneyandco.co.nz</a></div>
         </div>
       </div>
     </div>
@@ -3166,6 +3142,18 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
 </main>
 
+<!-- ── NEWSLETTER ──────────────────────────────────────────────────── -->
+<section style="background:var(--cream-dark);padding:56px 60px;border-top:1px solid var(--light-line);">
+  <div style="max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;">
+    <h2 style="font-family:var(--font-display);font-size:clamp(22px,2.4vw,30px);font-weight:300;color:var(--navy);line-height:1.25;margin:0;flex:1 1 320px;">Get the North West market update first.</h2>
+    <div style="display:flex;gap:10px;flex:1 1 340px;flex-wrap:wrap;">
+      <label for="nl-email" class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Email address</label>
+      <input id="nl-email" class="form-input" type="email" placeholder="Email address" style="flex:1 1 200px;min-width:0;">
+      <button class="form-submit" style="width:auto;padding:14px 28px;white-space:nowrap;" onclick="handleFormSubmit(event)">Sign me up</button>
+    </div>
+  </div>
+</section>
+
 <!-- ── FOOTER ──────────────────────────────────────────────────────── -->
 <footer>
   <div class="footer-logo">
@@ -3176,7 +3164,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
     <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
     </a>
-    <a href="https://www.facebook.com/courtneyandco" target="_blank" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
+    <a href="https://www.facebook.com/CourtneyandCoLtd/" target="_blank" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
     </a>
     <a href="https://www.trademe.co.nz/property" target="_blank" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
@@ -3189,7 +3177,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
   <ul class="footer-links">
     <li><a href="https://courtneyandco.co.nz">Properties</a></li>
     <li><a href="https://courtneyandco.co.nz/general-enquires">Contact</a></li>
-    <li><a href="https://www.facebook.com/courtneyandco" target="_blank">Facebook</a></li>
+    <li><a href="https://www.facebook.com/CourtneyandCoLtd/" target="_blank">Facebook</a></li>
     <li><a href="https://www.instagram.com/courtney_and_co_/" target="_blank">Instagram</a></li>
   </ul>
   <div class="footer-legal">
@@ -3218,7 +3206,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
 
   <div class="chat-messages" id="cp-messages">
     <div class="cp-msg cp-msg--agent">
-      <div class="cp-msg-bubble">Good <span id="cp-tod"></span>! I'm the Courtney &amp; Co concierge - your specialist for Riverhead, Helensville, Kumeu, Dairy Flat and surrounds. How can I help you today?</div>
+      <div class="cp-msg-bubble" id="cp-greeting">Hi, I'm the Courtney &amp; Co concierge - your specialist for Riverhead, Helensville, Kumeu, Dairy Flat and surrounds. How can I help you today?</div>
     </div>
     <div class="cp-chips" id="cp-chips">
       <button class="cp-chip" onclick="sendChip(this)">Free Appraisal</button>
@@ -3234,6 +3222,7 @@ body.js-loaded .stagger.visible > *:nth-child(6) { opacity: 1; transform: transl
       <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
     </button>
   </div>
+  <div style="padding:0 18px 12px;font-size:11px;line-height:1.45;color:var(--mid);text-align:center;">General information only. Courtney confirms all specifics.</div>
 </div>
 
 <!-- ── SCRIPTS ─────────────────────────────────────────────────────── -->
@@ -3277,10 +3266,17 @@ function timeOfDay() {
   return h < 12 ? 'morning' : h < 17 ? 'afternoon' : 'evening';
 }
 
-// Set greeting on load
+// Set greeting on load. HTML already holds a valid fallback greeting,
+// so a failure here degrades to "Hi, I'm the Courtney & Co concierge."
 (function() {
-  var tod = document.getElementById('cp-tod');
-  if (tod) tod.textContent = timeOfDay();
+  try {
+    var el = document.getElementById('cp-greeting');
+    var tod = timeOfDay();
+    if (el && tod) {
+      el.textContent = 'Good ' + tod + "! I'm the Courtney & Co concierge - your specialist for "
+        + 'Riverhead, Helensville, Kumeu, Dairy Flat and surrounds. How can I help you today?';
+    }
+  } catch (e) { /* keep the static fallback */ }
 })();
 
 // -- TOGGLE -------------------------------------------------------
@@ -3333,7 +3329,7 @@ function sendMessageText(text) {
     body: JSON.stringify({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 1000,
-      system: "You are the concierge for Courtney & Co, a boutique real estate agency specialising exclusively in North West Auckland: Riverhead, Helensville, Kumeu, Dairy Flat, Waimauku and surrounds. You speak in the agency voice: warm, knowledgeable, straight-talking, never pushy. Key facts: Courtney Wood is the lead agent, over $400M settled, licensed since 2008. Office: 1047 Coatesville-Riverhead Hwy, Riverhead. Phone: 027 688 0818. Email: info@courtneyandco.co.nz. Current listing: 8 Tauwaka Crescent, Riverhead - 316sqm architectural home, By Negotiation. Always offer to arrange a free appraisal or connect the person with Courtney directly. Keep responses concise (2-4 sentences max) and conversational.",
+      system: "You are the concierge for Courtney & Co, a boutique real estate agency specialising exclusively in North West Auckland: Riverhead, Helensville, Kumeu, Dairy Flat, Waimauku and surrounds. You speak in the agency voice: warm, knowledgeable, straight-talking, never pushy. Key facts: Courtney Wood is the lead agent, 366 properties and over $499M settled, licensed REA 2008. Office: 1047 Coatesville-Riverhead Hwy, Riverhead. Phone: 027 688 0818. Email: theteam@courtneyandco.co.nz. Current listings include 26 Alexandra Street Riverhead, 106 Awaroa Road Helensville and 208 Glenmore Road Coatesville, all price by negotiation. STRICT LIMITS, no exceptions: never state or estimate the value, price, CV or likely sale price of any property, including one the user describes or owns; never give legal, financial, tax or investment advice; never predict the market. Route every valuation, pricing or what-is-it-worth question to booking a free appraisal with Courtney. If asked for anything outside these limits, say plainly that Courtney confirms all specifics and offer the appraisal or her direct line. Always offer to arrange a free appraisal or connect the person with Courtney directly. Keep responses concise (2-4 sentences max) and conversational.",
       messages: messages
     })
   })
@@ -3361,19 +3357,19 @@ function sendMessageText(text) {
 function fallbackResponse(msg) {
   var t = msg.toLowerCase();
   if (t.indexOf('apprais') > -1 || t.indexOf('worth') > -1 || t.indexOf('value') > -1)
-    return "A free appraisal is always our first step - Courtney gives you the straight number, not what you want to hear. Call her directly on 027 688 0818 or drop your address and we will be in touch today.";
+    return "I cannot put a number on a property myself - Courtney confirms all specifics. A free appraisal is always the first step, and she gives you the straight number rather than what you want to hear. Call her on 027 688 0818 or leave your address and we will be in touch today.";
   if (t.indexOf('sell') > -1 || t.indexOf('list') > -1)
     return "Selling with Courtney & Co means bespoke marketing, world-class photography and honest pricing. Where is your property and what is your timeline? Courtney would love to chat.";
   if (t.indexOf('buy') > -1 || t.indexOf('looking') > -1)
     return "North West Auckland is a brilliant market right now. What is your budget and how many bedrooms are you after? We know every pocket of Riverhead, Kumeu, Helensville and Dairy Flat.";
   if (t.indexOf('riverhead') > -1)
-    return "Riverhead is our heartland - we have 8 Tauwaka Crescent available right now, a stunning 316sqm architectural home. Want to arrange a private viewing with Courtney?";
+    return "Riverhead is our heartland - 26 Alexandra Street is on the market right now, a renovated character villa on 807sqm. Want to arrange a viewing with Courtney?";
   if (t.indexOf('kumeu') > -1)
     return "Kumeu is one of the strongest performers in NW Auckland. Wine country, great schools, easy highway access. We have active listings there - what are you looking for?";
   if (t.indexOf('helensville') > -1)
     return "Helensville is having a real moment - lifestyle properties and genuine community. We have sold extensively here and know which streets are emerging.";
   if (t.indexOf('phone') > -1 || t.indexOf('contact') > -1 || t.indexOf('call') > -1)
-    return "Call Courtney directly: 027 688 0818. Office: 09 412 9903. Email: info@courtneyandco.co.nz. She picks up.";
+    return "Call Courtney directly: 027 688 0818. Office: 09 412 9903. Email: theteam@courtneyandco.co.nz. She picks up.";
   return "Happy to help - we specialise in North West Auckland real estate. Whether you are buying, selling or want a free appraisal, call Courtney on 027 688 0818 or ask me anything.";
 }
 
@@ -3420,6 +3416,113 @@ function hideTyping() {
 }
 
 
+
+// -- VIDEO TESTIMONIAL FACADES -----------------------------------
+// Thumbnail + play button; the YouTube iframe is only injected on click,
+// so nothing from youtube.com loads until the visitor asks for it.
+// NOTE: data-yt is intentionally empty. Every YouTube ID on Courtney's
+// testimonials page (rTG1BDPoJew, TFnr5M34WnE, Rnx-qnMSYs4, ZvbJAL_v5E0)
+// returns 404 - the videos are deleted or private. Until she supplies live
+// IDs, a click opens her testimonials page instead of embedding a dead
+// player. Put a working ID back in data-yt and the embed path takes over.
+document.querySelectorAll('.vt-card').forEach(function(card) {
+  card.addEventListener('click', function() {
+    var id = card.getAttribute('data-yt');
+    if (!id) {
+      var href = card.getAttribute('data-href');
+      if (href) window.open(href, '_blank', 'noopener');
+      return;
+    }
+    if (card.dataset.loaded === '1') return;
+    card.dataset.loaded = '1';
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+    f.title = card.getAttribute('aria-label') || 'Video testimonial';
+    f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    f.allowFullscreen = true;
+    // Same box as the thumbnail it replaces, so nothing on the page shifts.
+    card.innerHTML = '';
+    card.appendChild(f);
+  });
+});
+
+// -- LIGHTBOX -----------------------------------------------------
+// Indices match the onclick="openLightbox(n)" calls in the feature
+// listing and the property gallery.
+var LB_PHOTOS = [
+  { src: 'images/alexandra-01.jpg', cap: '26 Alexandra Street, Riverhead' },
+  { src: 'images/alexandra-15.jpg', cap: 'Family living room' },
+  { src: 'images/alexandra-31.jpg', cap: 'Upgraded kitchen' },
+  { src: 'images/alexandra-39.jpg', cap: 'Oversized master suite' },
+  { src: 'images/alexandra-23.jpg', cap: 'Leadlight windows and high stud' },
+  { src: 'images/alexandra-61.jpg', cap: 'Covered outdoor entertaining' },
+  { src: 'images/alexandra-78.jpg', cap: 'Established gardens' },
+  { src: 'images/alexandra-44.jpg', cap: 'Covered verandah' },
+  { src: 'images/alexandra-55.jpg', cap: 'Villa frontage' }
+];
+var lbIndex = 0;
+
+function renderLB() {
+  var img = document.getElementById('lb-img');
+  var cap = document.getElementById('lb-caption');
+  var photo = LB_PHOTOS[lbIndex];
+  if (!img || !photo) return;
+  img.src = photo.src;
+  img.alt = photo.cap;
+  if (cap) cap.textContent = photo.cap;
+}
+
+function openLightbox(i) {
+  var box = document.getElementById('lightbox');
+  if (!box) return;
+  lbIndex = (typeof i === 'number' && LB_PHOTOS[i]) ? i : 0;
+  renderLB();
+  box.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  var box = document.getElementById('lightbox');
+  if (!box) return;
+  box.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function changeLB(step) {
+  lbIndex = (lbIndex + step + LB_PHOTOS.length) % LB_PHOTOS.length;
+  renderLB();
+}
+
+// Backdrop click closes; arrow keys and Escape work while open.
+(function() {
+  var box = document.getElementById('lightbox');
+  if (box) {
+    box.addEventListener('click', function(e) { if (e.target === box) closeLightbox(); });
+  }
+  document.addEventListener('keydown', function(e) {
+    var open = box && box.style.display === 'flex';
+    if (!open) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') changeLB(-1);
+    if (e.key === 'ArrowRight') changeLB(1);
+  });
+})();
+
+// -- DEMO FORM HANDLER --------------------------------------------
+// Preview build: nothing is sent anywhere. Wire to a real endpoint
+// before this goes live.
+function handleFormSubmit(e) {
+  if (e && e.preventDefault) e.preventDefault();
+  var btn = e && e.target ? e.target : null;
+  if (!btn) return;
+  var original = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Thanks - we will be in touch.';
+  setTimeout(function() {
+    btn.disabled = false;
+    btn.textContent = original;
+  }, 3200);
+}
 </script>
 </body>
 </html>
