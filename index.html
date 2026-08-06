@@ -2052,22 +2052,13 @@ body.cover-open { overflow: hidden; }
 
 .cover-inner { width: 100%; max-width: 560px; text-align: center; }
 
-.cover-eyebrow {
-  font-family: var(--font-mono); font-size: 12px;
-  letter-spacing: 0.3em; text-transform: uppercase;
-  color: var(--pink); margin-bottom: 26px;
-}
-.cover-prepared { font-size: 15px; color: var(--paper-3); margin: 0 0 10px; }
 .cover-brand {
   font-family: var(--font-display);
   font-size: clamp(40px, 7vw, 64px);
   font-weight: 300; color: #fff; line-height: 1.05;
 }
-.cover-date {
-  font-family: var(--font-mono); font-size: 13px;
-  letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--paper-3); margin-top: 12px;
-}
+/* sits under the brand now, so the margin is above it rather than below */
+.cover-prepared { font-size: 15px; color: var(--paper-3); margin: 14px 0 0; }
 
 .cover-form { margin: 36px auto 0; max-width: 380px; }
 .cover-label {
@@ -2095,24 +2086,6 @@ body.cover-open { overflow: hidden; }
 }
 .cover-btn:hover { background: var(--blue-mid); }
 .cover-err { font-size: 13px; color: var(--pink-lt); margin: 10px 0 0; text-align: left; }
-
-.cover-loom { margin-top: 40px; }
-.cover-loom-frame {
-  aspect-ratio: 16 / 9; width: 100%;
-  background: rgba(255,255,255,0.045);
-  border: 1px solid rgba(255,255,255,0.14);
-  border-radius: 3px; overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
-}
-.cover-loom-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
-.cover-loom-hint {
-  font-family: var(--font-mono); font-size: 13px;
-  letter-spacing: 0.16em; text-transform: uppercase; color: var(--paper-3);
-}
-.cover-loom-cap {
-  margin-top: 12px; font-size: 13px; color: var(--paper-3);
-}
-.cover-foot { margin-top: 34px; font-size: 13px; color: var(--paper-3); }
 
 /* ── H: LIGHTBOX ─────────────────────────────────────────────────── */
 .lb {
@@ -2803,20 +2776,17 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
      Presentation, not security. The page source is public; this is a cover
      sheet so a forwarded link opens on something deliberate rather than
      straight into the client's unsigned site. No claim of protection.
-     ?k=riverhead skips it so the SMS link opens directly. -->
+     ?k=riverhead lands on the cover with the code already typed, one tap
+     from through, rather than bypassing the cover altogether. -->
 <script>
 /* I2: run before paint so the site never flashes behind the cover.
    In-memory only, no localStorage. This is a cover sheet, not access
    control: the page source is public and it is not protected. */
 (function () {
-  var ACCESS = 'riverhead';
-  var skip = false;
   try {
-    var q = new URLSearchParams(window.location.search).get('k');
-    skip = !!q && q.toLowerCase() === ACCESS;
-  } catch (e) { skip = false; }
-  window.__coverPassed = skip;
-  if (!skip) document.documentElement.classList.add('cover-pending');
+    window.__coverPrefill = new URLSearchParams(window.location.search).get('k') || '';
+  } catch (e) { window.__coverPrefill = ''; }
+  document.documentElement.classList.add('cover-pending');
 })();
 </script>
 <style>
@@ -2825,10 +2795,8 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
 </style>
 <div id="cover" class="cover">
   <div class="cover-inner">
-    <div class="cover-eyebrow">Private Preview</div>
-    <p class="cover-prepared">Prepared for Courtney Wood</p>
     <div class="cover-brand">Courtney &amp; Co</div>
-    <div class="cover-date">August 2026</div>
+    <p class="cover-prepared">Prepared for Courtney Wood</p>
 
     <form class="cover-form" id="cover-form" novalidate>
       <label class="cover-label" for="cover-code">Access code</label>
@@ -2839,19 +2807,6 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
       </div>
       <p class="cover-err" id="cover-err" role="alert" hidden>That code does not match. Try again.</p>
     </form>
-
-    <!-- I3: drop the Loom share URL into the src below. The frame is already
-         sized 16:9, so the layout does not move when it is added. -->
-    <div class="cover-loom">
-      <div class="cover-loom-frame" id="cover-loom-frame">
-        <span class="cover-loom-hint">Walkthrough coming shortly</span>
-        <!-- <iframe src="https://www.loom.com/embed/REPLACE_ME" frameborder="0"
-                 allowfullscreen title="A 90 second walkthrough from Will"></iframe> -->
-      </div>
-      <div class="cover-loom-cap">A 90 second walkthrough from Will</div>
-    </div>
-
-    <p class="cover-foot">Designed by Will. This preview is private and not indexed.</p>
   </div>
 </div>
 
@@ -4331,16 +4286,19 @@ function handleFormSubmit(e) {
     document.body.classList.remove('cover-open');
   }
 
-  if (window.__coverPassed) { reveal(); return; }
-
   document.body.classList.add('cover-open');
+
+  // I2b: ?k= arrives pre-typed rather than skipping the cover, so the link is
+  // one tap from through and the cover is always what opens.
+  if (input && window.__coverPrefill) {
+    input.value = window.__coverPrefill;
+  }
   if (input) setTimeout(function () { input.focus(); }, 120);
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var v = (input.value || '').trim().toLowerCase();
     if (v === ACCESS) {
-      window.__coverPassed = true;   // in memory only, never persisted
       reveal();
     } else {
       err.hidden = false;
