@@ -1892,6 +1892,43 @@ body.js-loaded .hero-photo { animation: heroDrift 12s cubic-bezier(.16,1,.3,1) b
 }
 .feature-thumbs { max-width: 1200px; margin: 0 auto; }
 
+/* v14: the caption sat on the white picket fence and the mauve price line was
+   the worst of it. The caption occupies only the bottom band of the frame, so
+   the scrim holds dense across that band and then falls away, rather than
+   starting to decay immediately. Holding ~0.84 under the price line is what
+   carries the mauve to a legible ratio against the fence. */
+.feature-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to top,
+    rgba(12,22,40,0.88) 0%,
+    rgba(12,22,40,0.84) 10%,
+    rgba(12,22,40,0.72) 18%,
+    rgba(12,22,40,0.40) 30%,
+    rgba(12,22,40,0.12) 42%,
+    rgba(12,22,40,0) 55%);
+}
+
+/* v14: at 390 the 16/10 crop left the hero 204px tall while the caption needs
+   214, so the caption overflowed the frame entirely and sat unscrimmed on the
+   fence, clipped at the top and colliding with the For Sale badge. A taller
+   crop at mobile puts the caption back inside the image, and the scrim carries
+   further up because the caption occupies proportionally more of the frame. */
+@media (max-width: 768px) {
+  .feature-hero { aspect-ratio: 4 / 5; }
+  .feature-scrim {
+    background: linear-gradient(to top,
+      rgba(12,22,40,0.90) 0%,
+      rgba(12,22,40,0.86) 30%,
+      rgba(12,22,40,0.76) 50%,
+      rgba(12,22,40,0.45) 66%,
+      rgba(12,22,40,0.15) 80%,
+      rgba(12,22,40,0) 92%);
+  }
+}
+
 /* ── C3: the video row was stretching a small poster across ~1900px,
    which read as low resolution. Capped, centred, 16/9. */
 .vt-grid {
@@ -2112,7 +2149,9 @@ body.cover-open { overflow: hidden; }
   position: fixed; top: 16px; right: 20px; z-index: 5;
   width: 48px; height: 48px;            /* >= 44px hit area */
   background: none; border: 0; cursor: pointer;
-  color: var(--paper-2); font-size: 24px; line-height: 1;
+  color: var(--paper-2); line-height: 1;
+  /* v14: was a text dingbat on the baseline; the stroke icon needs centring. */
+  display: flex; align-items: center; justify-content: center;
   border-radius: 50%; transition: background 0.2s;
 }
 .lb-close:hover { background: rgba(255,255,255,0.12); }
@@ -2712,7 +2751,7 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
 <!-- Social preview -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Courtney &amp; Co - Private Preview">
-<meta property="og:description" content="A private site preview prepared for Courtney Wood by Renovatio.">
+<meta property="og:description" content="A private site preview prepared for Courtney Wood.">
 <meta property="og:url" content="https://courtneyandco.vercel.app/">
 <meta property="og:image" content="https://courtneyandco.vercel.app/images/og-cover.jpg">
 <meta property="og:image:width" content="1200">
@@ -2812,7 +2851,7 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
       <div class="cover-loom-cap">A 90 second walkthrough from Will</div>
     </div>
 
-    <p class="cover-foot">Prepared by Renovatio. This preview is private and not indexed.</p>
+    <p class="cover-foot">Designed by Will. This preview is private and not indexed.</p>
   </div>
 </div>
 
@@ -3002,9 +3041,9 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
        point moves up, not down. -->
   <div class="feature-hero" onclick="openLightbox(0)">
     <picture><source type="image/avif" srcset="images/r/alexandra-01-400.avif 400w, images/r/alexandra-01-800.avif 800w, images/r/alexandra-01-1600.avif 1600w, images/r/alexandra-01-2400.avif 2400w" sizes="100vw"><source type="image/webp" srcset="images/r/alexandra-01-400.webp 400w, images/r/alexandra-01-800.webp 800w, images/r/alexandra-01-1600.webp 1600w, images/r/alexandra-01-2400.webp 2400w" sizes="100vw"><img loading="lazy" decoding="async" src="images/alexandra-01.jpg" alt="26 Alexandra Street, Riverhead - Villa frontage from the street" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;object-position:center 38%;display:block;transition:transform 0.7s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'"></picture>
-    <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(12,22,40,0.78) 0%,rgba(12,22,40,0.15) 42%,rgba(12,22,40,0) 65%);"></div>
-    <div style="position:absolute;top:20px;left:20px;background:var(--pink);color:white;font-size: 12px;letter-spacing:0.2em;text-transform:uppercase;padding:6px 14px;font-family:var(--font-mono);border-radius:2px;">For Sale</div>
-    <div style="position:absolute;bottom:28px;left:28px;right:28px;">
+    <div class="feature-scrim"></div>
+    <div style="position:absolute;top:20px;left:20px;z-index:2;background:var(--pink);color:white;font-size: 12px;letter-spacing:0.2em;text-transform:uppercase;padding:6px 14px;font-family:var(--font-mono);border-radius:2px;">For Sale</div>
+    <div style="position:absolute;bottom:28px;left:28px;right:28px;z-index:2;">
       <div style="font-family:var(--font-display);font-size:clamp(26px,3vw,38px);font-weight:300;color:white;line-height:1.15;margin-bottom:10px;">26 Alexandra Street, Riverhead</div>
       <div style="font-size:15px;color:var(--blue-lt);font-weight:500;letter-spacing:0.04em;margin-bottom:14px;">Price by negotiation</div>
       <div style="display:flex;gap:20px;flex-wrap:wrap;">
@@ -3027,8 +3066,11 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
     <div style="aspect-ratio:4/3;overflow:hidden;cursor:pointer;" onclick="openLightbox(3)">
       <picture><source type="image/avif" srcset="images/r/alexandra-39-400.avif 400w, images/r/alexandra-39-800.avif 800w, images/r/alexandra-39-1600.avif 1600w, images/r/alexandra-39-2400.avif 2400w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/alexandra-39-400.webp 400w, images/r/alexandra-39-800.webp 800w, images/r/alexandra-39-1600.webp 1600w, images/r/alexandra-39-2400.webp 2400w" sizes="(max-width:900px) 100vw, 50vw"><img loading="lazy" decoding="async" src="images/alexandra-39.jpg" alt="26 Alexandra Street, Riverhead - Off-street parking and entry" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></picture>
     </div>
+    <!-- v14: the sources here were keyed to alexandra-31 while the fallback src
+         and the alt text were alexandra-61, so this tile rendered the dusk deck
+         a second time. Sources realigned to the image the tile is meant to show. -->
     <div style="aspect-ratio:4/3;overflow:hidden;cursor:pointer;" onclick="openLightbox(5)">
-      <picture><source type="image/avif" srcset="images/r/alexandra-31-400.avif 400w, images/r/alexandra-31-800.avif 800w, images/r/alexandra-31-1600.avif 1600w, images/r/alexandra-31-2400.avif 2400w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/alexandra-31-400.webp 400w, images/r/alexandra-31-800.webp 800w, images/r/alexandra-31-1600.webp 1600w, images/r/alexandra-31-2400.webp 2400w" sizes="(max-width:900px) 100vw, 50vw"><img loading="lazy" decoding="async" src="images/alexandra-61.jpg" alt="26 Alexandra Street, Riverhead - Bedroom with leadlight windows" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></picture>
+      <picture><source type="image/avif" srcset="images/r/alexandra-61-400.avif 400w, images/r/alexandra-61-800.avif 800w, images/r/alexandra-61-1600.avif 1600w, images/r/alexandra-61-2400.avif 2400w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/alexandra-61-400.webp 400w, images/r/alexandra-61-800.webp 800w, images/r/alexandra-61-1600.webp 1600w, images/r/alexandra-61-2400.webp 2400w" sizes="(max-width:900px) 100vw, 50vw"><img loading="lazy" decoding="async" src="images/alexandra-61.jpg" alt="26 Alexandra Street, Riverhead - Bedroom with leadlight windows" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></picture>
     </div>
   </div>
 
@@ -3146,7 +3188,7 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
 <!-- ── H: LIGHTBOX ─────────────────────────────────────────────────── -->
 <div id="lightbox" class="lb" role="dialog" aria-modal="true" aria-label="Property photo viewer" hidden>
   <div class="lb-counter" id="lb-counter"></div>
-  <button class="lb-close" id="lb-close" type="button" aria-label="Close viewer">&#10005;</button>
+  <button class="lb-close" id="lb-close" type="button" aria-label="Close viewer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
 
   <button class="lb-zone lb-prev" type="button" aria-label="Previous photo" onclick="changeLB(-1)">
     <span class="lb-chev" aria-hidden="true">&#8249;</span>
@@ -3265,52 +3307,52 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
   <div class="sold-scroll-wrap">
     <div class="sold-track">
       <div class="sold-card">
-        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-albert-14-400.avif 400w, images/r/sold-albert-14-800.avif 800w, images/r/sold-albert-14-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-albert-14-400.webp 400w, images/r/sold-albert-14-800.webp 800w, images/r/sold-albert-14-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-albert-14.jpg" alt="Sold - #14 Albert Street, Riverhead" style="width:100%;height:100%;object-fit:cover;"></picture></div>
-        <div class="sold-info"><div class="sold-addr">#14 Albert Street</div><div class="sold-loc">Riverhead</div></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-albert-14-400.avif 400w, images/r/sold-albert-14-800.avif 800w, images/r/sold-albert-14-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-albert-14-400.webp 400w, images/r/sold-albert-14-800.webp 800w, images/r/sold-albert-14-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-albert-14.jpg" alt="Sold - 14 Albert Street, Riverhead" style="width:100%;height:100%;object-fit:cover;"></picture></div>
+        <div class="sold-info"><div class="sold-addr">14 Albert Street</div><div class="sold-loc">Riverhead</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-turpin-23-400.avif 400w, images/r/sold-turpin-23-800.avif 800w, images/r/sold-turpin-23-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-turpin-23-400.webp 400w, images/r/sold-turpin-23-800.webp 800w, images/r/sold-turpin-23-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-turpin-23.jpg" alt="Sold - #23 Turpin Road, Riverhead" style="width:100%;height:100%;object-fit:cover;"></picture></div>
-        <div class="sold-info"><div class="sold-addr">#23 Turpin Road</div><div class="sold-loc">Riverhead</div></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-turpin-23-400.avif 400w, images/r/sold-turpin-23-800.avif 800w, images/r/sold-turpin-23-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-turpin-23-400.webp 400w, images/r/sold-turpin-23-800.webp 800w, images/r/sold-turpin-23-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-turpin-23.jpg" alt="Sold - 23 Turpin Road, Riverhead" style="width:100%;height:100%;object-fit:cover;"></picture></div>
+        <div class="sold-info"><div class="sold-addr">23 Turpin Road</div><div class="sold-loc">Riverhead</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-pohutukawa-96-400.avif 400w, images/r/sold-pohutukawa-96-800.avif 800w, images/r/sold-pohutukawa-96-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-pohutukawa-96-400.webp 400w, images/r/sold-pohutukawa-96-800.webp 800w, images/r/sold-pohutukawa-96-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-pohutukawa-96.jpg" alt="Sold - #96 Pohutukawa Parade, Riverhead" style="width:100%;height:100%;object-fit:cover;"></picture></div>
-        <div class="sold-info"><div class="sold-addr">#96 Pohutukawa Parade</div><div class="sold-loc">Riverhead</div></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-pohutukawa-96-400.avif 400w, images/r/sold-pohutukawa-96-800.avif 800w, images/r/sold-pohutukawa-96-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-pohutukawa-96-400.webp 400w, images/r/sold-pohutukawa-96-800.webp 800w, images/r/sold-pohutukawa-96-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-pohutukawa-96.jpg" alt="Sold - 96 Pohutukawa Parade, Riverhead" style="width:100%;height:100%;object-fit:cover;"></picture></div>
+        <div class="sold-info"><div class="sold-addr">96 Pohutukawa Parade</div><div class="sold-loc">Riverhead</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-amber-10-400.avif 400w, images/r/sold-amber-10-800.avif 800w, images/r/sold-amber-10-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-amber-10-400.webp 400w, images/r/sold-amber-10-800.webp 800w, images/r/sold-amber-10-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-amber-10.jpg" alt="Sold - #10 Amber Place, Waimauku" style="width:100%;height:100%;object-fit:cover;"></picture></div>
-        <div class="sold-info"><div class="sold-addr">#10 Amber Place</div><div class="sold-loc">Waimauku</div></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-amber-10-400.avif 400w, images/r/sold-amber-10-800.avif 800w, images/r/sold-amber-10-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-amber-10-400.webp 400w, images/r/sold-amber-10-800.webp 800w, images/r/sold-amber-10-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-amber-10.jpg" alt="Sold - 10 Amber Place, Waimauku" style="width:100%;height:100%;object-fit:cover;"></picture></div>
+        <div class="sold-info"><div class="sold-addr">10 Amber Place</div><div class="sold-loc">Waimauku</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-school-244-400.avif 400w, images/r/sold-school-244-800.avif 800w, images/r/sold-school-244-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-school-244-400.webp 400w, images/r/sold-school-244-800.webp 800w, images/r/sold-school-244-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-school-244.jpg" alt="Sold - #244 School Road, Waimauku" style="width:100%;height:100%;object-fit:cover;"></picture></div>
-        <div class="sold-info"><div class="sold-addr">#244 School Road</div><div class="sold-loc">Waimauku</div></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-school-244-400.avif 400w, images/r/sold-school-244-800.avif 800w, images/r/sold-school-244-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-school-244-400.webp 400w, images/r/sold-school-244-800.webp 800w, images/r/sold-school-244-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-school-244.jpg" alt="Sold - 244 School Road, Waimauku" style="width:100%;height:100%;object-fit:cover;"></picture></div>
+        <div class="sold-info"><div class="sold-addr">244 School Road</div><div class="sold-loc">Waimauku</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-amreins-225b-400.avif 400w, images/r/sold-amreins-225b-800.avif 800w, images/r/sold-amreins-225b-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-amreins-225b-400.webp 400w, images/r/sold-amreins-225b-800.webp 800w, images/r/sold-amreins-225b-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-amreins-225b.jpg" alt="Sold - #225B Amreins Road, Taupaki" style="width:100%;height:100%;object-fit:cover;"></picture></div>
-        <div class="sold-info"><div class="sold-addr">#225B Amreins Road</div><div class="sold-loc">Taupaki</div></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-amreins-225b-400.avif 400w, images/r/sold-amreins-225b-800.avif 800w, images/r/sold-amreins-225b-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-amreins-225b-400.webp 400w, images/r/sold-amreins-225b-800.webp 800w, images/r/sold-amreins-225b-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-amreins-225b.jpg" alt="Sold - 225B Amreins Road, Taupaki" style="width:100%;height:100%;object-fit:cover;"></picture></div>
+        <div class="sold-info"><div class="sold-addr">225B Amreins Road</div><div class="sold-loc">Taupaki</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-trigg-29a-400.avif 400w, images/r/sold-trigg-29a-800.avif 800w, images/r/sold-trigg-29a-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-trigg-29a-400.webp 400w, images/r/sold-trigg-29a-800.webp 800w, images/r/sold-trigg-29a-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-trigg-29a.jpg" alt="Sold - #29A Trigg Road, Kumeu" style="width:100%;height:100%;object-fit:cover;"></picture></div>
-        <div class="sold-info"><div class="sold-addr">#29A Trigg Road</div><div class="sold-loc">Kumeu</div></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-trigg-29a-400.avif 400w, images/r/sold-trigg-29a-800.avif 800w, images/r/sold-trigg-29a-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-trigg-29a-400.webp 400w, images/r/sold-trigg-29a-800.webp 800w, images/r/sold-trigg-29a-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-trigg-29a.jpg" alt="Sold - 29A Trigg Road, Kumeu" style="width:100%;height:100%;object-fit:cover;"></picture></div>
+        <div class="sold-info"><div class="sold-addr">29A Trigg Road</div><div class="sold-loc">Kumeu</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-lenireland-16-400.avif 400w, images/r/sold-lenireland-16-800.avif 800w, images/r/sold-lenireland-16-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-lenireland-16-400.webp 400w, images/r/sold-lenireland-16-800.webp 800w, images/r/sold-lenireland-16-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-lenireland-16.jpg" alt="Sold - #16 Len Ireland Drive, Kumeu" style="width:100%;height:100%;object-fit:cover;"></picture></div>
-        <div class="sold-info"><div class="sold-addr">#16 Len Ireland Drive</div><div class="sold-loc">Kumeu</div></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-lenireland-16-400.avif 400w, images/r/sold-lenireland-16-800.avif 800w, images/r/sold-lenireland-16-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-lenireland-16-400.webp 400w, images/r/sold-lenireland-16-800.webp 800w, images/r/sold-lenireland-16-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-lenireland-16.jpg" alt="Sold - 16 Len Ireland Drive, Kumeu" style="width:100%;height:100%;object-fit:cover;"></picture></div>
+        <div class="sold-info"><div class="sold-addr">16 Len Ireland Drive</div><div class="sold-loc">Kumeu</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-robertmight-30-400.avif 400w, images/r/sold-robertmight-30-800.avif 800w, images/r/sold-robertmight-30-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-robertmight-30-400.webp 400w, images/r/sold-robertmight-30-800.webp 800w, images/r/sold-robertmight-30-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-robertmight-30.jpg" alt="Sold - #30 Robert Might Road, Huapai" style="width:100%;height:100%;object-fit:cover;"></picture></div>
-        <div class="sold-info"><div class="sold-addr">#30 Robert Might Road</div><div class="sold-loc">Huapai</div></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-robertmight-30-400.avif 400w, images/r/sold-robertmight-30-800.avif 800w, images/r/sold-robertmight-30-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-robertmight-30-400.webp 400w, images/r/sold-robertmight-30-800.webp 800w, images/r/sold-robertmight-30-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-robertmight-30.jpg" alt="Sold - 30 Robert Might Road, Huapai" style="width:100%;height:100%;object-fit:cover;"></picture></div>
+        <div class="sold-info"><div class="sold-addr">30 Robert Might Road</div><div class="sold-loc">Huapai</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-paihere-12-400.avif 400w, images/r/sold-paihere-12-800.avif 800w, images/r/sold-paihere-12-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-paihere-12-400.webp 400w, images/r/sold-paihere-12-800.webp 800w, images/r/sold-paihere-12-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-paihere-12.jpg" alt="Sold - #12 Paihere Street, Huapai" style="width:100%;height:100%;object-fit:cover;"></picture></div>
-        <div class="sold-info"><div class="sold-addr">#12 Paihere Street</div><div class="sold-loc">Huapai</div></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-paihere-12-400.avif 400w, images/r/sold-paihere-12-800.avif 800w, images/r/sold-paihere-12-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-paihere-12-400.webp 400w, images/r/sold-paihere-12-800.webp 800w, images/r/sold-paihere-12-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-paihere-12.jpg" alt="Sold - 12 Paihere Street, Huapai" style="width:100%;height:100%;object-fit:cover;"></picture></div>
+        <div class="sold-info"><div class="sold-addr">12 Paihere Street</div><div class="sold-loc">Huapai</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-kaiparaview-10-400.avif 400w, images/r/sold-kaiparaview-10-800.avif 800w, images/r/sold-kaiparaview-10-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-kaiparaview-10-400.webp 400w, images/r/sold-kaiparaview-10-800.webp 800w, images/r/sold-kaiparaview-10-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-kaiparaview-10.jpg" alt="Sold - #10 Kaipara View Road, Helensville" style="width:100%;height:100%;object-fit:cover;"></picture></div>
-        <div class="sold-info"><div class="sold-addr">#10 Kaipara View Road</div><div class="sold-loc">Helensville</div></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-kaiparaview-10-400.avif 400w, images/r/sold-kaiparaview-10-800.avif 800w, images/r/sold-kaiparaview-10-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-kaiparaview-10-400.webp 400w, images/r/sold-kaiparaview-10-800.webp 800w, images/r/sold-kaiparaview-10-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-kaiparaview-10.jpg" alt="Sold - 10 Kaipara View Road, Helensville" style="width:100%;height:100%;object-fit:cover;"></picture></div>
+        <div class="sold-info"><div class="sold-addr">10 Kaipara View Road</div><div class="sold-loc">Helensville</div></div>
       </div>
       <div class="sold-card">
-        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-manarini-24-400.avif 400w, images/r/sold-manarini-24-800.avif 800w, images/r/sold-manarini-24-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-manarini-24-400.webp 400w, images/r/sold-manarini-24-800.webp 800w, images/r/sold-manarini-24-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-manarini-24.jpg" alt="Sold - #24 Manarini Road, Westgate" style="width:100%;height:100%;object-fit:cover;"></picture></div>
-        <div class="sold-info"><div class="sold-addr">#24 Manarini Road</div><div class="sold-loc">Westgate</div></div>
+        <div class="sold-img"><span class="sold-badge">SOLD</span><picture><source type="image/avif" srcset="images/r/sold-manarini-24-400.avif 400w, images/r/sold-manarini-24-800.avif 800w, images/r/sold-manarini-24-1000.avif 1000w" sizes="(max-width:900px) 60vw, 20vw"><source type="image/webp" srcset="images/r/sold-manarini-24-400.webp 400w, images/r/sold-manarini-24-800.webp 800w, images/r/sold-manarini-24-1000.webp 1000w" sizes="(max-width:900px) 60vw, 20vw"><img width="1000" height="667" loading="lazy" decoding="async" src="images/sold-manarini-24.jpg" alt="Sold - 24 Manarini Road, Westgate" style="width:100%;height:100%;object-fit:cover;"></picture></div>
+        <div class="sold-info"><div class="sold-addr">24 Manarini Road</div><div class="sold-loc">Westgate</div></div>
       </div>
     </div>
   </div>
@@ -3336,11 +3378,15 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
   <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" rel="noopener" class="insta-tile" aria-label="Courtney &amp; Co on Instagram: Riverhead villa">
     <picture><source type="image/avif" srcset="images/r/alexandra-01-400.avif 400w, images/r/alexandra-01-800.avif 800w, images/r/alexandra-01-1600.avif 1600w, images/r/alexandra-01-2400.avif 2400w" sizes="(max-width:768px) 33vw, 16vw"><source type="image/webp" srcset="images/r/alexandra-01-400.webp 400w, images/r/alexandra-01-800.webp 800w, images/r/alexandra-01-1600.webp 1600w, images/r/alexandra-01-2400.webp 2400w" sizes="(max-width:768px) 33vw, 16vw"><img loading="lazy" decoding="async" src="images/alexandra-01.jpg" alt="26 Alexandra Street, Riverhead - Villa frontage from the street" width="2500" height="1667"></picture>
   </a>
-  <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" rel="noopener" class="insta-tile" aria-label="Courtney &amp; Co on Instagram: Pohutukawa Parade, Riverhead">
-    <picture><source type="image/avif" srcset="images/r/sold-pohutukawa-96-400.avif 400w, images/r/sold-pohutukawa-96-800.avif 800w, images/r/sold-pohutukawa-96-1000.avif 1000w" sizes="(max-width:768px) 33vw, 16vw"><source type="image/webp" srcset="images/r/sold-pohutukawa-96-400.webp 400w, images/r/sold-pohutukawa-96-800.webp 800w, images/r/sold-pohutukawa-96-1000.webp 1000w" sizes="(max-width:768px) 33vw, 16vw"><img loading="lazy" decoding="async" src="images/sold-pohutukawa-96.jpg" alt="Pohutukawa Parade, Riverhead" width="1000" height="667"></picture>
+  <!-- v14: was sold-pohutukawa-96, which carries a baked-in pink SOLD watermark
+       in the source file. The square tile crop cut it to a stray "D" floating over
+       the shrubs. Every sold-* asset carries the same marketing overlay, so the
+       swap is to a clean listing frame rather than another sold shot. -->
+  <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" rel="noopener" class="insta-tile" aria-label="Courtney &amp; Co on Instagram: Living room and outlook, Riverhead">
+    <picture><source type="image/avif" srcset="images/r/alexandra-55-400.avif 400w, images/r/alexandra-55-800.avif 800w, images/r/alexandra-55-1600.avif 1600w, images/r/alexandra-55-2400.avif 2400w" sizes="(max-width:768px) 33vw, 16vw"><source type="image/webp" srcset="images/r/alexandra-55-400.webp 400w, images/r/alexandra-55-800.webp 800w, images/r/alexandra-55-1600.webp 1600w, images/r/alexandra-55-2400.webp 2400w" sizes="(max-width:768px) 33vw, 16vw"><img loading="lazy" decoding="async" src="images/alexandra-55.jpg" alt="26 Alexandra Street, Riverhead - Living room and outlook" width="2500" height="1667"></picture>
   </a>
   <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" rel="noopener" class="insta-tile" aria-label="Courtney &amp; Co on Instagram: Outdoor entertaining">
-    <picture><source type="image/avif" srcset="images/r/alexandra-31-400.avif 400w, images/r/alexandra-31-800.avif 800w, images/r/alexandra-31-1600.avif 1600w, images/r/alexandra-31-2400.avif 2400w" sizes="(max-width:768px) 33vw, 16vw"><source type="image/webp" srcset="images/r/alexandra-31-400.webp 400w, images/r/alexandra-31-800.webp 800w, images/r/alexandra-31-1600.webp 1600w, images/r/alexandra-31-2400.webp 2400w" sizes="(max-width:768px) 33vw, 16vw"><img loading="lazy" decoding="async" src="images/alexandra-61.jpg" alt="26 Alexandra Street, Riverhead - Bedroom with leadlight windows" width="2500" height="1667"></picture>
+    <picture><source type="image/avif" srcset="images/r/alexandra-61-400.avif 400w, images/r/alexandra-61-800.avif 800w, images/r/alexandra-61-1600.avif 1600w, images/r/alexandra-61-2400.avif 2400w" sizes="(max-width:768px) 33vw, 16vw"><source type="image/webp" srcset="images/r/alexandra-61-400.webp 400w, images/r/alexandra-61-800.webp 800w, images/r/alexandra-61-1600.webp 1600w, images/r/alexandra-61-2400.webp 2400w" sizes="(max-width:768px) 33vw, 16vw"><img loading="lazy" decoding="async" src="images/alexandra-61.jpg" alt="26 Alexandra Street, Riverhead - Bedroom with leadlight windows" width="2500" height="1667"></picture>
   </a>
   <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" rel="noopener" class="insta-tile" aria-label="Courtney &amp; Co on Instagram: Glenmore Road, Coatesville">
     <picture><source type="image/avif" srcset="images/r/glenmore-09-400.avif 400w, images/r/glenmore-09-800.avif 800w, images/r/glenmore-09-1600.avif 1600w, images/r/glenmore-09-2400.avif 2400w" sizes="(max-width:768px) 33vw, 16vw"><source type="image/webp" srcset="images/r/glenmore-09-400.webp 400w, images/r/glenmore-09-800.webp 800w, images/r/glenmore-09-1600.webp 1600w, images/r/glenmore-09-2400.webp 2400w" sizes="(max-width:768px) 33vw, 16vw"><img loading="lazy" decoding="async" src="images/glenmore-09.jpg" alt="Glenmore Road, Coatesville" width="2500" height="1667"></picture>
@@ -3804,7 +3850,7 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
       <div class="chat-agent-name">Courtney &amp; Co Concierge</div>
       <div class="chat-agent-status"><div class="status-dot"></div>NW Auckland Specialist - Online</div>
     </div>
-    <button class="chat-close-btn" onclick="toggleChat()">✕</button>
+    <button class="chat-close-btn" onclick="toggleChat()" type="button" aria-label="Close chat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
   </div>
 
   <div class="chat-messages" id="cp-messages">
