@@ -54,16 +54,39 @@ hougarden `#00a0dc`, realestate.co.nz `#e31837`) keep their own colours by desig
 3. Source: **main branch / root**
 4. Live at: `https://ryanai33.github.io/courtney-co`
 
-## ✅ Before this goes live for real
+## ✅ Launch checklist
 
-1. Create `images/og-cover.jpg` at 1200x630 (referenced by the `og:image` tag, not yet present)
-2. Point the enquiry form at a live inbox (currently a demo alert)
-3. Move the concierge API call to a Cloudflare Worker so the key is server-side
-4. Verify the 356 sold figure and the 5.0 / 47 review count against source
-5. Confirm both office addresses and phone numbers
+The site is a PRIVATE PREVIEW. Everything below is deliberate and has to be
+undone in one deliberate pass, not piecemeal.
 
-Note: the page currently carries `<meta name="robots" content="noindex">` as a
-private preview. Remove it when the site is ready to be indexed.
+1. Remove the `noindex` meta AND the `X-Robots-Tag` header in `vercel.json`;
+   add a canonical link, a robots.txt allow, and a sitemap
+2. Swap `og:title` / `og:description` off "Private Preview" to the real title
+   and description
+3. Real 180x180 `apple-touch-icon` - it currently points at the 1200x630
+   `og-cover.jpg`
+4. Set `FORM_ENDPOINT` and `CONCIERGE_ENDPOINT` to the live Worker URLs. Until
+   `FORM_ENDPOINT` is set, both forms validate and acknowledge but send nothing,
+   and log `form endpoint not configured`. Until `CONCIERGE_ENDPOINT` is set the
+   chat answers from keyword fallback, which is why its header no longer claims
+   "Online"
+5. Verify the Google rating and review count against source, THEN add
+   `aggregateRating` schema. It is deliberately absent today rather than guessed
+6. Remove the cover page and the access-code gate
+
+Also still open: confirm both office addresses and phone numbers.
+
+### Known residuals
+
+- The testimonial video cards are commented out. Both YouTube IDs
+  (`rTG1BDPoJew`, `TFnr5M34WnE`) return "This video isn't available any more",
+  and courtneyandco.co.nz/testimonials no longer embeds any video. Restore the
+  cards once Courtney supplies live IDs.
+- `.testi-avatar` initials sit at 3.7:1 on the pale pink chip, under the 4.5:1
+  AA floor. Closing it needs a darker ink or a paler chip - an identity call.
+  The initial repeats the name printed next to it.
+- The marquee logo links are shorter than the 44px tap floor. They are a
+  decorative auto-scrolling strip and half of them are `aria-hidden`.
 
 ## 📞 Contact
 

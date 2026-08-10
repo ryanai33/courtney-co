@@ -223,9 +223,8 @@ nav.scrolled {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background-image: 
-    linear-gradient(to right, rgba(12,22,40,0.72) 0%, rgba(12,22,40,0.38) 55%, rgba(12,22,40,0.05) 100%),
-    url('images/courtneyhero.webp');
+  background-image:
+    linear-gradient(to right, rgba(12,22,40,0.72) 0%, rgba(12,22,40,0.38) 55%, rgba(12,22,40,0.05) 100%);
   background-size: cover;
   background-position: center 30%;
 }
@@ -392,28 +391,6 @@ nav.scrolled {
 
 .btn-ghost:hover { border-color: var(--blue-lt); color: var(--blue-lt); }
 
-/* ── HERO SCROLL INDICATOR ─────────────────────────────────────── */
-.hero-scroll {
-  position: absolute;
-  bottom: 36px;
-  right: 60px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--paper-3);
-  font-size: 12px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  font-family: var(--font-mono);
-}
-
-.scroll-line {
-  width: 1px;
-  height: 50px;
-  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.3));
-  animation: scrollPulse 2s ease-in-out infinite;
-}
-
 @keyframes scrollPulse {
   0%, 100% { opacity: 0.3; }
   50% { opacity: 0.8; }
@@ -467,8 +444,15 @@ nav.scrolled {
 }
 
 /* A1: explicit lining figures on every numeral-carrying element. */
-.stat-num, .step-num, .process-num, .about-badge-num, .spec-num, .spec-value,
-.track-total, .listing-price, .sold-addr, .cp-msg-time {
+.stat-num,
+.process-num,
+.about-badge-num,
+.spec-num,
+.spec-value,
+.track-total,
+.listing-price,
+.sold-addr,
+.cp-msg-time {
   font-variant-numeric: lining-nums tabular-nums;
   font-feature-settings: "lnum" 1, "tnum" 1;
 }
@@ -570,24 +554,6 @@ nav.scrolled {
   inset: 0;
   pointer-events: none;
   background: linear-gradient(to top, rgba(12,22,40,0.35) 0%, rgba(12,22,40,0) 45%);
-}
-
-.about-photo-inset {
-  position: absolute;
-  bottom: -24px;
-  right: 0;
-  width: 52%;
-  height: 44%;
-  background: var(--copper-pale);
-  border: 6px solid var(--warm-white);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.about-photo-inset img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 /* v15: was anchored top-left, where it sat over her hair and cheek. Moved to
@@ -696,81 +662,9 @@ nav.scrolled {
 .featured-section .section-label { color: var(--blue-lt); }
 .featured-section .section-label::after { background: var(--blue-lt); }
 
-.featured-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 54px;
-}
-
 .featured-nav {
   display: flex;
   gap: 10px;
-}
-
-.feat-btn {
-  width: 44px;
-  height: 44px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  border-radius: 2px;
-}
-
-.feat-btn:hover { background: var(--pink); border-color: var(--pink); }
-
-.property-showcase {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 2px;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.prop-main-img {
-  height: 560px;
-  background: linear-gradient(160deg, #2a3d2e 0%, #1d3545 100%);
-  /* Replace: url('property-main.jpg') center/cover */
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.prop-main-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s ease;
-}
-
-.prop-main-img:hover img { transform: scale(1.03); }
-
-.prop-main-img::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(13,31,45,0.8) 0%, transparent 50%);
-}
-
-.prop-badge {
-  position: absolute;
-  top: 24px;
-  left: 24px;
-  z-index: 2;
-  background: var(--pink);
-  color: white;
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  padding: 6px 14px;
-  font-family: var(--font-mono);
-  border-radius: 2px;
 }
 
 .prop-main-info {
@@ -824,23 +718,6 @@ nav.scrolled {
   gap: 2px;
 }
 
-.prop-thumb {
-  flex: 1;
-  background: linear-gradient(160deg, #2d3a2d 0%, #1e2d3a 100%);
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.prop-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s;
-}
-
-.prop-thumb:hover img { transform: scale(1.05); }
-
 .prop-thumb-overlay {
   position: absolute;
   inset: 0;
@@ -860,19 +737,6 @@ nav.scrolled {
   letter-spacing: 0.2em;
   background: rgba(0,0,0,0.5);
   padding: 6px 12px;
-  border-radius: 2px;
-}
-
-/* Property details strip */
-.prop-details {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
-  padding: 32px 36px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr auto;
-  gap: 24px;
-  align-items: center;
-  margin-top: 2px;
   border-radius: 2px;
 }
 
@@ -1016,8 +880,7 @@ nav.scrolled {
   position: relative;
   overflow: hidden;
 }
-
-.listing-img-bg, .listing-img img {
+.listing-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1025,14 +888,7 @@ nav.scrolled {
   transition: transform 0.6s ease;
 }
 
-.listing-card:hover .listing-img-bg,
 .listing-card:hover .listing-img img { transform: scale(1.06); }
-
-.listing-img-placeholder {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #2d4a35 0%, #1a3347 100%);
-}
 
 .listing-tag {
   position: absolute;
@@ -1110,11 +966,14 @@ nav.scrolled {
   margin-top: 16px;
 }
 
+/* v12: --pink at 13.2px on a white card is about 3.3:1, under the 4.5:1 AA
+   floor, and this is the conversion link. --accent is the same hue and passes
+   on white. Pink stays wherever it sits on navy. */
 .listing-link {
   font-size: 13.2px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--pink);
+  color: var(--accent);
   text-decoration: none;
   font-weight: 500;
   display: flex;
@@ -1143,14 +1002,6 @@ nav.scrolled {
 .sold-header .section-title { color: white; }
 .sold-header .section-label { color: var(--blue-lt); }
 .sold-header .section-label::after { background: var(--blue-lt); opacity: 0.6; }
-
-.sold-count {
-  font-family: var(--font-display);
-  font-size: 80px;
-  font-weight: 400;
-  color: rgba(208,154,184,0.2);
-  line-height: 1;
-}
 
 .sold-scroll-wrap {
   overflow-x: auto;
@@ -1197,20 +1048,6 @@ nav.scrolled {
 .sold-card:hover .sold-img img {
   filter: brightness(1);
   transform: scale(1.04);
-}
-
-.sold-stamp {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: var(--blue-deep);
-  color: white;
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  padding: 4px 10px;
-  font-family: var(--font-mono);
-  border-radius: 2px;
 }
 
 .sold-info {
@@ -1313,7 +1150,6 @@ nav.scrolled {
 .team-card:hover .team-photo-wrap img[src*="courtneyhead"] { transform: scale(1.28); }
 
 /* Unifies the mismatched studio backdrops across the team grid */
-.member-photo::after,
 .team-photo-wrap::after {
   content: ''; position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(to bottom,
@@ -1323,18 +1159,6 @@ nav.scrolled {
 .team-card:hover .team-photo-wrap img {
   transform: scale(1.04);
   filter: grayscale(0) contrast(1) brightness(1);
-}
-
-.team-photo-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-size: 60px;
-  color: rgba(13,31,45,0.15);
-  font-weight: 300;
 }
 
 .team-overlay {
@@ -1534,7 +1358,11 @@ nav.scrolled {
   justify-content: center;
   font-family: var(--font-display);
   font-size: 16px;
-  color: var(--pink);
+  /* v12: --pink on --pink-pale was 2.69:1. --accent lifts it to 3.7:1, which is
+     still short of the 4.5:1 AA floor - closing that gap needs either a darker
+     ink or a paler chip, and both are identity calls. The initial repeats the
+     name printed beside it, so nothing is lost if it is hard to read. */
+  color: var(--accent);
   flex-shrink: 0;
 }
 
@@ -1558,20 +1386,6 @@ nav.scrolled {
 .vt-play-btn::after { content:""; margin-left:5px; border-style:solid; border-width:11px 0 11px 18px; border-color:transparent transparent transparent var(--navy); }
 .vt-label { position:absolute; left:20px; bottom:18px; right:20px; font-family:var(--font-mono); font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:#fff; text-align:left; }
 @media (max-width:900px){ .vt-grid { grid-template-columns:1fr; } }
-
-.testi-loc {
-  font-size: 13.2px;
-  color: var(--ink-2);
-  font-family: var(--font-mono);
-  letter-spacing: 0.08em;
-}
-
-.testi-stars {
-  color: var(--gold);
-  font-size: 14.4px;
-  letter-spacing: 2px;
-  margin-top: 3px;
-}
 
 /* ── CONTACT ───────────────────────────────────────────────────── */
 .contact-section {
@@ -1736,6 +1550,38 @@ nav.scrolled {
 }
 
 .form-submit:hover { background: var(--pink-lt); transform: translateY(-1px); }
+
+/* Inline validation. The message sits under its field and only appears once
+   that field has actually failed, so a first-time reader sees a clean form. */
+.form-error {
+  display: block;
+  margin-top: 6px;
+  font-size: 12.5px;
+  font-family: var(--font-body);
+  color: #ffb4b4;
+  line-height: 1.4;
+}
+.form-error[hidden] { display: none; }
+/* Same message on the light newsletter band, where #ffb4b4 would vanish. */
+.form-error-light { color: #b3261e; }
+
+.form-input.field-invalid,
+.form-select.field-invalid,
+.form-textarea.field-invalid { border-color: #ffb4b4; }
+.nl-input.field-invalid { border-color: #b3261e; }
+
+/* Honeypot. Off-screen rather than display:none, which some bots skip. */
+.form-trap {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+  padding: 0;
+  margin: -1px;
+}
 
 /* ── FOOTER ────────────────────────────────────────────────────── */
 footer {
@@ -1973,6 +1819,10 @@ body.js-loaded .hero-photo { animation: heroDrift 12s cubic-bezier(.16,1,.3,1) b
 
 /* ── C2: the feature hero ran nearly edge to edge and read stretched.
    Capped and centred, 16/10 so it is not a letterbox. The margin is the point. */
+/* v12: the hero and the four thumbs below it are <button> now, not click-only
+   divs, so the keyboard and a screen reader can reach them the way the gallery
+   mosaic already allowed. Button chrome is reset to nothing so they render
+   exactly as they did as divs. */
 .feature-hero {
   max-width: 1200px;
   margin: 0 auto 3px;
@@ -1981,8 +1831,29 @@ body.js-loaded .hero-photo { animation: heroDrift 12s cubic-bezier(.16,1,.3,1) b
   overflow: hidden;
   border-radius: 4px;
   cursor: pointer;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
 }
 .feature-thumbs { max-width: 1200px; margin: 0 auto; }
+
+.feature-thumb {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+}
+
+.feature-hero:focus-visible,
+.feature-thumb:focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
 
 /* v15: the five-up property spec bar needed 666px of content in a 324px box on
    a phone, so every value was clipped by the row's own overflow:hidden. The
@@ -2319,7 +2190,11 @@ body.cover-open { overflow: hidden; }
 body {
   color: var(--ink);
 }
-body, p, li, .about-body, .contact-intro, .member-bio, .step-desc {
+body,
+p,
+li,
+.about-body,
+.contact-intro {
   font-size: 17px;
   line-height: 1.65;
 }
@@ -2586,22 +2461,6 @@ body, p, li, .about-body, .contact-intro, .member-bio, .step-desc {
   line-height: 1.55;
 }
 
-.msg-bot {
-  background: white;
-  border: 1px solid var(--light-line);
-  border-bottom-left-radius: 3px;
-  align-self: flex-start;
-  color: var(--navy);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-}
-
-.msg-user {
-  background: var(--copper);
-  color: white;
-  border-bottom-right-radius: 3px;
-  align-self: flex-end;
-}
-
 .msg-label {
   font-size: 13px;
   font-family: var(--font-mono);
@@ -2609,30 +2468,6 @@ body, p, li, .about-body, .contact-intro, .member-bio, .step-desc {
   color: var(--ink-2);
   margin-bottom: 4px;
 }
-
-.chat-quick-btns {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  padding: 6px 18px 12px;
-  background: var(--warm-white);
-  flex-shrink: 0;
-}
-
-.quick-btn {
-  background: white;
-  border: 1px solid var(--light-line);
-  color: var(--navy);
-  font-size: 13.2px;
-  padding: 6px 12px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-family: var(--font-body);
-  white-space: nowrap;
-}
-
-.quick-btn:hover { background: var(--pink); color: white; border-color: var(--pink); }
 
 .chat-input-area {
   display: flex;
@@ -2756,9 +2591,7 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
   .team-grid { grid-template-columns: 1fr 1fr; }
   .process-grid { grid-template-columns: 1fr 1fr; }
   .testi-grid { grid-template-columns: 1fr; gap: 20px; }
-  .property-showcase { grid-template-columns: 1fr; }
   .prop-side { flex-direction: row; height: 200px; }
-  .prop-details { grid-template-columns: 1fr 1fr; }
   footer { padding: 40px 30px; }
   .nav-links { display: none; }
   .sold-header { padding: 0 30px; }
@@ -2779,7 +2612,6 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
   .chat-trigger, .chat-panel, .chat-pulse,
   .contact-form,
   .skip-link,
-  .scroll-line,
   #lightbox { display: none !important; }
 
   html, body { background: #fff !important; color: #000 !important; }
@@ -2799,7 +2631,7 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
     border-color: #bbb !important;
   }
 
-  .team-photo-wrap::after, .member-photo::after { display: none !important; }
+  .team-photo-wrap::after { display: none !important; }
   .team-photo-wrap img { filter: none !important; }
 
   a { text-decoration: underline; }
@@ -2848,6 +2680,8 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
   "@context": "https://schema.org",
   "@type": "RealEstateAgent",
   "name": "Courtney & Co",
+  "url": "https://courtneyandco.co.nz/",
+  "image": "https://ryanai33.github.io/courtney-co/images/og-cover.jpg",
   "telephone": "+64-9-412-9903",
   "email": "theteam@courtneyandco.co.nz",
   "address": {
@@ -2876,6 +2710,51 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
     "https://www.facebook.com/CourtneyandCoLtd/",
     "https://www.instagram.com/courtney_and_co_/"
   ]
+}
+</script>
+
+<!-- Feature listing. Every figure here is copied from the on-page spec bar and
+     nothing else: 4 bed, 1 bath, 807m2 freehold, Riverhead. No price, because
+     the page says by negotiation. No aggregateRating or Review: the 5.0 and the
+     review count are not yet checked against Google, and inventing them on a
+     compliance-positioned site is worse than leaving them out. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "RealEstateListing",
+  "name": "26 Alexandra Street, Riverhead",
+  "url": "https://courtneyandco.co.nz/",
+  "image": "https://ryanai33.github.io/courtney-co/images/alexandra-01.jpg",
+  "provider": {
+    "@type": "RealEstateAgent",
+    "name": "Courtney & Co"
+  },
+  "about": {
+    "@type": "SingleFamilyResidence",
+    "name": "26 Alexandra Street, Riverhead",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "26 Alexandra Street",
+      "addressLocality": "Riverhead",
+      "addressRegion": "Auckland",
+      "addressCountry": "NZ"
+    },
+    "numberOfBedrooms": 4,
+    "numberOfBathroomsTotal": 1,
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Land area",
+        "value": 807,
+        "unitCode": "MTK"
+      },
+      {
+        "@type": "PropertyValue",
+        "name": "Tenure",
+        "value": "Freehold"
+      }
+    ]
+  }
 }
 </script>
 </head>
@@ -3089,7 +2968,6 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
     </div>
   </div>
 </div>
-</div>
 
 <section class="featured-section" id="properties">
 
@@ -3106,39 +2984,41 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
        and object-position frames the villa rather than the fence and lawn.
        The house sits in the upper half of the source frame, so the focal
        point moves up, not down. -->
-  <div class="feature-hero" onclick="openLightbox(0)">
+  <button type="button" class="feature-hero" onclick="openLightbox(0)" aria-label="Open photo: Villa frontage from the street">
     <picture><source type="image/avif" srcset="images/r/alexandra-01-400.avif 400w, images/r/alexandra-01-800.avif 800w, images/r/alexandra-01-1600.avif 1600w, images/r/alexandra-01-2400.avif 2400w" sizes="100vw"><source type="image/webp" srcset="images/r/alexandra-01-400.webp 400w, images/r/alexandra-01-800.webp 800w, images/r/alexandra-01-1600.webp 1600w, images/r/alexandra-01-2400.webp 2400w" sizes="100vw"><img loading="lazy" decoding="async" src="images/alexandra-01.jpg" alt="26 Alexandra Street, Riverhead - Villa frontage from the street" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;object-position:center 38%;display:block;transition:transform 0.7s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'"></picture>
-    <div class="feature-scrim"></div>
-    <div style="position:absolute;top:20px;left:20px;z-index:2;background:var(--pink);color:white;font-size: 12px;letter-spacing:0.2em;text-transform:uppercase;padding:6px 14px;font-family:var(--font-mono);border-radius:2px;">For Sale</div>
-    <div style="position:absolute;bottom:28px;left:28px;right:28px;z-index:2;">
-      <div style="font-family:var(--font-display);font-size:clamp(26px,3vw,38px);font-weight:300;color:white;line-height:1.15;margin-bottom:10px;">26 Alexandra Street, Riverhead</div>
-      <div style="font-size:15px;color:var(--blue-lt);font-weight:500;letter-spacing:0.04em;margin-bottom:14px;">Price by negotiation</div>
-      <div style="display:flex;gap:20px;flex-wrap:wrap;">
+    <!-- Spans, not divs: a <button> only takes phrasing content, and the
+         caption has to keep rendering as blocks inside it. -->
+    <span class="feature-scrim"></span>
+    <span style="display:block;position:absolute;top:20px;left:20px;z-index:2;background:var(--pink);color:white;font-size: 12px;letter-spacing:0.2em;text-transform:uppercase;padding:6px 14px;font-family:var(--font-mono);border-radius:2px;">For Sale</span>
+    <span style="display:block;position:absolute;bottom:28px;left:28px;right:28px;z-index:2;">
+      <span style="display:block;font-family:var(--font-display);font-size:clamp(26px,3vw,38px);font-weight:300;color:white;line-height:1.15;margin-bottom:10px;">26 Alexandra Street, Riverhead</span>
+      <span style="display:block;font-size:15px;color:var(--blue-lt);font-weight:500;letter-spacing:0.04em;margin-bottom:14px;">Price by negotiation</span>
+      <span style="display:flex;gap:20px;flex-wrap:wrap;">
         <span style="font-size: 13.2px;color: var(--paper-3);font-family:var(--font-mono);">4 Bedrooms</span>
         <span style="font-size: 13.2px;color: var(--paper-3);font-family:var(--font-mono);">1 Bathroom</span>
         <span style="font-size: 13.2px;color: var(--paper-3);font-family:var(--font-mono);">807m² Freehold</span>
         <span style="font-size: 13.2px;color: var(--paper-3);font-family:var(--font-mono);">Off-street parking</span>
-      </div>
-    </div>
-  </div>
+      </span>
+    </span>
+  </button>
 
   <!-- B3: an even four-up row, so no column runs short and leaves dead navy. -->
   <div class="feature-thumbs" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:56px;">
-    <div style="aspect-ratio:4/3;overflow:hidden;cursor:pointer;" onclick="openLightbox(1)">
+    <button type="button" class="feature-thumb" style="aspect-ratio:4/3;overflow:hidden;cursor:pointer;" onclick="openLightbox(1)" aria-label="Open photo: Street frontage and bay window">
       <picture><source type="image/avif" srcset="images/r/alexandra-15-400.avif 400w, images/r/alexandra-15-800.avif 800w, images/r/alexandra-15-1600.avif 1600w, images/r/alexandra-15-2400.avif 2400w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/alexandra-15-400.webp 400w, images/r/alexandra-15-800.webp 800w, images/r/alexandra-15-1600.webp 1600w, images/r/alexandra-15-2400.webp 2400w" sizes="(max-width:900px) 100vw, 50vw"><img loading="lazy" decoding="async" src="images/alexandra-15.jpg" alt="26 Alexandra Street, Riverhead - Street frontage and bay window" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></picture>
-    </div>
-    <div style="aspect-ratio:4/3;overflow:hidden;cursor:pointer;" onclick="openLightbox(2)">
+    </button>
+    <button type="button" class="feature-thumb" style="aspect-ratio:4/3;overflow:hidden;cursor:pointer;" onclick="openLightbox(2)" aria-label="Open photo: Covered entertaining deck at dusk">
       <picture><source type="image/avif" srcset="images/r/alexandra-31-400.avif 400w, images/r/alexandra-31-800.avif 800w, images/r/alexandra-31-1600.avif 1600w, images/r/alexandra-31-2400.avif 2400w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/alexandra-31-400.webp 400w, images/r/alexandra-31-800.webp 800w, images/r/alexandra-31-1600.webp 1600w, images/r/alexandra-31-2400.webp 2400w" sizes="(max-width:900px) 100vw, 50vw"><img loading="lazy" decoding="async" src="images/alexandra-31.jpg" alt="26 Alexandra Street, Riverhead - Covered entertaining deck at dusk" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></picture>
-    </div>
-    <div style="aspect-ratio:4/3;overflow:hidden;cursor:pointer;" onclick="openLightbox(3)">
+    </button>
+    <button type="button" class="feature-thumb" style="aspect-ratio:4/3;overflow:hidden;cursor:pointer;" onclick="openLightbox(3)" aria-label="Open photo: Off-street parking and entry">
       <picture><source type="image/avif" srcset="images/r/alexandra-39-400.avif 400w, images/r/alexandra-39-800.avif 800w, images/r/alexandra-39-1600.avif 1600w, images/r/alexandra-39-2400.avif 2400w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/alexandra-39-400.webp 400w, images/r/alexandra-39-800.webp 800w, images/r/alexandra-39-1600.webp 1600w, images/r/alexandra-39-2400.webp 2400w" sizes="(max-width:900px) 100vw, 50vw"><img loading="lazy" decoding="async" src="images/alexandra-39.jpg" alt="26 Alexandra Street, Riverhead - Off-street parking and entry" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></picture>
-    </div>
+    </button>
     <!-- v14: the sources here were keyed to alexandra-31 while the fallback src
          and the alt text were alexandra-61, so this tile rendered the dusk deck
          a second time. Sources realigned to the image the tile is meant to show. -->
-    <div style="aspect-ratio:4/3;overflow:hidden;cursor:pointer;" onclick="openLightbox(5)">
+    <button type="button" class="feature-thumb" style="aspect-ratio:4/3;overflow:hidden;cursor:pointer;" onclick="openLightbox(5)" aria-label="Open photo: Bedroom with leadlight windows">
       <picture><source type="image/avif" srcset="images/r/alexandra-61-400.avif 400w, images/r/alexandra-61-800.avif 800w, images/r/alexandra-61-1600.avif 1600w, images/r/alexandra-61-2400.avif 2400w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/alexandra-61-400.webp 400w, images/r/alexandra-61-800.webp 800w, images/r/alexandra-61-1600.webp 1600w, images/r/alexandra-61-2400.webp 2400w" sizes="(max-width:900px) 100vw, 50vw"><img loading="lazy" decoding="async" src="images/alexandra-61.jpg" alt="26 Alexandra Street, Riverhead - Bedroom with leadlight windows" width="2500" height="1667" style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(.16,1,.3,1);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></picture>
-    </div>
+    </button>
   </div>
 
   <!-- Property stats bar. Verified against courtneyandco.co.nz and
@@ -3220,7 +3100,9 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
       <div class="section-label" style="color:var(--blue-lt);">Property Gallery</div>
       <h2 class="section-title" style="color:white;">Every detail, <em style="color:var(--pink-lt);">considered.</em></h2>
     </div>
-    <button class="tap-cta" type="button" onclick="openLightbox(0)" style="font-size: 13px;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue-lt);background:none;border:0;cursor:pointer;font-family:inherit;">View All Photos →</button>
+    <!-- v12: this one tap-cta sits on the light gallery band, where --blue-lt
+         is about 2.3:1. The other two are on navy and keep the pink. -->
+    <button class="tap-cta" type="button" onclick="openLightbox(0)" style="font-size: 13px;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:none;border:0;cursor:pointer;font-family:inherit;">View All Photos →</button>
   </div>
   <!-- B8: 12-column editorial mosaic. One anchor tile spanning 8 columns and
        two rows, 4- and 3-column tiles around it. Every cell has a fixed
@@ -3236,7 +3118,7 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
       <picture><source type="image/avif" srcset="images/r/alexandra-31-400.avif 400w, images/r/alexandra-31-800.avif 800w, images/r/alexandra-31-1600.avif 1600w, images/r/alexandra-31-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-31-400.webp 400w, images/r/alexandra-31-800.webp 800w, images/r/alexandra-31-1600.webp 1600w, images/r/alexandra-31-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-31.jpg" alt="26 Alexandra Street, Riverhead - Covered entertaining deck at dusk" width="2500" height="1667"></picture>
     </button>
     <button type="button" class="gal-tile" style="grid-column:span 3;" onclick="openLightbox(5)" aria-label="Open photo: Bedroom with leadlight windows">
-      <picture><source type="image/avif" srcset="images/r/alexandra-31-400.avif 400w, images/r/alexandra-31-800.avif 800w, images/r/alexandra-31-1600.avif 1600w, images/r/alexandra-31-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-31-400.webp 400w, images/r/alexandra-31-800.webp 800w, images/r/alexandra-31-1600.webp 1600w, images/r/alexandra-31-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-61.jpg" alt="26 Alexandra Street, Riverhead - Bedroom with leadlight windows" width="2500" height="1667"></picture>
+      <picture><source type="image/avif" srcset="images/r/alexandra-61-400.avif 400w, images/r/alexandra-61-800.avif 800w, images/r/alexandra-61-1600.avif 1600w, images/r/alexandra-61-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-61-400.webp 400w, images/r/alexandra-61-800.webp 800w, images/r/alexandra-61-1600.webp 1600w, images/r/alexandra-61-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-61.jpg" alt="26 Alexandra Street, Riverhead - Bedroom with leadlight windows" width="2500" height="1667"></picture>
     </button>
     <button type="button" class="gal-tile" style="grid-column:span 3;" onclick="openLightbox(4)" aria-label="Open photo: The villa at dusk">
       <picture><source type="image/avif" srcset="images/r/alexandra-23-400.avif 400w, images/r/alexandra-23-800.avif 800w, images/r/alexandra-23-1600.avif 1600w, images/r/alexandra-23-2400.avif 2400w" sizes="(max-width:900px) 50vw, 33vw"><source type="image/webp" srcset="images/r/alexandra-23-400.webp 400w, images/r/alexandra-23-800.webp 800w, images/r/alexandra-23-1600.webp 1600w, images/r/alexandra-23-2400.webp 2400w" sizes="(max-width:900px) 50vw, 33vw"><img loading="lazy" decoding="async" src="images/alexandra-23.jpg" alt="26 Alexandra Street, Riverhead - The villa at dusk" width="2500" height="1667"></picture>
@@ -3651,6 +3533,12 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
     <cite class="testi-name" style="font-style:normal;">Debbie</cite>
   </blockquote>
 
+  <!-- v12: both video testimonial cards are hidden because neither ID resolves.
+       Checked 2026-08-10: youtube.com/watch?v=rTG1BDPoJew and ?v=TFnr5M34WnE both
+       return "This video isn't available any more", and courtneyandco.co.nz/testimonials
+       no longer embeds any video at all. Rather than ship two cards that open a dead
+       page, the grid is commented out. To restore: uncomment and put a live ID in
+       data-yt (embed path) or data-src-id (opens the watch page in a new tab).
   <div class="vt-grid stagger">
     <button class="vt-card" type="button" data-yt="" data-src-id="rTG1BDPoJew" aria-label="Play video testimonial: Hear it from Mark &amp; Liz">
       <picture><source type="image/avif" srcset="images/r/video-mark-liz-400.avif 400w, images/r/video-mark-liz-480.avif 480w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/video-mark-liz-400.webp 400w, images/r/video-mark-liz-480.webp 480w" sizes="(max-width:900px) 100vw, 50vw"><img width="480" height="360" loading="lazy" decoding="async" src="images/video-mark-liz.webp" alt="Hear it from Mark &amp; Liz"></picture>
@@ -3663,6 +3551,7 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
       <span class="vt-label">Hear it from Mary &amp; Kevin</span>
     </button>
   </div>
+  -->
 
   <div class="testi-grid stagger">
     <div class="testi-card">
@@ -3808,31 +3697,34 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
     </div>
   </div>
 
-  <div class="contact-form">
+  <form class="contact-form" id="contact-form" novalidate>
     <div class="form-title">Send us a message</div>
     <div class="form-row">
       <div class="form-group">
-        <label class="form-label">First Name</label>
-        <input class="form-input" type="text" placeholder="Jane">
+        <label class="form-label" for="cf-first">First Name</label>
+        <input class="form-input" id="cf-first" name="first_name" type="text" placeholder="Jane" autocomplete="given-name" required data-validate aria-describedby="cf-first-err">
+        <span class="form-error" id="cf-first-err" role="alert" hidden></span>
       </div>
       <div class="form-group">
-        <label class="form-label">Last Name</label>
-        <input class="form-input" type="text" placeholder="Smith">
+        <label class="form-label" for="cf-last">Last Name</label>
+        <input class="form-input" id="cf-last" name="last_name" type="text" placeholder="Smith" autocomplete="family-name" required data-validate aria-describedby="cf-last-err">
+        <span class="form-error" id="cf-last-err" role="alert" hidden></span>
       </div>
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label class="form-label">Phone</label>
-        <input class="form-input" type="tel" placeholder="021 000 0000">
+        <label class="form-label" for="cf-phone">Phone</label>
+        <input class="form-input" id="cf-phone" name="phone" type="tel" placeholder="021 000 0000" autocomplete="tel">
       </div>
       <div class="form-group">
-        <label class="form-label">Email</label>
-        <input class="form-input" type="email" placeholder="jane@email.com">
+        <label class="form-label" for="cf-email">Email</label>
+        <input class="form-input" id="cf-email" name="email" type="email" placeholder="jane@email.com" autocomplete="email" required data-validate aria-describedby="cf-email-err">
+        <span class="form-error" id="cf-email-err" role="alert" hidden></span>
       </div>
     </div>
     <div class="form-group">
-      <label class="form-label">I'm looking to...</label>
-      <select class="form-select">
+      <label class="form-label" for="cf-intent">I'm looking to...</label>
+      <select class="form-select" id="cf-intent" name="intent">
         <option value="">Select an option</option>
         <option>Sell my property</option>
         <option>Buy a property</option>
@@ -3842,15 +3734,21 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
       </select>
     </div>
     <div class="form-group">
-      <label class="form-label">Address / Property</label>
-      <input class="form-input" type="text" placeholder="Your property address">
+      <label class="form-label" for="cf-address">Address / Property</label>
+      <input class="form-input" id="cf-address" name="address" type="text" placeholder="Your property address" autocomplete="street-address">
     </div>
     <div class="form-group">
-      <label class="form-label">Message</label>
-      <textarea class="form-textarea" placeholder="Tell us what you need..."></textarea>
+      <label class="form-label" for="cf-message">Message</label>
+      <textarea class="form-textarea" id="cf-message" name="message" placeholder="Tell us what you need..."></textarea>
     </div>
-    <button class="form-submit" onclick="handleFormSubmit(event)">Send Enquiry →</button>
-  </div>
+    <!-- Honeypot: hidden from people, catnip to bots. Any value here means the
+         submission is dropped silently. Never sent to the endpoint. -->
+    <div class="form-trap" aria-hidden="true">
+      <label for="cf-company">Company</label>
+      <input id="cf-company" name="company" type="text" tabindex="-1" autocomplete="off">
+    </div>
+    <button class="form-submit" type="submit">Send Enquiry →</button>
+  </form>
 </section>
 
 </main>
@@ -3860,11 +3758,16 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
 <div class="container">
   <div style="max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;">
     <h2 style="font-family:var(--font-display);font-size:clamp(22px,2.4vw,30px);font-weight:300;color:var(--navy);line-height:1.25;margin:0;flex:1 1 320px;">Get the North West market update first.</h2>
-    <div style="display:flex;gap:10px;flex:1 1 340px;flex-wrap:wrap;">
+    <form id="newsletter-form" novalidate style="display:flex;gap:10px;flex:1 1 340px;flex-wrap:wrap;">
       <label for="nl-email" class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Email address</label>
-      <input id="nl-email" class="nl-input" type="email" placeholder="Email address" style="flex:1 1 200px;min-width:0;">
-      <button class="form-submit" style="width:auto;padding:14px 28px;white-space:nowrap;" onclick="handleFormSubmit(event)">Sign me up</button>
-    </div>
+      <input id="nl-email" class="nl-input" name="email" type="email" placeholder="Email address" autocomplete="email" required data-validate aria-describedby="nl-email-err" style="flex:1 1 200px;min-width:0;">
+      <button class="form-submit" type="submit" style="width:auto;padding:14px 28px;white-space:nowrap;">Sign me up</button>
+      <span class="form-error form-error-light" id="nl-email-err" role="alert" hidden style="flex:1 1 100%;"></span>
+      <div class="form-trap" aria-hidden="true">
+        <label for="nl-company">Company</label>
+        <input id="nl-company" name="company" type="text" tabindex="-1" autocomplete="off">
+      </div>
+    </form>
   </div>
 </div>
 </section>
@@ -3903,19 +3806,22 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
 </footer>
 
 <!-- ── AI CONCIERGE WIDGET ─────────────────────────────────────────── -->
-<button class="chat-trigger" id="chat-trigger" onclick="toggleChat()">
-  <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+<button class="chat-trigger" id="chat-trigger" onclick="toggleChat()" aria-label="Open chat">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
   <div class="chat-pulse"></div>
 </button>
 
 <div class="chat-panel" id="chat-panel">
   <div class="chat-header">
     <div style="width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid rgba(255,255,255,0.2);">
-      <picture><source type="image/avif" srcset="images/r/courtneyhead-400.avif 400w, images/r/courtneyhead-800.avif 800w, images/r/courtneyhead-1023.avif 1023w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/courtneyhead-400.webp 400w, images/r/courtneyhead-800.webp 800w, images/r/courtneyhead-1023.webp 1023w" sizes="(max-width:900px) 100vw, 50vw"><img width="1023" height="1023" loading="lazy" decoding="async" src="images/courtneyhead.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center 18%;"></picture>
+      <picture><source type="image/avif" srcset="images/r/courtneyhead-400.avif 400w, images/r/courtneyhead-800.avif 800w, images/r/courtneyhead-1023.avif 1023w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="images/r/courtneyhead-400.webp 400w, images/r/courtneyhead-800.webp 800w, images/r/courtneyhead-1023.webp 1023w" sizes="(max-width:900px) 100vw, 50vw"><img width="1023" height="1023" loading="lazy" decoding="async" src="images/courtneyhead.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 18%;"></picture>
     </div>
     <div class="chat-agent-info">
       <div class="chat-agent-name">Courtney &amp; Co Concierge</div>
-      <div class="chat-agent-status"><div class="status-dot"></div>NW Auckland Specialist - Online</div>
+      <!-- No "Online". CONCIERGE_ENDPOINT is empty, so every reply here is the
+           keyword fallback, and claiming a live person is a claim we cannot
+           keep. The .status-dot CSS stays for when the Worker is wired. -->
+      <div class="chat-agent-status">NW Auckland Specialist</div>
     </div>
     <button class="chat-close-btn" onclick="toggleChat()" type="button" aria-label="Close chat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
   </div>
@@ -4153,16 +4059,19 @@ function hideTyping() {
 // -- VIDEO TESTIMONIAL FACADES -----------------------------------
 // Thumbnail + play button; the YouTube iframe is only injected on click,
 // so nothing from youtube.com loads until the visitor asks for it.
-// NOTE: data-yt is intentionally empty. Every YouTube ID on Courtney's
-// testimonials page (rTG1BDPoJew, TFnr5M34WnE, Rnx-qnMSYs4, ZvbJAL_v5E0)
-// returns 404 - the videos are deleted or private. Until she supplies live
-// IDs, a click opens her testimonials page instead of embedding a dead
-// player. Put a working ID back in data-yt and the embed path takes over.
+// Click order: data-yt embeds inline, data-href opens that URL, data-src-id
+// opens the YouTube watch page in a new tab. The two v11 cards are commented
+// out in the markup because their IDs are dead (see the note there), so this
+// runs against zero cards today and is here for the next live one.
 document.querySelectorAll('.vt-card').forEach(function(card) {
   card.addEventListener('click', function() {
     var id = card.getAttribute('data-yt');
     if (!id) {
       var href = card.getAttribute('data-href');
+      if (!href) {
+        var srcId = card.getAttribute('data-src-id');
+        if (srcId) href = 'https://www.youtube.com/watch?v=' + srcId;
+      }
       if (href) window.open(href, '_blank', 'noopener');
       return;
     }
@@ -4310,21 +4219,127 @@ function changeLB(step) {
   }, { passive: true });
 })();
 
-// -- DEMO FORM HANDLER --------------------------------------------
-// Preview build: nothing is sent anywhere. Wire to a real endpoint
-// before this goes live.
-function handleFormSubmit(e) {
-  if (e && e.preventDefault) e.preventDefault();
-  var btn = e && e.target ? e.target : null;
-  if (!btn) return;
-  var original = btn.textContent;
-  btn.disabled = true;
-  btn.textContent = 'Thanks - we will be in touch.';
-  setTimeout(function() {
-    btn.disabled = false;
-    btn.textContent = original;
-  }, 3200);
-}
+// -- FORM HANDLING -------------------------------------------------
+// Both forms (contact and newsletter) run through here. With FORM_ENDPOINT
+// set, the serialised form POSTs as JSON; with it empty the visitor still
+// gets the acknowledgement, and the console says why nothing was sent.
+var FORM_ENDPOINT = '';
+
+(function () {
+  function errorBox(input) {
+    var id = input.getAttribute('aria-describedby');
+    return id ? document.getElementById(id) : null;
+  }
+
+  function problemWith(input) {
+    var value = (input.value || '').trim();
+    if (input.hasAttribute('required') && !value) {
+      return input.type === 'email' ? 'Please enter your email address.' : 'This field is required.';
+    }
+    if (input.type === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) {
+      return 'Please enter a valid email address.';
+    }
+    return '';
+  }
+
+  function validate(input) {
+    var msg = problemWith(input);
+    var box = errorBox(input);
+    if (msg) {
+      input.classList.add('field-invalid');
+      input.setAttribute('aria-invalid', 'true');
+      if (box) { box.textContent = msg; box.hidden = false; }
+    } else {
+      input.classList.remove('field-invalid');
+      input.removeAttribute('aria-invalid');
+      if (box) { box.textContent = ''; box.hidden = true; }
+    }
+    return !msg;
+  }
+
+  function acknowledge(form) {
+    var btn = form.querySelector('.form-submit');
+    form.reset();
+    form.querySelectorAll('[data-validate]').forEach(function (input) {
+      input.classList.remove('field-invalid');
+      input.removeAttribute('aria-invalid');
+      var box = errorBox(input);
+      if (box) { box.textContent = ''; box.hidden = true; }
+    });
+    if (!btn) return;
+    var original = btn.dataset.label || btn.textContent;
+    btn.dataset.label = original;
+    btn.disabled = true;
+    btn.textContent = 'Thanks - we will be in touch.';
+    setTimeout(function () {
+      btn.disabled = false;
+      btn.textContent = original;
+    }, 3200);
+  }
+
+  function wire(form) {
+    if (!form) return;
+    var fields = form.querySelectorAll('[data-validate]');
+
+    fields.forEach(function (input) {
+      input.addEventListener('blur', function () { validate(input); });
+      // Only re-check while typing once the field has already complained,
+      // so nobody gets an error mid-word on their first pass.
+      input.addEventListener('input', function () {
+        if (input.classList.contains('field-invalid')) validate(input);
+      });
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var valid = true;
+      fields.forEach(function (input) { if (!validate(input)) valid = false; });
+      if (!valid) {
+        var first = form.querySelector('.field-invalid');
+        if (first) first.focus();
+        return;
+      }
+
+      // Honeypot filled means a bot. Acknowledge, send nothing.
+      var trap = form.querySelector('[name="company"]');
+      if (trap && trap.value) { acknowledge(form); return; }
+
+      var payload = { form: form.id };
+      new FormData(form).forEach(function (value, key) {
+        if (key !== 'company') payload[key] = value;
+      });
+
+      if (!FORM_ENDPOINT) {
+        console.warn('form endpoint not configured');
+        acknowledge(form);
+        return;
+      }
+
+      var btn = form.querySelector('.form-submit');
+      if (btn) btn.disabled = true;
+      fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function (res) {
+        if (!res.ok) throw new Error('bad status ' + res.status);
+        if (btn) btn.disabled = false;
+        acknowledge(form);
+      }).catch(function () {
+        if (btn) btn.disabled = false;
+        var box = form.querySelector('.form-error');
+        if (box) {
+          box.textContent = 'That did not send. Please call 027 688 0818 or email theteam@courtneyandco.co.nz.';
+          box.hidden = false;
+        }
+      });
+    });
+  }
+
+  wire(document.getElementById('contact-form'));
+  wire(document.getElementById('newsletter-form'));
+})();
 
 // -- D1: one reveal pattern applied to every major section ----------
 (function () {
