@@ -636,10 +636,13 @@ nav.scrolled {
   gap: 12px;
 }
 
+/* v15 accent restraint: the four value dots sat between a pink heading word
+   and a pink CTA in one viewport. Decorative bullets are the least important
+   pink in that cluster, so they carry no accent. */
 .value-dot {
   width: 7px;
   height: 7px;
-  background: var(--blue-deep);
+  background: var(--ink-3);
   border-radius: 50%;
   flex-shrink: 0;
   margin-top: 6px;
@@ -918,11 +921,14 @@ nav.scrolled {
   margin-bottom: 8px;
 }
 
+/* v15 accent restraint: three pink suburb labels sat under a pink eyebrow,
+   a pink heading word, a pink CTA and three pink FOR SALE tags. The suburb
+   is meta above the address, so it demotes. */
 .listing-suburb {
   font-size: 13.2px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--blue-deep);
+  color: var(--ink-3);
   font-family: var(--font-mono);
   margin-bottom: 16px;
 }
@@ -1204,11 +1210,13 @@ nav.scrolled {
   margin-bottom: 4px;
 }
 
+/* v15 accent restraint: four pink role labels under a pink eyebrow and a
+   pink heading word read as a wash. The role is meta above the name. */
 .team-role {
   font-size: 12px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--blue-deep);
+  color: var(--ink-3);
   font-family: var(--font-mono);
   margin-bottom: 8px;
 }
@@ -1332,13 +1340,16 @@ nav.scrolled {
   font-style: italic;
 }
 
+/* v15: a 300-weight serif italic at paragraph length was the least legible
+   text on the page. The display serif stays on the single featured pull
+   quote; the six cards read in body sans. */
 .testi-text {
-  font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 300;
-  font-style: italic;
-  line-height: 1.65;
-  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.7;
+  color: var(--ink-2);
   margin-bottom: 28px;
 }
 
@@ -1585,7 +1596,8 @@ nav.scrolled {
 
 /* ── FOOTER ────────────────────────────────────────────────────── */
 footer {
-  background: #061520;
+  background: var(--navy);
+  border-top: 1px solid rgba(255,255,255,0.08);
   padding: 60px;
   display: flex;
   justify-content: space-between;
@@ -1960,14 +1972,38 @@ body.js-loaded .hero-photo { animation: heroDrift 12s cubic-bezier(.16,1,.3,1) b
 }
 
 /* ── E: FOOTER ───────────────────────────────────────────────────── */
+/* v15: four zones now, so this is flex-wrap rather than a fixed three
+   column grid. The bottom of the page has to be a dead end with a phone
+   number on it, not just a copyright. */
 .footer-row {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   align-items: center;
-  gap: 32px;
-  width: min(1440px, 100% - 9rem);
+  gap: 32px 40px;
+  /* the footer already carries 60px of padding; the old 9rem inset on top of
+     it left too little room for a fourth zone and forced a stray wrap. */
+  width: 100%;
+  max-width: 1440px;
   margin-inline: auto;
 }
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--paper-3);
+  font-style: normal;
+}
+.footer-contact a {
+  color: var(--paper-3);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-contact a:hover,
+.footer-contact a:focus-visible { color: #fff; }
 .footer-social { display: flex; gap: 14px; justify-content: center; }
 .footer-social a {
   width: 42px; height: 42px; border-radius: 50%;
@@ -1989,7 +2025,8 @@ body.js-loaded .hero-photo { animation: heroDrift 12s cubic-bezier(.16,1,.3,1) b
 .footer-links a:hover { color: #fff; }
 
 .footer-fine {
-  width: min(1440px, 100% - 9rem);
+  width: 100%;
+  max-width: 1440px;
   margin: 34px auto 0;
   padding-top: 24px;
   border-top: 1px solid rgba(255,255,255,0.12);
@@ -2007,9 +2044,10 @@ body.js-loaded .hero-photo { animation: heroDrift 12s cubic-bezier(.16,1,.3,1) b
 .footer-source { margin-top: 6px; }
 
 @media (max-width: 900px) {
-  .footer-row { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 22px; }
+  .footer-row { flex-direction: column; align-items: center; text-align: center; gap: 22px; }
+  .footer-contact { align-items: center; }
   .footer-links { justify-content: center; }
-  .footer-row, .footer-fine { width: min(1440px, 100% - 2.5rem); }
+  .footer-row, .footer-fine { width: 100%; }
 }
 
 /* ── I: PRIVATE PREVIEW COVER ────────────────────────────────────── */
@@ -2829,7 +2867,7 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
       <em>straight up.</em>
     </h1>
     <p class="hero-tagline">
-      No jargon. No waffle. Straight answers, deep local knowledge and 366 homes sold across the North West.
+      Deep local knowledge. 366 homes sold across the North West.
     </p>
     <div class="hero-actions">
       <a href="#properties" class="btn-primary">View Properties</a>
@@ -2842,7 +2880,7 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
 <div class="stats-strip" id="stats">
   <div class="stat-item">
     <div class="stat-num">$499M+</div>
-    <div class="stat-lbl">Property Sold</div>
+    <div class="stat-lbl">In Property Sold</div>
   </div>
   <div class="stat-item">
     <div class="stat-num">15+</div>
@@ -3248,7 +3286,7 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
       <h2 class="section-title" style="color:white;">Sold. <em style="color:var(--pink-lt);">Delivered.</em></h2>
     </div>
     <div style="text-align:right;">
-      <div style="font-family:var(--font-display);font-size:clamp(52px,6vw,88px);font-weight:400;color:white;line-height:1;letter-spacing:-0.02em;">$499<span style="color:var(--blue-lt);">M+</span></div>
+      <div style="font-family:var(--font-display);font-size:clamp(52px,6vw,88px);font-weight:400;color:white;line-height:1;letter-spacing:-0.02em;">$499<span>M+</span></div>
       <div style="font-family:var(--font-mono);font-size: 12px;letter-spacing:0.3em;text-transform:uppercase;color: var(--paper-3);margin-top:6px;">Total Settled Sales</div>
     </div>
   </div>
@@ -3784,6 +3822,15 @@ body.js-loaded .stagger.visible > *:nth-child(12) { opacity: 1; transform: trans
       <div class="footer-logo-main">Courtney &amp; Co</div>
       <div class="footer-logo-tag">Straight Talking Real Estate - Licensed REA 2008</div>
     </div>
+
+    <!-- v15: the essentials restated so the foot of the page ends on a phone
+         number rather than a copyright line. -->
+    <address class="footer-contact">
+      <span>1047 Coatesville-Riverhead Hwy, Riverhead</span>
+      <span>9 Factory Road, Shop 15C, Waimauku</span>
+      <span>Office <a href="tel:+6494129903">09 412 9903</a></span>
+      <a href="mailto:theteam@courtneyandco.co.nz">theteam@courtneyandco.co.nz</a>
+    </address>
 
     <div class="footer-social">
       <a href="https://www.instagram.com/courtney_and_co_/" target="_blank" rel="noopener" aria-label="Courtney &amp; Co on Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
